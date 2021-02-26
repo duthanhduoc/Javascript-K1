@@ -1,0 +1,6 @@
+console.log('1')
+console.log(1)
+console.log(true)
+console.warn('canh bao')
+console.error('loi roi')
+console.table({ name: 'duoc', age: 25 })
