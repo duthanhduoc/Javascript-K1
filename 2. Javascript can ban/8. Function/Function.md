@@ -33,6 +33,14 @@ var expression = function () {
 
 **Giải thích**: Biến `var expression` vẫn được **hoisting** và được đẩy lên trên cùng của scope nhưng chỉ là khai báo mà thôi, nó không được gán cho hàm! Vì thế nó sẽ ném ra lỗi `TypeError`.
 
+Lưu ý khai báo như thế này thì sẽ chạy luôn function và gán `handle` là giá trị mà function return:
+
+```js
+const handle = (function () {
+  console.log('Run here')
+})()
+```
+
 ## IIFE (Immediately Invokable Function Expression)
 
 IIFE là khởi tạo một function và thực thi ngay lập tức sau đó.
@@ -42,6 +50,26 @@ IIFE là khởi tạo một function và thực thi ngay lập tức sau đó.
   let a = 1
   let b = 2
   console.log('a + b = ' + (a + b))
+})()
+```
+
+Chúng ta nên có dấu chấm phẩy `;` trước IIFE để tránh trường hợp làm run một function ngoài ý muốn, ví dụ
+
+```js
+const handle = (function () {
+  console.log('hello')
+})(function () {
+  console.log('IIFE')
+})()
+```
+
+sẽ giống như chúng ta vừa khai báo handle rồi chạy luôn function với tham số đầu vào là một function IIFE => gây nên lỗi không mong muốn. Vì thế nên thêm dấu `;` trước IIFE.
+
+```js
+const handle = (function () {
+  console.log('hello')
+})(function () {
+  console.log('IIFE')
 })()
 ```
 
@@ -57,7 +85,7 @@ setTimeout(function () {
 }, 1000)
 ```
 
-## Hàm rút gọn (Arrow function)
+## Hàm rút gọn - hàm mũi tên (Arrow function)
 
 Hàm rút gọn ngắn hơn biểu thức hàm (function expression) và không phụ thuộc this. Áp dụng tốt cho hàm ẩn danh (anonymous function) nhưng không thể dùng làm hàm khởi tạo
 

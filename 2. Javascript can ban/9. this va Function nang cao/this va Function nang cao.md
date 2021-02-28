@@ -17,7 +17,9 @@ var person = {
     return this.firstName + ' ' + this.lastName
   }
 }
-console.log(person.fullName()) //John Doe
+var handleFullName = person.fullName
+console.log(person.fullName()) // John Doe
+console.log(handleFullName()) // undefined undefined
 ```
 
 ### this đứng một mình
@@ -40,7 +42,7 @@ function myFunction() {
 console.log(myFunction()) // [object Window]
 ```
 
-Nếu trong chế độc `'strict mode'` thì sẽ là `undefined`
+Nếu trong chế độ `'strict mode'` thì sẽ là `undefined`
 
 ```javascript
 'use strict'
@@ -48,6 +50,22 @@ function myFunction() {
   return this
 }
 console.log(myFunction()) // undefined
+```
+
+Để rõ ràng thì chúng ta sẽ ví dụ trong `'strict mode'` thôi nhé
+Trong một constructor function cũng tương tự như vậy.
+
+```js
+'use strict'
+function Car(name) {
+  this.name = name
+  this.printName = function () {
+    console.log(this.name)
+  }
+}
+Car('bmw') // Lỗi vì không thể truy cập thuộc tính name của undefined
+const bmw = new Car('BMW')
+bmw.printName() // log ra BMW
 ```
 
 ### this ở trong một Event Handler
@@ -65,26 +83,49 @@ Khi nhấn vào button dưới đây thì nó sẽ được set `display:none`
 `this` trong đoạn code này sẽ đề cập đến `setTimeout`
 
 ```javascript
-function delay() {
-  this.name = 'Duoc'
-  setTimeout(function () {
-    console.log(this.name) // undefined
-  }, 1000)
+const delay = {
+  lastName: 'Duoc',
+  print() {
+    setTimeout(function () {
+      console.log(this.lastName) // undefined
+    }, 1000)
+  }
 }
-delay()
+delay.print()
 ```
 
 để fix vấn đề này thì có thể dùng **arrow function**
 
 ```javascript
-function delay() {
-  this.name = 'Duoc'
-  setTimeout(() => {
-    console.log(this.name) // Duoc
-  }, 1000)
+const delay = {
+  lastName: 'Duoc',
+  print() {
+    setTimeout(() => {
+      console.log(this.lastName) // Duoc
+    }, 1000)
+  }
 }
-delay()
+delay.print()
 ```
+
+Lưu ý là `this` trong callback không đề cập đến function chứa callback đó, hãy cẩn thận!
+`this` dưới đây không đề cập đến `broke` mà nó đề cấp đến obj.
+
+```js
+function broke(func) {
+  const obj = {
+    name: 'duoc',
+    func
+  }
+  return obj.func()
+}
+
+broke(function () {
+  console.log(this) // obj
+})
+```
+
+Vì thế để biết this trong callback đề cập đến cái nào thì phải hiểu được hàm chứa callback gọi callback như thế nào.
 
 ## Higher order function
 
