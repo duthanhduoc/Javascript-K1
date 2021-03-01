@@ -56,9 +56,11 @@ IIFE là khởi tạo một function và thực thi ngay lập tức sau đó.
 Chúng ta nên có dấu chấm phẩy `;` trước IIFE để tránh trường hợp làm run một function ngoài ý muốn, ví dụ
 
 ```js
-const handle = (function () {
+const handle = function () {
   console.log('hello')
-})(function () {
+}
+
+(function () {
   console.log('IIFE')
 })()
 ```
@@ -97,7 +99,7 @@ const handleClick = () => {
 
 Lưu ý với arrow function:
 
-- Không có `this`
+- Không có `this`, sẽ học ở bài tiếp theo
 - Không được gọi với `new`
 - Cũng không có super, chúng ta sẽ học về nó trong bài kế thừa class
 

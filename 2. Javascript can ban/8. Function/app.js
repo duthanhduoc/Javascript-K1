@@ -1,39 +1,85 @@
-// function handle(a, b) {
-//   console.log(a, b)
+// console.log(1 + 2)
+// console.log(2 + 3)
+// console.log(3 + 4)
+
+// function sum(a, b) {
+//   console.log(a + b)
 // }
-// handle(1, function() {
+// sum(1, 2)
+// sum(2, 3)
+// sum(3, 4)
 
-// })
+// var ex = function() {
+//   console.log('hi')
+// }
 
-// setTimeout(function() {
-//   console.log('xin chao moi nguoi')
+// const ex = function () {
+//   console.log('hi')
+// }()
+
+// console.log(ex)
+
+// ;(function (a, b, c) {
+//   console.log(a, b, c)
+// })(1, 2, 3)
+
+// const handle = function () {
+//   console.log('hello')
+// };(function () {
+//   console.log('IIFE')
+// })()
+
+// const handleCLick = function () {
+//   return 1
+// }
+
+// const handleClick = () => 1
+
+// setTimeout(() => {
+//   console.log('hio')
 // }, 1000);
 
-// const handle = function() {
+// Constructor function
+// function Car(fullName) {
+//   this.fullName = fullName
+// }
+// // const Car = fullName => {
+// //   this.fullName = fullName
+// // }
+// const bmw = new Car('BMW')
+// console.log(bmw)
 
+// function sum(a, b, c, ...d) {
+//   console.log(d)
 // }
 
-// const handle = () => {
+// sum(1, 2, 3, 4, 5, 6)
 
+// function handle(a) {
+//   return function (b) {
+//     return a + b
+//   }
 // }
 
-//constructor function - ham khoi tao
+// const handle = a => b => a + b
 
-// function Person(age) {
-//   this.age = age
+// function handle(obj) {
+//   const {name, age, ...rest} = obj
+//   console.log(rest)
 // }
 
-// const Person = (age) => {
-//   this.age = age
+// function handle({ name, age, ...rest }) {
+//   console.log(rest)
 // }
 
-// const duoc = new Person('24')
-// console.log(duoc)
+// handle({ name: 'duoc', age: 24, school: 'Hoa vang', class: '12' })
 
-function sum(...c) {
-  // console.log('a', a)
-  // console.log('b', b)
-  console.log('c', c)
+const sum = (...rest) => {
+  let result = 0
+  for(let i = 0; i < rest.length; i++) {
+    result += rest[i]
+  }
+  return result
 }
 
-sum(1, 2, 3, 4, 5, 6, 7)
+console.log(sum(1, 2, 3, 4,5,6,7,8))

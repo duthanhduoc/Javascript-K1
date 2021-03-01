@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>this va Function nang cao.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="this-v%C3%A0-function-n%C3%A2ng-cao">This và Function nâng cao</h1>
+<h2 id="this">This</h2>
+<p><code>this</code> trong Javascript là từ khóa đề cập đến object mà nó thuộc về.</p>
+<h3 id="this-trong-m%E1%BB%99t-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-method">this trong một phương thức (method)</h3>
+<p>Trong phương thức, <code>this</code> đề cập đến <strong>object chủ quản</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> person = {
+  <span class="hljs-attr">firstName</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Doe'</span>,
+  <span class="hljs-attr">id</span>: <span class="hljs-number">5566</span>,
+  <span class="hljs-attr">fullName</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.firstName + <span class="hljs-string">' '</span> + <span class="hljs-keyword">this</span>.lastName
+  }
+}
+<span class="hljs-keyword">var</span> handleFullName = person.fullName
+<span class="hljs-built_in">console</span>.log(person.fullName()) <span class="hljs-comment">// John Doe</span>
+<span class="hljs-built_in">console</span>.log(handleFullName()) <span class="hljs-comment">// undefined undefined</span>
+</div></code></pre>
+<h3 id="this-%C4%91%E1%BB%A9ng-m%E1%BB%99t-m%C3%ACnh">this đứng một mình</h3>
+<p>Khi đứng một mình, <code>this</code> đề cập đến <strong>global object</strong>. Nếu là trình duyệt thì sẽ là <strong>[object Window]</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> x = <span class="hljs-keyword">this</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>) <span class="hljs-comment">//[object Window]</span>
+</div></code></pre>
+<h3 id="this-%E1%BB%9F-trong-m%E1%BB%99t-function">this ở trong một function</h3>
+<p>Nếu mặc định thì <code>this</code> sẽ đề cập đến <strong>global object</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myFunction</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+}
+<span class="hljs-built_in">console</span>.log(myFunction()) <span class="hljs-comment">// [object Window]</span>
+</div></code></pre>
+<p>Nếu trong chế độ <code>'strict mode'</code> thì sẽ là <code>undefined</code></p>
+<pre class="hljs"><code><div><span class="hljs-meta">'use strict'</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">myFunction</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>
+}
+<span class="hljs-built_in">console</span>.log(myFunction()) <span class="hljs-comment">// undefined</span>
+</div></code></pre>
+<p>Để rõ ràng thì chúng ta sẽ ví dụ trong <code>'strict mode'</code> thôi nhé
+Trong một constructor function cũng tương tự như vậy.</p>
+<pre class="hljs"><code><div><span class="hljs-meta">'use strict'</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Car</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">this</span>.name = name
+  <span class="hljs-keyword">this</span>.printName = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.name)
+  }
+}
+Car(<span class="hljs-string">'bmw'</span>) <span class="hljs-comment">// Lỗi vì không thể truy cập thuộc tính name của undefined</span>
+<span class="hljs-keyword">const</span> bmw = <span class="hljs-keyword">new</span> Car(<span class="hljs-string">'BMW'</span>)
+bmw.printName() <span class="hljs-comment">// log ra BMW</span>
+</div></code></pre>
+<h3 id="this-%E1%BB%9F-trong-m%E1%BB%99t-event-handler">this ở trong một Event Handler</h3>
+<p>Trong một HTML event handler, <code>this</code> đề cập đến HTML element mà nó nhận event.</p>
+<p>Khi nhấn vào button dưới đây thì nó sẽ được set <code>display:none</code></p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">"this.style.display='none'"</span>&gt;</span>Click to Remove Me!<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<h3 id="this-%E1%BB%9F-trong-callback">this ở trong callback</h3>
+<p><code>this</code> trong đoạn code này sẽ không đề cập đến object <code>delay</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> delay = {
+  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Duoc'</span>,
+  print() {
+    setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.lastName) <span class="hljs-comment">// undefined</span>
+    }, <span class="hljs-number">1000</span>)
+  }
+}
+delay.print()
+</div></code></pre>
+<p>để fix vấn đề này thì có thể dùng <strong>arrow function</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> delay = {
+  <span class="hljs-attr">lastName</span>: <span class="hljs-string">'Duoc'</span>,
+  print() {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.lastName) <span class="hljs-comment">// Duoc</span>
+    }, <span class="hljs-number">1000</span>)
+  }
+}
+delay.print()
+</div></code></pre>
+<p>Lưu ý là <code>this</code> trong callback không đề cập đến function chứa callback đó, hãy cẩn thận!
+<code>this</code> dưới đây không đề cập đến <code>broke</code> mà nó đề cấp đến obj.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">broke</span>(<span class="hljs-params">func</span>) </span>{
+  <span class="hljs-keyword">const</span> obj = {
+    <span class="hljs-attr">name</span>: <span class="hljs-string">'duoc'</span>,
+    func
+  }
+  <span class="hljs-keyword">return</span> obj.func()
+}
+
+broke(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>) <span class="hljs-comment">// obj</span>
+})
+</div></code></pre>
+<p>Vì thế để biết this trong callback đề cập đến cái nào thì phải hiểu được hàm chứa callback gọi callback như thế nào.</p>
+<h2 id="higher-order-function">Higher order function</h2>
+<p>Mình đã viết 1 bài chi tiết tại đây: <a href="https://xdevclass.com/hieu-ki-hon-ve-high-order-function-closures-currying-va-callback-trong-javascript/">Chinh phục High Order Function, Closures, Currying và Callback trong Javascript</a></p>
+<p><strong>High order function</strong> là một <strong>function</strong> mà nhận vào tham số là <strong>function</strong> hoặc return về một <strong>function</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> tinhTong = <span class="hljs-function">(<span class="hljs-params">a</span>) =&gt;</span> <span class="hljs-function">(<span class="hljs-params">b</span>) =&gt;</span> a + b
+<span class="hljs-keyword">const</span> ketQua = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>].map(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item * item)
+<span class="hljs-built_in">console</span>.log(tinhTong(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 3</span>
+<span class="hljs-built_in">console</span>.log(ketQua) <span class="hljs-comment">// [ 1, 4, 9, 16, 25 ]</span>
+</div></code></pre>
+<h3 id="callback-function">Callback function</h3>
+<p><strong>Callback function</strong> là một <strong>function</strong> mà được truyền vào một <strong>function khác</strong> như một tham số</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> num = [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>]
+num.forEach(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'STT: '</span>, index, <span class="hljs-string">'la '</span>, item)
+})
+<span class="hljs-keyword">const</span> result = num.map(<span class="hljs-function">(<span class="hljs-params">item, index</span>) =&gt;</span> <span class="hljs-string">`STT: <span class="hljs-subst">${index}</span> la <span class="hljs-subst">${item}</span>`</span>)
+</div></code></pre>
+<h3 id="closure">Closure</h3>
+<p><strong>Closure</strong> là cách mà một <strong>function cha</strong> return về một <strong>function con</strong> bên trong nó. Ở trong <strong>function con</strong> đó có thể truy cập và thực thi các biến của <strong>function cha</strong>. Phải đủ 2 điều kiện này mới được gọi là <strong>Closure</strong> nhé.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> increase = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">let</span> x = <span class="hljs-number">0</span>
+  <span class="hljs-keyword">const</span> increaseInner = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ++x
+  <span class="hljs-keyword">return</span> increaseInner
+}
+<span class="hljs-keyword">const</span> myFunc = increase()
+<span class="hljs-built_in">console</span>.log(increase()()) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(increase()()) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(myFunc()) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(myFunc()) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(myFunc()) <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<h2 id="currying">Currying</h2>
+<p><strong>Currying</strong> là một kỹ thuật mà cho phép chuyển đổi một <strong>function nhiều tham số</strong> thành những <strong>function liên tiếp có một tham số</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> findNumber = <span class="hljs-function">(<span class="hljs-params">num</span>) =&gt;</span> <span class="hljs-function">(<span class="hljs-params">func</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> result = []
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; num; i++) {
+    <span class="hljs-keyword">if</span> (func(i)) {
+      result.push(i)
+    }
+  }
+  <span class="hljs-keyword">return</span> result
+}
+findNumber(<span class="hljs-number">10</span>)(<span class="hljs-function">(<span class="hljs-params">number</span>) =&gt;</span> number % <span class="hljs-number">2</span> === <span class="hljs-number">1</span>)
+findNumber(<span class="hljs-number">20</span>)(<span class="hljs-function">(<span class="hljs-params">number</span>) =&gt;</span> number % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>)
+findNumber(<span class="hljs-number">30</span>)(<span class="hljs-function">(<span class="hljs-params">number</span>) =&gt;</span> number % <span class="hljs-number">3</span> === <span class="hljs-number">2</span>)
+</div></code></pre>
+
+</body>
+</html>
