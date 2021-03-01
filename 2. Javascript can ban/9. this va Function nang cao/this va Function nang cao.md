@@ -80,7 +80,7 @@ Khi nhấn vào button dưới đây thì nó sẽ được set `display:none`
 
 ### this ở trong callback
 
-`this` trong đoạn code này sẽ đề cập đến `setTimeout`
+`this` trong đoạn code này sẽ không đề cập đến object `delay`
 
 ```javascript
 const delay = {

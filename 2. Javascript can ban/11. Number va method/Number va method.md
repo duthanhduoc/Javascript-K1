@@ -18,7 +18,20 @@ var x = 0.2 + 0.1 // x sẽ bằng 0.30000000000000004
 Để giải quyết điều này, chúng ta nên nhân nó thành số nguyên rồi thực hiện
 
 ```javascript
-var x = (0.2 _ 10 + 0.1 _ 10) / 10; // x sẽ bằng 0.3
+var x = (0.2 * 10 + 0.1 * 10) / 10 // x sẽ bằng 0.3
+```
+
+Hoặc làm tròn đến hàng thập phân cho phép
+
+```js
+let a = 0.2 + 0.1
+console.log(Number(a.toFixed(1))) // 0.3
+```
+
+Hoặc dùng các thư viện ngoài như [math.js](https://mathjs.org/)
+
+```js
+math.add(math.fraction(0.1), math.fraction(0.2)) // 0.3
 ```
 
 Nếu cộng 2 số thì kết quả sẽ là số. Nhưng nếu chuỗi cộng với số thì kết quả là chuỗi. Vậy nên khi tính toán thì nên chuyển hết về dạng số
