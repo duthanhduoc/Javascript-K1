@@ -3,7 +3,7 @@
 Chuỗi có thể được chứa trong nháy đơn hoặc nháy kép. Vị trí đầu tiên của chuỗi là **0**.
 
 ```javascript
-var carName1 = 'Volvo XC60' // Double quotes
+var carName1 = "Volvo XC60" // Double quotes
 var carName2 = 'Volvo XC60' // Single quotes
 ```
 
@@ -32,14 +32,11 @@ Có 3 phương thức tách chuỗi
 ```javascript
 var str = 'Apple, Banana, Kiwi'
 var res = str.slice(7, 13) // Banana
-//Nếu tham số là giá trị âm thì vị trí sẽ được đếm từ phía sau
-str.slice(-12, -6) // Banana
 //Nếu không có tham số thứ 2 thì coi như đếm đến cuối
 str.slice(7) // Banana, Kiwi
-str.slice(-12) // Banana, Kiwi
 ```
 
-**substring(start, end)**: Tương tự với slice nhưng không thể nhận giá trị âm
+**substring(start, end)**: Tương tự với slice
 
 ```javascript
 var str = 'Apple, Banana, Kiwi'

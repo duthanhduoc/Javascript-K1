@@ -31,7 +31,6 @@ Vậy nên nếu nó là global object, function, biến thì bạn có thể kh
 - `window.innerWidth`: Chiều rộng bên trong của cửa sổ trình duyệt (pixel)
 - `window.open()`: mở một cửa sổ
 - `window.close()`: đóng cửa sổ hiện tại
-- `window.moveTo()`: chuyển đến cửa sổ hiện tại
 - `window.resizeTo()`: resize cửa sổ hiện tại
 
 ## Window location

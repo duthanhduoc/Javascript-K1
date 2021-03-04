@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>String va method.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="chu%E1%BB%97i-%E2%80%93-string">Chuỗi – String</h1>
+<p>Chuỗi có thể được chứa trong nháy đơn hoặc nháy kép. Vị trí đầu tiên của chuỗi là <strong>0</strong>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> carName1 = <span class="hljs-string">"Volvo XC60"</span> <span class="hljs-comment">// Double quotes</span>
+<span class="hljs-keyword">var</span> carName2 = <span class="hljs-string">'Volvo XC60'</span> <span class="hljs-comment">// Single quotes</span>
+</div></code></pre>
+<h2 id="m%E1%BB%99t-s%E1%BB%91-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-hay-d%C3%B9ng">Một số phương thức hay dùng</h2>
+<p><strong>length</strong> trả về độ dài của chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> txt = <span class="hljs-string">'Duoc'</span>
+<span class="hljs-keyword">var</span> sln = txt.length <span class="hljs-comment">// 4</span>
+</div></code></pre>
+<p><strong>indexOf()</strong> trả về vị trí đầu tiên của từ khóa trong một chuỗi. Nếu không có sẽ trả về -1</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">"Please locate where 'locate' occurs!"</span>
+<span class="hljs-keyword">var</span> pos = str.indexOf(<span class="hljs-string">'locate'</span>) <span class="hljs-comment">// 7</span>
+</div></code></pre>
+<p><strong>Tách chuỗi</strong></p>
+<p>Có 3 phương thức tách chuỗi</p>
+<p><strong>slice(start, end)</strong>: Tách từ vị trí start đến vị trí end – 1</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'Apple, Banana, Kiwi'</span>
+<span class="hljs-keyword">var</span> res = str.slice(<span class="hljs-number">7</span>, <span class="hljs-number">13</span>) <span class="hljs-comment">// Banana</span>
+<span class="hljs-comment">//Nếu tham số là giá trị âm thì vị trí sẽ được đếm từ phía sau</span>
+str.slice(<span class="hljs-number">-12</span>, <span class="hljs-number">-6</span>) <span class="hljs-comment">// Banana</span>
+<span class="hljs-comment">//Nếu không có tham số thứ 2 thì coi như đếm đến cuối</span>
+str.slice(<span class="hljs-number">7</span>) <span class="hljs-comment">// Banana, Kiwi</span>
+str.slice(<span class="hljs-number">-12</span>) <span class="hljs-comment">// Banana, Kiwi</span>
+</div></code></pre>
+<p><strong>substring(start, end)</strong>: Tương tự với slice nhưng không thể nhận giá trị âm</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'Apple, Banana, Kiwi'</span>
+<span class="hljs-keyword">var</span> res = str.substring(<span class="hljs-number">7</span>, <span class="hljs-number">13</span>) <span class="hljs-comment">// Banana</span>
+</div></code></pre>
+<p><strong>substr()</strong> tương tự <strong>slice()</strong> nhưng tham số thứ 2 là độ dài chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'Apple, Banana, Kiwi'</span>
+<span class="hljs-keyword">var</span> res = str.substr(<span class="hljs-number">7</span>, <span class="hljs-number">6</span>) <span class="hljs-comment">// Banana</span>
+str.substr(<span class="hljs-number">7</span>) <span class="hljs-comment">// Banana, Kiwi</span>
+str.substr(<span class="hljs-number">-4</span>) <span class="hljs-comment">// Kiwi</span>
+</div></code></pre>
+<p><strong>replace()</strong>: Thay thế chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'Please visit Microsoft and Microsoft!'</span>
+<span class="hljs-keyword">var</span> n1 = str.replace(<span class="hljs-string">'Microsoft'</span>, <span class="hljs-string">'W3Schools'</span>)
+<span class="hljs-keyword">var</span> n2 = str.replace(<span class="hljs-regexp">/Microsoft/g</span>, <span class="hljs-string">'W3Schools'</span>)
+<span class="hljs-built_in">console</span>.log(n1) <span class="hljs-comment">// Please visit W3Schools and Microsoft!</span>
+<span class="hljs-built_in">console</span>.log(n2) <span class="hljs-comment">// Please visit W3Schools and W3Schools!</span>
+</div></code></pre>
+<p><strong>Chuyển đổi sang chữ hoa hoặc chữ thường (upper and lower case)</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> text1 = <span class="hljs-string">'Hello World!'</span>
+<span class="hljs-keyword">var</span> text2 = text1.toUpperCase() <span class="hljs-comment">// HELLO WORLD!</span>
+<span class="hljs-keyword">var</span> text3 = text1.toLowerCase() <span class="hljs-comment">// hello world!</span>
+</div></code></pre>
+<p><strong>concat()</strong>: Nối chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> text1 = <span class="hljs-string">'Hello'</span>
+<span class="hljs-keyword">var</span> text2 = <span class="hljs-string">'World'</span>
+<span class="hljs-keyword">var</span> text3 = text1.concat(<span class="hljs-string">' '</span>, text2) <span class="hljs-comment">// Hello World</span>
+</div></code></pre>
+<p><strong>trim()</strong>: Xóa khoảng trắng 2 bên chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">' Hello World! '</span>
+<span class="hljs-keyword">var</span> newStr = str.trim() <span class="hljs-comment">// Hello World!</span>
+</div></code></pre>
+<p><strong>charAt() hoặc []</strong>: Lấy ký tự từ một chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'HELLO WORLD'</span>
+str.charAt(<span class="hljs-number">0</span>) <span class="hljs-comment">// returns H</span>
+str[<span class="hljs-number">0</span>] <span class="hljs-comment">// returns H</span>
+str[<span class="hljs-number">0</span>] = <span class="hljs-string">'A'</span> <span class="hljs-comment">// Không bị lỗi nhưng đoạn code này không hoạt động</span>
+</div></code></pre>
+<p><strong>charCodeAt()</strong>: Lấy UTF-16 code tại vị trí bất kì trong chuỗi</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> str = <span class="hljs-string">'HELLO WORLD'</span>
+str.charCodeAt(<span class="hljs-number">0</span>) <span class="hljs-comment">// returns 72</span>
+</div></code></pre>
+<p><strong>split()</strong>: Chuyển chuỗi sang mảng. Tham số là chuỗi ngăn cách</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> txt1 = <span class="hljs-string">'a,b,c,d,e'</span>
+<span class="hljs-keyword">const</span> array1 = txt1.split(<span class="hljs-string">','</span>) <span class="hljs-comment">// [ 'a', 'b', 'c', 'd', 'e' ]</span>
+<span class="hljs-comment">// Nếu tham số là rỗng thì sẽ return về mảng từng ký tự</span>
+<span class="hljs-keyword">const</span> txt2 = <span class="hljs-string">'Hello'</span>
+<span class="hljs-keyword">const</span> array2 = txt2.split(<span class="hljs-string">''</span>) <span class="hljs-comment">// [ 'H', 'e', 'l', 'l', 'o' ]</span>
+</div></code></pre>
+
+</body>
+</html>
