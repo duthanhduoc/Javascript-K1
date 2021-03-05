@@ -1,9 +1,13 @@
-// var car = 'bmw'
-// function xe() {
-
+// var car = 'BMW'
+// function handleSomeThing() {
+//   console.log('hello')
 // }
-// console.log(window.xe)
+// console.log(window.car)
 
-// prompt('xin chao')
-console.log(window.location.href)
-console.log(window.location.domain)
+// window.handleSomeThing()
+
+// document.getElementById()
+
+// window.document.getElementById()
+
+window.open('https://vnexpress.vn')
