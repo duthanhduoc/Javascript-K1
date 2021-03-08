@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oẳn tù tì</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .a .btn {
+        font-size: 4rem;
+        width: 110px;
+        height: 110px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .a .btn:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+      .b {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .b span {
+        font-size: 10rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h2 class="text-center">Bạn</h2>
+          <div class="a d-flex flex-column align-items-center">
+            <button
+              class="btn btn-outline-warning a__scissors"
+              data-value="scissors"
+            >
+              ✌️
+            </button>
+            <button class="btn btn-outline-warning a__rock" data-value="rock">
+              ✊
+            </button>
+            <button class="btn btn-outline-warning a__paper" data-value="paper">
+              🖐
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <h2 class="text-center">Máy tính</h2>
+          <div class="b text-center pending">
+            <span class="b__scissors" data-value="scissors">✌️</span>
+            <span class="b__rock" data-value="rock">✊</span>
+            <span class="b__paper" data-value="paper">🖐</span>
+          </div>
+        </div>
+      </div>
+      <div class="notification text-center my-4"></div>
+      <div class="text-center">
+        <button class="btn btn-success btn__play-again d-none">Chơi lại</button>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
