@@ -1,40 +1,44 @@
-const clear = () => {
-  document.querySelector('table tbody').innerHTML = ''
-}
-
 const handlePeriod = (period, dateString, month) => {
-  if(month === 0) {
+  if (month === 0) {
     const currentDate = new Date(dateString)
-    period.push(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`)
+    period.push(
+      `${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}`
+    )
   } else {
     const pre = new Date(dateString)
-    let currentMonth = pre.getMonth() + 2
-    let currentDate = pre.getDate()
-    let currentYear = pre.getFullYear()
-    if(currentMonth > 12) {
-      currentMonth = 1
-      currentYear += 1
+    let month = pre.getMonth() + 2,
+      year = pre.getFullYear(),
+      date = pre.getDate()
+    if (month > 12) {
+      month = 1
+      year += 1
     }
-    const _currentDate = new Date(`${currentYear}-${currentMonth}-${currentDate}`)
-    period.push(`${_currentDate.getFullYear()}-${_currentDate.getMonth() + 1}-${_currentDate.getDate()}`)
+    const currentDate = new Date(`${year}-${month}-${date}`)
+    period.push(
+      `${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}`
+    )
   }
   return period[month]
 }
 
-document.querySelector('form').addEventListener('submit', (event) => {
+document.querySelector('.handle').addEventListener('click', (event) => {
   event.preventDefault()
-  clear()
+  // clear table
+  document.querySelector('tbody').innerHTML = ''
   const loan = Number(document.getElementById('loan').value)
   const months = Number(document.getElementById('months').value)
   const rate = Number(document.getElementById('rate').value)
   const disbursementDate = document.getElementById('disbursementDate').value
-
-  const interest = Math.round((loan * months * rate) / 1200)
-  const originalAndInterest = loan + interest
-  document.getElementById('interest').value = interest.toLocaleString()
+  const totalInterest = Math.round((loan * months * rate) / 1200)
+  const totalOriginalAndInterest = loan + totalInterest
+  document.getElementById('interest').value = totalInterest.toLocaleString()
   document.getElementById(
     'originalAndInterest'
-  ).value = originalAndInterest.toLocaleString()
+  ).value = totalOriginalAndInterest.toLocaleString()
   const period = []
   for (let i = 0; i <= months; i++) {
     let html
@@ -50,14 +54,14 @@ document.querySelector('form').addEventListener('submit', (event) => {
     } else if (i === months) {
       const originalPerMonth = loan - Math.round(loan / months) * (months - 1)
       const interestPerMonth =
-        interest - Math.round((loan * rate) / 1200) * (months - 1)
+        totalInterest - Math.round((loan * rate) / 1200) * (months - 1)
       const originalAndInterestPerMonth = originalPerMonth + interestPerMonth
       html = `
       <td>${i}</td>
-      <td>${handlePeriod(period, period[i - 1], i)}</td>
-      <td>${originalPerMonth}</td>
-      <td>${interestPerMonth}</td>
-      <td>${originalAndInterestPerMonth}</td>
+      <td>${handlePeriod(period, period[i-1], i)}</td>
+      <td>${originalPerMonth.toLocaleString()}</td>
+      <td>${interestPerMonth.toLocaleString()}</td>
+      <td>${originalAndInterestPerMonth.toLocaleString()}</td>
       <td>0</td>
       `
     } else {
@@ -67,11 +71,11 @@ document.querySelector('form').addEventListener('submit', (event) => {
       const remainingOriginal = loan - originalPerMonth * i
       html = `
       <td>${i}</td>
-      <td>${handlePeriod(period, period[i - 1], i)}</td>
-      <td>${originalPerMonth}</td>
-      <td>${interestPerMonth}</td>
-      <td>${originalAndInterestPerMonth}</td>
-      <td>${remainingOriginal}</td>
+      <td>${handlePeriod(period, period[i-1], i)}</td>
+      <td>${originalPerMonth.toLocaleString()}</td>
+      <td>${interestPerMonth.toLocaleString()}</td>
+      <td>${originalAndInterestPerMonth.toLocaleString()}</td>
+      <td>${remainingOriginal.toLocaleString()}</td>
       `
     }
     const tr = document.createElement('tr')

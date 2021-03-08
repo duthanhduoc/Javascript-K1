@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Keyboard Event</title>
+    <title>Keyboard Event
+    </title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,27 +14,32 @@
     />
     <style>
       body {
-        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .content {
+        display: none;
+      }
+      .content.active {
+        display: block;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <form class="mb-3" action="">
-        <div class="mb-3">
-          <label for="name" class="form-label">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="name"
-          />
-        </div>
-        <button class="btn btn-primary">Add</button>
-      </form>
-
-      <div class="card mb-2 p-2">Sua may tinh</div>
-      <div class="card mb-2 p-2">Hoc bai</div>
+    <div class="container p-3">
+      <div class="d-flex mb-3">
+        <button class="btn btn-outline-primary me-2 active" id="1">Dien thoai</button>
+        <button class="btn btn-outline-primary me-2" id="2">Quan ao</button>
+        <button class="btn btn-outline-primary me-2" id="3">Giay dep</button>
+      </div>
+      <div class="content card p2 active" data-id="1">
+        <img src="https://cdn.fptshop.com.vn/Uploads/Originals/2020/7/28/637315469884239128_ss-a51-inoxbac-dd.png" alt="">
+      </div>
+      <div class="content card p2" data-id="2">
+        <img src="https://cdn.tgdd.vn/Files/2016/06/10/839867/de-quan-ao-khong-bi-nhan-khi-giat-bang-may-giat-91.jpg" alt="">
+      </div>
+      <div class="content card p2" data-id="3">
+        <img src="http://aroma.vn/wp-content/uploads/2018/11/4bbf73e1-c%C3%A1c-lo%E1%BA%A1i-gi%E1%BA%A7y-trong-ti%E1%BA%BFng-anh.jpg" alt="">
+      </div>
     </div>
     <script src="app.js"></script>
   </body>
