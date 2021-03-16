@@ -1,7 +1,7 @@
 # Regex Evaluation Funtions
 
 Nên test trên trang: [https://regexr.com/](https://regexr.com/)
-
+Tham khảo: [https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions](https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions)
 ## Regex là gì
 
 **Regex** là các mẫu (pattern) thay vì các chuỗi cụ thể được sử dụng tìm/thay thế (Find/Replace). Là một công cụ cực mạnh cho xử lí chuỗi trong Php, javascript… Ví dụ: Khi kiểm tra tính hợp lệ của email hoặc số điện thoại thì điều bạn nghĩ tới đầu tiên chính là regex. **Regex** là viết tắt của **Regular Expression**, tên thuần Việt là biểu thức chính quy.
@@ -32,8 +32,8 @@ regex.test('my Name is duoc') // true
 
 ```javascript
 const reg = /name/
-regex.exec('what is your name') // array
-regex.exec('hello everybody') // null
+reg.exec('what is your name') // array
+reg.exec('hello everybody') // null
 ```
 
 `String.match()`: return về một array hoặc null

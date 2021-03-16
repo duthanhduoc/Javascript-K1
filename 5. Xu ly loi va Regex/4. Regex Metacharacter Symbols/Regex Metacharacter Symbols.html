@@ -393,7 +393,7 @@ code {
 <span class="hljs-built_in">console</span>.log(result1) <span class="hljs-comment">// true</span>
 <span class="hljs-built_in">console</span>.log(result2) <span class="hljs-comment">// true</span>
 </div></code></pre>
-<p>Khớp từ 0 đến nhiều ký tự bất kỳ</p>
+<p>Cho phép ký tự trước đó lặp lại 0 hoặc nhiều lần</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/m*y/i</span>
 <span class="hljs-keyword">const</span> str1 = <span class="hljs-string">'my vi tinh'</span>
 <span class="hljs-keyword">const</span> str2 = <span class="hljs-string">'moay vi tinh'</span>
@@ -415,7 +415,7 @@ code {
 <span class="hljs-built_in">console</span>.log(result3) <span class="hljs-comment">// true</span>
 </div></code></pre>
 <p>Escape Character
-Nếu muốn so khớp chuỗi có chứa các ký tự đặc biệt như *, $, ^, ?... thì chỉ cần thêm dấu <code>/</code> vào trong regex</p>
+Nếu muốn so khớp chuỗi có chứa các ký tự đặc biệt như *, $, ^, ?... thì chỉ cần thêm dấu <code>\</code> vào trong regex</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/ma?y?n\?/i</span>
 <span class="hljs-keyword">const</span> str = <span class="hljs-string">'myn?'</span>
 <span class="hljs-keyword">const</span> result = regex.test(str)

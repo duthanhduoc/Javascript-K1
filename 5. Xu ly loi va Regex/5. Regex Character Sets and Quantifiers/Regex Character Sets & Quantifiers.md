@@ -52,9 +52,11 @@ regex.test('10years') // true
 
 ## Ngoặc nhọn {} - Giới hạn số lượng ký tự
 
+Bắt buộc 2 ký tự
+
 ```javascript
 const regex = /gy{2}m/i
-regex.test('Gym') // true
+regex.test('Gym') // false
 regex.test('Gyym') // true
 regex.test('Gyyym') // false
 ```

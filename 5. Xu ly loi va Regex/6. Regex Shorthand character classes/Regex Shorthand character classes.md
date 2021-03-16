@@ -7,7 +7,7 @@ Khớp 1 chữ cái, số hoặc `_`
 ```javascript
 const regex = /\w/
 regex.test('Hello 2021') // true
-regex.test('!hi') // false
+regex.test('!hi') // true
 ```
 
 Khớp 1 hoặc nhiều chữ cái, số, hoặc `_`
@@ -16,7 +16,7 @@ Tên gọi có thể khác nhưng nhìn chung thì tác dụng tương tự cái
 ```javascript
 const regex = /\w+/
 regex.test('Hello 2021') // true
-regex.test('!hi') // false
+regex.test('!hi') // true
 ```
 
 Khớp với không phải là chữ cái, số hoặc `_`
@@ -57,13 +57,6 @@ Khớp với không phải dấu cách
 const regex = /\S/
 ```
 
-Khớp với ranh giới (boundary)
-
-```javascript
-const regex = /Anh\b/i
-regex.test('Anh yeu em cua anh') // true
-```
-
 Khớp nếu b theo ngay sau a
 
 ```javascript
@@ -78,17 +71,10 @@ const regex = /a(?!b)/
 regex.test('hi acb') // true
 ```
 
-Khớp nếu chuỗi có từ mà bắt đầu bằng `an`
+Khớp nếu chuỗi `an` là ký tự biên
+Ký tự biên là ký tự mà nằm giữa ký tự từ và không phải ký tự từ hoặc giữa 2 ký tự không phải là ký tự từ
 
 ```javascript
 const regex = /an\b/i
-regex.test('han yeu anh khong') // true, Khớp tại từ anh
-```
-
-Khớp nếu chuỗi có từ `an`
-
-```javascript
-const regex = /\ban\b/i
-regex.test('anh yeu han khong') // false
-regex.test('an yeu em khong') // true
+regex.test('han yeu anh khong') // true, Khớp tại từ han
 ```

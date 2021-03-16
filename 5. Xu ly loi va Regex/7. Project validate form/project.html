@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Regex Shorthand character classes.md</title>
+<title>project.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -365,51 +365,27 @@ code {
           : 'default'
     });
   </script>
-<h1 id="regex-shorthand-character-classes">Regex Shorthand character classes</h1>
-<p>Cú pháp rút gọn trong Regex</p>
-<p>Khớp 1 chữ cái, số hoặc <code>_</code></p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\w/</span>
-regex.test(<span class="hljs-string">'Hello 2021'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'!hi'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp 1 hoặc nhiều chữ cái, số, hoặc <code>_</code>
-Tên gọi có thể khác nhưng nhìn chung thì tác dụng tương tự cái trên</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\w+/</span>
-regex.test(<span class="hljs-string">'Hello 2021'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'!hi'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp với không phải là chữ cái, số hoặc <code>_</code></p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\W/</span>
-regex.test(<span class="hljs-string">'~'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'he'</span>) <span class="hljs-comment">// false</span>
-</div></code></pre>
-<p>Khớp 1 số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\d/</span>
-</div></code></pre>
-<p>Khớp 1 hoặc nhiều số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\d+/</span>
-</div></code></pre>
-<p>Khớp không phải là số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\D/</span>
-</div></code></pre>
-<p>Khớp với dấu cách</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\s/</span>
-</div></code></pre>
-<p>Khớp với không phải dấu cách</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\S/</span>
-</div></code></pre>
-<p>Khớp nếu b theo ngay sau a</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/a(?=b)/</span>
-regex.test(<span class="hljs-string">'hi abc'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp nếu không phải b ngay sau a</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/a(?!b)/</span>
-regex.test(<span class="hljs-string">'hi acb'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp nếu chuỗi <code>an</code> là ký tự biên
-Ký tự biên là ký tự mà nằm giữa ký tự từ và không phải ký tự từ hoặc giữa 2 ký tự không phải là ký tự từ</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/an\b/i</span>
-regex.test(<span class="hljs-string">'han yeu anh khong'</span>) <span class="hljs-comment">// true, Khớp tại từ han</span>
+<h1 id="project-validate">Project validate</h1>
+<p>Tạo một form như hình
+<img src="project.PNG" alt="form"></p>
+<h2 id="rule-validate">Rule validate</h2>
+<ul>
+<li>Email: required, email</li>
+<li>Tên: required, là tên người (tiếng anh hoặc tiếng việt không chứa số), max 50 ký tự</li>
+<li>Giới tính: required</li>
+<li>Quốc gia: required</li>
+<li>Mật khẩu: required, min 8, max 20</li>
+<li>Nhập lại mật khẩu: required, min 8, max 20, giống mật khẩu</li>
+<li>Đồng ý: required</li>
+</ul>
+<h2 id="g%E1%BB%A3i-%C3%BD">Gợi ý</h2>
+<ul>
+<li>Email: duthanhduoc+01@gmail-vn.com
+Tên email thì gồm chữ, sốDomain email từ 1-63 ký tự bao gồm chữ cái, số, <code>.</code> và <code>-</code>, tên miền thì từ 1-5 ký tự</li>
+<li>Bao gồm chữ tiếng Việt thì: <code>[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]</code></li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> REGEX_EMAIL = <span class="hljs-regexp">/^([a-zA-Z0-9\.\_]+)(\+([0-9]+))?@([a-zA-Z0-9\.\-]+){1,63}\.[a-zA-Z]{1,5}$/</span>
+<span class="hljs-keyword">const</span> REGEX_NAME = <span class="hljs-regexp">/[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+(\s?[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+)+$/</span>
 </div></code></pre>
 
 </body>

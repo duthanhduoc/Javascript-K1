@@ -135,7 +135,7 @@ alert(Object.keys(user)) // name
 
 ## Non-configurable - Không thể cấu hình
 
-Ý tưởng của `configurable: false` là để ngăn chặn thay đổi cờ thuộc tính và xóa thuộc tính, trong khi đó bạn vẫn có thể thay đổi value của thuộc tính
+Ý tưởng của `configurable: false` là để ngăn chặn thay đổi cờ thuộc tính và xóa thuộc tính, trong khi đó bạn vẫn có thể thay đổi value của thuộc tính.
 Cờ non-configurable (`configurable:false`) thỉnh thoảng được set mặc định trong các Object xây dựng sẵn.
 Ví dụ `Math.PI` thì non-writable, non-enumerable, non-configurable
 

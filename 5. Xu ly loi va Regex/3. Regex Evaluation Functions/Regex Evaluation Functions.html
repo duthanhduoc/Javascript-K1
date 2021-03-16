@@ -366,7 +366,8 @@ code {
     });
   </script>
 <h1 id="regex-evaluation-funtions">Regex Evaluation Funtions</h1>
-<p>Nên test trên trang: <a href="https://regexr.com/">https://regexr.com/</a></p>
+<p>Nên test trên trang: <a href="https://regexr.com/">https://regexr.com/</a>
+Tham khảo: <a href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions">https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Regular_Expressions</a></p>
 <h2 id="regex-l%C3%A0-g%C3%AC">Regex là gì</h2>
 <p><strong>Regex</strong> là các mẫu (pattern) thay vì các chuỗi cụ thể được sử dụng tìm/thay thế (Find/Replace). Là một công cụ cực mạnh cho xử lí chuỗi trong Php, javascript… Ví dụ: Khi kiểm tra tính hợp lệ của email hoặc số điện thoại thì điều bạn nghĩ tới đầu tiên chính là regex. <strong>Regex</strong> là viết tắt của <strong>Regular Expression</strong>, tên thuần Việt là biểu thức chính quy.</p>
 <p>Ứng dụng chủ yếu của Regex là so khớp chuỗi dựa trên một mẫu (pattern)
@@ -384,8 +385,8 @@ regex.test(<span class="hljs-string">'my Name is duoc'</span>) <span class="hljs
 <h2 id="m%E1%BB%99t-s%E1%BB%91-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-%C3%A1p-d%E1%BB%A5ng-v%E1%BB%9Bi-regex">Một số phương thức áp dụng với Regex</h2>
 <p><code>Regex.exec()</code>: return về một array hoặc null</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/name/</span>
-regex.exec(<span class="hljs-string">'what is your name'</span>) <span class="hljs-comment">// array</span>
-regex.exec(<span class="hljs-string">'hello everybody'</span>) <span class="hljs-comment">// null</span>
+reg.exec(<span class="hljs-string">'what is your name'</span>) <span class="hljs-comment">// array</span>
+reg.exec(<span class="hljs-string">'hello everybody'</span>) <span class="hljs-comment">// null</span>
 </div></code></pre>
 <p><code>String.match()</code>: return về một array hoặc null</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> reg = <span class="hljs-regexp">/name/</span>

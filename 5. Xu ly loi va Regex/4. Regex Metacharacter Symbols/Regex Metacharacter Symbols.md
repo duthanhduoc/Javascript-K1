@@ -39,7 +39,7 @@ console.log(result1) // true
 console.log(result2) // true
 ```
 
-Khớp từ 0 đến nhiều ký tự bất kỳ
+Cho phép ký tự trước đó lặp lại 0 hoặc nhiều lần
 
 ```javascript
 const regex = /m*y/i
@@ -67,7 +67,7 @@ console.log(result3) // true
 ```
 
 Escape Character
-Nếu muốn so khớp chuỗi có chứa các ký tự đặc biệt như \*, $, ^, ?... thì chỉ cần thêm dấu `/` vào trong regex
+Nếu muốn so khớp chuỗi có chứa các ký tự đặc biệt như \*, $, ^, ?... thì chỉ cần thêm dấu `\` vào trong regex
 
 ```javascript
 const regex = /ma?y?n\?/i

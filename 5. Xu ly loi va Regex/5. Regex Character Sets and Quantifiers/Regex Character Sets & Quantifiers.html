@@ -398,8 +398,9 @@ regex.test(<span class="hljs-string">'9years'</span>) <span class="hljs-comment"
 regex.test(<span class="hljs-string">'10years'</span>) <span class="hljs-comment">// true</span>
 </div></code></pre>
 <h2 id="ngo%E1%BA%B7c-nh%E1%BB%8Dn----gi%E1%BB%9Bi-h%E1%BA%A1n-s%E1%BB%91-l%C6%B0%E1%BB%A3ng-k%C3%BD-t%E1%BB%B1">Ngoặc nhọn {} - Giới hạn số lượng ký tự</h2>
+<p>Bắt buộc 2 ký tự</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/gy{2}m/i</span>
-regex.test(<span class="hljs-string">'Gym'</span>) <span class="hljs-comment">// true</span>
+regex.test(<span class="hljs-string">'Gym'</span>) <span class="hljs-comment">// false</span>
 regex.test(<span class="hljs-string">'Gyym'</span>) <span class="hljs-comment">// true</span>
 regex.test(<span class="hljs-string">'Gyyym'</span>) <span class="hljs-comment">// false</span>
 </div></code></pre>

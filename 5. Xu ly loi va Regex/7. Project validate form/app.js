@@ -1,28 +1,36 @@
 const REGEX_EMAIL = /^([a-zA-Z0-9\.\_]+)(\+([0-9]+))?@([a-zA-Z0-9\.\-]+){1,63}\.[a-zA-Z]{1,5}$/
-const REGEX_NAME = /[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+(\s?[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+)+$/
+const REGEX_NAME = /^[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]+[\sA-Za-z\u00C0-\u024F\u1E00-\u1EFF]+$/
+
+const isRequired = (value) => {
+  if(typeof value === 'boolean') {
+    return value ? false : 'Trường này là bắt buộc'
+  } else {
+    return value.trim() ? false : 'Trường này là bắt buộc'
+  }
+}
 const isEmail = (value) =>
-  REGEX_EMAIL.test(value) ? '' : 'Email không đúng định dạng'
+  REGEX_EMAIL.test(value) ? false : 'Email không đúng định dạng'
 const isName = (value) =>
-  REGEX_NAME.test(value) ? '' : 'Tên không đúng định dạng'
-const isRequired = (name) => (value) =>
-  value.trim() !== '' ? '' : `${name ? name : 'Trường này'} không được để trống`
-const isCheck = (value) => (value ? '' : 'Bạn phải chọn trước khi đăng ký')
-const isMax = (name, max) => (value) =>
-  value.length <= max ? '' : `${name} không được vượt quá ${max} ký tự`
-const isMin = (name, min) => (value) =>
-  value.length >= min ? '' : `${name} không được dưới ${min} ký tự`
-const createMessageNode = (message = '') => {
+  REGEX_NAME.test(value) ? false : 'Tên không đúng định dạng'
+const max = (maxValue) => (value) =>
+  value.length <= maxValue ? false : `Giá trị lớn nhất là ${maxValue}`
+const min = (minValue) => (value) =>
+  value.length >= minValue ? false : `Giá trị bé nhật là ${minValue}`
+const isSame = (name1, name2) => (value1, value2) => value1 === value2 ? false : `${name1} phải giống ${name2}`
+
+const createMessage = (node, message, backupNode = null) => {
   const messageNode = document.createElement('div')
-  messageNode.classList.add('message-error', 'text-danger', 'small')
-  messageNode.innerText = message
+  messageNode.className = 'invalid-feedback'
+  messageNode.textContent = message
+  const _node = node || backupNode
+  _node.parentElement.appendChild(messageNode)
+  _node.classList.add('is-invalid')
   return messageNode
 }
-const isSamePassword = (value1, value2) =>
-  value1 === value2 ? '' : `Mật khẩu nhập lại không đúng`
-const validate = (node, funcs) => {
-  let message = ''
-  for (const func of funcs) {
-    let value = ''
+
+const isInvalid = (node, funcs, backupNode = null) => {
+  for (func of funcs) {
+    let value
     if (node === null) {
       value = ''
     } else if (node.type === 'checkbox') {
@@ -30,92 +38,56 @@ const validate = (node, funcs) => {
     } else {
       value = node.value
     }
-    message = func(value)
+    const message = func(value)
     if (message) {
-      break
+      createMessage(node, message, backupNode)
+      return message
     }
   }
-  if (message) {
-    node.parentElement.appendChild(createMessageNode(message))
-    node?.classList.add('is-invalid')
-    return false
-  }
-  return true
-}
-const validateCompare = (node1, node2, funcs) => {
-  let message = ''
-  for (const func of funcs) {
-    message = func(node1.value, node2.value)
-    if (message) {
-      break
-    }
-  }
-  if (message) {
-    node2.parentElement.appendChild(createMessageNode(message))
-    node1.classList.add('is-invalid')
-    node2.classList.add('is-invalid')
-    return false
-  }
-  return true
-}
-const clearValidate = () => {
-  const nodeMessages = document.querySelectorAll('form .message-error')
-  const nodeFormControls = document.querySelectorAll('form .form-control')
-  const nodeFormCheckInputs = document.querySelectorAll(
-    'form .form-check-input'
-  )
-  nodeMessages.forEach((node) => {
-    node.remove()
-  })
-  nodeFormCheckInputs.forEach(
-    (node) =>
-      node.classList.contains('is-invalid') &&
-      node.classList.remove('is-invalid')
-  )
-  nodeFormControls.forEach(
-    (node) =>
-      node.classList.contains('is-invalid') &&
-      node.classList.remove('is-invalid')
-  )
+  return false
 }
 
-const handleSubmit = (event) => {
-  event.preventDefault()
-  clearValidate()
-  const email = document.getElementById('email')
-  const name = document.getElementById('name')
-  const sex = document.getElementById('sex')
-  const nation = document.querySelector('input[name="nation"]:checked')
-  const password = document.getElementById('password')
-  const confirmedPassword = document.getElementById('confirmedPassword')
-  const agree = document.getElementById('agree')
-  const validArray = [
-    validate(email, [isRequired('Email'), isEmail]),
-    validate(name, [isRequired('Tên'), isName, isMax('Tên', 50)]),
-    validate(sex, [isRequired('Giới tính')]),
-    validate(nation, [isRequired('Quốc gia')]),
-    validate(password, [
-      isRequired('Mật khẩu'),
-      isMin('Mật khẩu', 8),
-      isMax('Mật khẩu', 20)
-    ]),
-    validate(confirmedPassword, [
-      isRequired('Nhập lại mật khẩu'),
-      isMin('Nhập lại mật khẩu', 8),
-      isMax('Nhập lại mật khẩu', 20)
-    ]),
-    validate(agree, [isCheck]),
-    validateCompare(password, confirmedPassword, [isSamePassword])
-  ]
-  const isValidForm = validArray.every((item) => item)
-  if (isValidForm) {
-    const body = {
-      email: email.value,
-      name: name.value,
-      sex: sex.value,
-      nation: nation.value,
-      password: password.value
+const isInvalidCompare = (node1, node2, funcs) => {
+  const value1 = node1.value
+  const value2 = node2.value
+  for(func of funcs) {
+    const message = func(value1, value2)
+    if(message) {
+      createMessage(node2, message)
+      return message
     }
-    console.log(body)
   }
+  return false
 }
+
+const clearMessage = () => {
+  document.querySelectorAll('.invalid-feedback').forEach(item => item.remove())
+  document.querySelectorAll('.is-invalid').forEach(item => item.classList.remove('is-invalid'))
+}
+
+document.querySelector('form').addEventListener('submit', (event) => {
+  event.preventDefault()
+  clearMessage()
+  const emailNode = document.getElementById('email')
+  const nameNode = document.getElementById('name')
+  const sexNode = document.getElementById('sex')
+  const nationNode = document.querySelector('input[name=nation]:checked')
+  const formCheck = document.querySelector('.form-check')
+  const passwordNode = document.getElementById('password')
+  const confirmedPasswordNode = document.getElementById('confirmedPassword')
+  const agree = document.getElementById('agree')
+  const arrayValidate = [
+    isInvalid(emailNode, [isRequired, isEmail]),
+    isInvalid(nameNode, [isRequired, isName, max(50)]),
+    isInvalid(sexNode, [isRequired]),
+    isInvalid(nationNode, [isRequired], formCheck),
+    isInvalid(passwordNode, [isRequired, min(8), max(20)]),
+    isInvalid(confirmedPasswordNode, [isRequired, min(8), max(20)]),
+    isInvalid(agree, [isRequired]),
+    isInvalidCompare(passwordNode, confirmedPasswordNode, [isSame('Nhập lại mật khẩu', 'mật khẩu')])
+  ]
+  const isValidForm = arrayValidate.every((item) => !item)
+  if (isValidForm) {
+    console.log('form valid')
+  }
+})

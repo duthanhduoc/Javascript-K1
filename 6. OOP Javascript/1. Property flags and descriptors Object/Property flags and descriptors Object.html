@@ -468,7 +468,7 @@ user.name = <span class="hljs-string">'Pete'</span> <span class="hljs-comment">/
 <pre class="hljs"><code><div>alert(<span class="hljs-built_in">Object</span>.keys(user)) <span class="hljs-comment">// name</span>
 </div></code></pre>
 <h2 id="non-configurable---kh%C3%B4ng-th%E1%BB%83-c%E1%BA%A5u-h%C3%ACnh">Non-configurable - Không thể cấu hình</h2>
-<p>Ý tưởng của <code>configurable: false</code> là để ngăn chặn thay đổi cờ thuộc tính và xóa thuộc tính, trong khi đó bạn vẫn có thể thay đổi value của thuộc tính
+<p>Ý tưởng của <code>configurable: false</code> là để ngăn chặn thay đổi cờ thuộc tính và xóa thuộc tính, trong khi đó bạn vẫn có thể thay đổi value của thuộc tính.
 Cờ non-configurable (<code>configurable:false</code>) thỉnh thoảng được set mặc định trong các Object xây dựng sẵn.
 Ví dụ <code>Math.PI</code> thì non-writable, non-enumerable, non-configurable</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">let</span> descriptor = <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptor(<span class="hljs-built_in">Math</span>, <span class="hljs-string">'PI'</span>);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Regex Shorthand character classes.md</title>
+<title>Property getters and setters Object.md</title>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
 
 <style>
@@ -365,52 +365,85 @@ code {
           : 'default'
     });
   </script>
-<h1 id="regex-shorthand-character-classes">Regex Shorthand character classes</h1>
-<p>Cú pháp rút gọn trong Regex</p>
-<p>Khớp 1 chữ cái, số hoặc <code>_</code></p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\w/</span>
-regex.test(<span class="hljs-string">'Hello 2021'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'!hi'</span>) <span class="hljs-comment">// true</span>
+<h1 id="property-getters-and-setters">Property getters and setters</h1>
+<p>Có 2 loại thuộc tính object:</p>
+<ul>
+<li>Đầu tiên là thuộc tính dữ liệu. Chúng ta điều biết cách làm việc với chúng, 99% những thuộc tính chúng ta làm việc là thuộc tính dữ liệu</li>
+<li>Loại thứ 2 là thuộc tính bộ truy cập (accessor properties). Chúng là những function đặc biệt thực thi khi get và set một giá trị.</li>
+</ul>
+<h2 id="getter-v%C3%A0-setter">Getter và setter</h2>
+<p>Phương thức Getter, setter được coi là thuộc tính bộ truy cập</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> user = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">surname</span>: <span class="hljs-string">'Smith'</span>,
+
+  <span class="hljs-keyword">get</span> fullName() {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> <span class="hljs-subst">${<span class="hljs-keyword">this</span>.surname}</span>`</span>
+  },
+
+  <span class="hljs-keyword">set</span> fullName(value) {
+    ;[<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.surname] = value.split(<span class="hljs-string">' '</span>)
+  }
+}
+
+<span class="hljs-comment">// set fullName được thực thi với giá trị được gán phía dưới</span>
+user.fullName = <span class="hljs-string">'Alice Cooper'</span>
+
+alert(user.name) <span class="hljs-comment">// Alice</span>
+alert(user.surname) <span class="hljs-comment">// Cooper</span>
 </div></code></pre>
-<p>Khớp 1 hoặc nhiều chữ cái, số, hoặc <code>_</code>
-Tên gọi có thể khác nhưng nhìn chung thì tác dụng tương tự cái trên</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\w+/</span>
-regex.test(<span class="hljs-string">'Hello 2021'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'!hi'</span>) <span class="hljs-comment">// true</span>
+<p>Và bây giờ ta có một thuộc tính &quot;ảo&quot; là <code>fullName</code>. Nó có thể đọc và viết</p>
+<h2 id="accessor-descriptors---b%E1%BB%99-m%C3%B4-t%E1%BA%A3-c%E1%BB%A7a-b%E1%BB%99-truy-c%E1%BA%ADp">Accessor descriptors - Bộ mô tả của bộ truy cập</h2>
+<p>Bộ mô tả cho thuộc tính bộ truy cập thì khác một chút so với thuộc tính dữ liệu
+Với thuộc tính bộ truy cập, nó không có <code>value</code> và <code>writable</code>, nhưng lại có thêm <code>get</code> và <code>set</code> function.
+Đây là những gì mà một bộ mô tả của bộ truy cập có</p>
+<ul>
+<li>get: một function mà không co tham số, nó hoạt động khi thuộc tính được đọc</li>
+<li>set: một function mà có một tham số, nó được gọi khi thuộc tính được set</li>
+<li>enumerable: tương tự thuộc tính dữ liệu</li>
+<li>configurable: tương tự thuộc tính dữ liệu</li>
+</ul>
+<p>Với một object được tạo sẵn, chúng ta có thể tạo getter và setter thông qua <code>defineProperty</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> user = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">surname</span>: <span class="hljs-string">'Smith'</span>
+}
+
+<span class="hljs-built_in">Object</span>.defineProperty(user, <span class="hljs-string">'fullName'</span>, {
+  <span class="hljs-keyword">get</span>() {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> <span class="hljs-subst">${<span class="hljs-keyword">this</span>.surname}</span>`</span>
+  },
+
+  <span class="hljs-keyword">set</span>(value) {
+    ;[<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.surname] = value.split(<span class="hljs-string">' '</span>)
+  }
+})
+
+alert(user.fullName) <span class="hljs-comment">// John Smith</span>
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> user) alert(key) <span class="hljs-comment">// name, surname</span>
 </div></code></pre>
-<p>Khớp với không phải là chữ cái, số hoặc <code>_</code></p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\W/</span>
-regex.test(<span class="hljs-string">'~'</span>) <span class="hljs-comment">// true</span>
-regex.test(<span class="hljs-string">'he'</span>) <span class="hljs-comment">// false</span>
+<h2 id="getterssetters-th%C3%B4ng-minh">getters/setters thông minh</h2>
+<p>Nếu chúng ta muốn cấm đặt một cái tên quá dài cho <code>user</code>, chúng ta có thể dùng cách này</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> user = {
+  <span class="hljs-keyword">get</span> name() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._name
+  },
+  <span class="hljs-keyword">set</span> name(value) {
+    <span class="hljs-keyword">if</span> (value.length &lt; <span class="hljs-number">4</span>) {
+      alert(<span class="hljs-string">'Name is too short, need at least 4 characters'</span>)
+      <span class="hljs-keyword">return</span>
+    }
+    <span class="hljs-keyword">this</span>._name = value
+  }
+}
+
+user.name = <span class="hljs-string">'Pete'</span>
+alert(user.name) <span class="hljs-comment">// Pete</span>
+
+user.name = <span class="hljs-string">''</span> <span class="hljs-comment">// Name is too short...</span>
 </div></code></pre>
-<p>Khớp 1 số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\d/</span>
-</div></code></pre>
-<p>Khớp 1 hoặc nhiều số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\d+/</span>
-</div></code></pre>
-<p>Khớp không phải là số</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\D/</span>
-</div></code></pre>
-<p>Khớp với dấu cách</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\s/</span>
-</div></code></pre>
-<p>Khớp với không phải dấu cách</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/\S/</span>
-</div></code></pre>
-<p>Khớp nếu b theo ngay sau a</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/a(?=b)/</span>
-regex.test(<span class="hljs-string">'hi abc'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp nếu không phải b ngay sau a</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/a(?!b)/</span>
-regex.test(<span class="hljs-string">'hi acb'</span>) <span class="hljs-comment">// true</span>
-</div></code></pre>
-<p>Khớp nếu chuỗi <code>an</code> là ký tự biên
-Ký tự biên là ký tự mà nằm giữa ký tự từ và không phải ký tự từ hoặc giữa 2 ký tự không phải là ký tự từ</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">const</span> regex = <span class="hljs-regexp">/an\b/i</span>
-regex.test(<span class="hljs-string">'han yeu anh khong'</span>) <span class="hljs-comment">// true, Khớp tại từ han</span>
-</div></code></pre>
+<p>Vậy nên tên sẽ được lưu trữ trong thuộc tính <code>_name</code>, và truy cập nó thông qua getter và setter</p>
 
 </body>
 </html>
