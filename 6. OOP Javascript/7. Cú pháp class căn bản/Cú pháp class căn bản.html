@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cú pháp class căn bản.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="c%C3%BA-ph%C3%A1p-class-c%C4%83n-b%E1%BA%A3n">Cú pháp class căn bản</h1>
+<p>Chúng ta đã được học về constructor function, giúp chúng ta tạo được nhiều object cùng một loại như user, car,... Nhưng hôm nay, chúng ta có một cú pháp mới hơn, nhiều tính năng hơn đó là class</p>
+<h2 id="c%C3%BA-ph%C3%A1p-class">Cú pháp class</h2>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+  <span class="hljs-comment">// class methods</span>
+  <span class="hljs-keyword">constructor</span>() { ... }
+  method1() { ... }
+  method2() { ... }
+  method3() { ... }
+  ...
+}
+</div></code></pre>
+<p>Sau đó sử dụng <code>new MyClass()</code> để tạo một object mới với tất cả phương thức được liệt kê.
+Phương thức <code>constructor()</code> được gọi tự động bằng <code>new</code>, vì thế chúng ta có thể khởi tạo object ngay tại đây.</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.name = name
+  }
+
+  sayHi() {
+    alert(<span class="hljs-keyword">this</span>.name)
+  }
+}
+
+<span class="hljs-comment">// Usage:</span>
+<span class="hljs-keyword">let</span> user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'John'</span>)
+user.sayHi()
+</div></code></pre>
+<p>Khi <code>new User(&quot;John&quot;)</code> được gọi:</p>
+<ol>
+<li>Một object mới được tạo</li>
+<li><code>constructor</code> chạy với tham số được đưa vào và gán <code>this.name</code> vào nó.</li>
+</ol>
+<p>Sau đó chúng ta có thể gọi tất cả các phương thức như là <code>user.sayHi()</code></p>
+<p>Lưu ý: Không có dấu phẩy giữa các phương thức (method)</p>
+<h2 id="class-l%C3%A0-g%C3%AC">Class là gì?</h2>
+<p>Vậy chính xác thì <code>class</code> là gì?</p>
+<p>Trong Javascript, class là một loại function</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.name = name
+  }
+  sayHi() {
+    alert(<span class="hljs-keyword">this</span>.name)
+  }
+}
+
+<span class="hljs-comment">// class is a function</span>
+alert(<span class="hljs-keyword">typeof</span> User) <span class="hljs-comment">// function</span>
+
+<span class="hljs-comment">// ...or, more precisely, the constructor method</span>
+alert(User === User.prototype.constructor) <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// The methods are in User.prototype, e.g:</span>
+alert(User.prototype.sayHi) <span class="hljs-comment">// alert(this.name);</span>
+
+<span class="hljs-comment">// there are exactly two methods in the prototype</span>
+alert(<span class="hljs-built_in">Object</span>.getOwnPropertyNames(User.prototype)) <span class="hljs-comment">// constructor, sa</span>
+</div></code></pre>
+<h2 id="kh%C3%B4ng-ch%E1%BB%89-l%C3%A0-m%E1%BB%99t-syntactic-sugar">Không chỉ là một syntactic sugar</h2>
+<p>Thỉnh thoảng một số người nói rằng <code>class</code> là một &quot;syntactic sugar&quot; (cú pháp mà được thiết kế để làm mọi thử dễ đọc hơn chứ không giới thiệu tính năng gì mới), bởi vì chúng ta có thể khai báo y hệt mà không dùng từ khóa <code>class</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// viết lại class User bằng function cơ bản</span>
+
+<span class="hljs-comment">// 1. Tạo constructor function</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">User</span>(<span class="hljs-params">name</span>) </span>{
+  <span class="hljs-keyword">this</span>.name = name
+}
+<span class="hljs-comment">// Một function prototype mặc định có thuộc tính "constructor",</span>
+<span class="hljs-comment">// Vậy nên không cần tạo nó</span>
+
+<span class="hljs-comment">// 2. Thêm phương thức vào prototype</span>
+User.prototype.sayHi = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  alert(<span class="hljs-keyword">this</span>.name)
+}
+
+<span class="hljs-comment">// Sử dụng:</span>
+<span class="hljs-keyword">let</span> user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'John'</span>)
+user.sayHi()
+</div></code></pre>
+<p>Kết quả tương tự với class.
+Nhưng vẫn có một số điểm khác biệt:</p>
+<ol>
+<li>Đầu tiên, một function được tạo bởi <code>class</code> thì được gắn nhãn như là một function đặc biệt, nó chỉ được gọi bằng <code>new</code></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {}
+}
+
+alert(<span class="hljs-keyword">typeof</span> User) <span class="hljs-comment">// function</span>
+User() <span class="hljs-comment">// Error: Class constructor User cannot be invoked without 'new'</span>
+</div></code></pre>
+<p>Cũng như chuỗi đại diện cho một class constructor trong hầu hết JS engine bắt đầu là &quot;class...&quot;</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {}
+}
+
+alert(User) <span class="hljs-comment">// class User { ... }</span>
+</div></code></pre>
+<ol start="2">
+<li>
+<p>Các phương thức class thì non-enumerable (không liệt kê). Một class set cờ <code>enumerable</code> là <code>false</code> cho tất cả phương thức trong <code>&quot;prototype&quot;</code>. Điều này là tốt vì nếu <code>for...in</code> qua một object, chúng ta thường không muốn nó lặp qua các phương thức class.</p>
+</li>
+<li>
+<p>Các class luôn luôn <code>use strict</code>. Tất cả code bên trong class thì tự động ở chế độ strict mode.</p>
+</li>
+</ol>
+<p>Bên cạnh đó, cú pháp <code>class</code> mang đến nhiều tính năng khác mà chúng ta sẽ khám phá sau.</p>
+<h2 id="class-expression">Class Expression</h2>
+<p>Giống như function, class cũng có thể được khai báo như thế này.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> User = <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{
+  sayHi() {
+    alert(<span class="hljs-string">'Hello'</span>)
+  }
+}
+</div></code></pre>
+<p>Nếu một class expression có một tên, nó chỉ hiện bên trong class</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// "Named Class Expression"</span>
+<span class="hljs-comment">// (no such term in the spec, but that's similar to Named Function Expression)</span>
+<span class="hljs-keyword">let</span> User = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+  sayHi() {
+    alert(MyClass) <span class="hljs-comment">// MyClass name is visible only inside the class</span>
+  }
+}
+
+<span class="hljs-keyword">new</span> User().sayHi() <span class="hljs-comment">// works, shows MyClass definition</span>
+
+alert(MyClass) <span class="hljs-comment">// error, MyClass name isn't visible outside of the class</span>
+</div></code></pre>
+<p>Chúng ta có thể tạo class theo kiểu này</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeClass</span>(<span class="hljs-params">phrase</span>) </span>{
+  <span class="hljs-comment">// declare a class and return it</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{
+    sayHi() {
+      alert(phrase)
+    }
+  }
+}
+
+<span class="hljs-comment">// Create a new class</span>
+<span class="hljs-keyword">let</span> User = makeClass(<span class="hljs-string">'Hello'</span>)
+
+<span class="hljs-keyword">new</span> User().sayHi() <span class="hljs-comment">// Hello</span>
+</div></code></pre>
+<h2 id="gettersetter">Getter/setter</h2>
+<p>Giống như literal object, class cũng có getter/setter, thuộc tính computed</p>
+<p>Đây là ví dụ cho <code>user.name</code> được thực hiện bằng sử dụng <code>get/set</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-comment">// invokes the setter</span>
+    <span class="hljs-keyword">this</span>.name = name
+  }
+
+  <span class="hljs-keyword">get</span> name() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._name
+  }
+
+  <span class="hljs-keyword">set</span> name(value) {
+    <span class="hljs-keyword">if</span> (value.length &lt; <span class="hljs-number">4</span>) {
+      alert(<span class="hljs-string">'Name is too short.'</span>)
+      <span class="hljs-keyword">return</span>
+    }
+    <span class="hljs-keyword">this</span>._name = value
+  }
+}
+
+<span class="hljs-keyword">let</span> user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'John'</span>)
+alert(user.name) <span class="hljs-comment">// John</span>
+
+user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">''</span>) <span class="hljs-comment">// Name is too short.</span>
+</div></code></pre>
+<h2 id="computed-names">Computed names […]</h2>
+<p>Đây là một ví dụ với một tên phương thức computed sử dụng <code>[...]</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  [<span class="hljs-string">'say'</span> + <span class="hljs-string">'Hi'</span>]() {
+    alert(<span class="hljs-string">'Hello'</span>)
+  }
+}
+
+<span class="hljs-keyword">new</span> User().sayHi()
+</div></code></pre>
+<h2 id="class-fields---c%C3%A1c-tr%C6%B0%E1%BB%9Dng-trong-class">Class fields - Các trường trong class</h2>
+<p>Đây là một tính năng mới được thêm gần đây (các trình duyệt cũ có thể phải cần một polyfill)</p>
+<p>Trước đó thì các class của chúng ta chỉ có các phương thức, class fields cho phép chúng ta thêm bất kỳ thuộc tính.</p>
+<p>Ví dụ, thêm thuộc tính <code>firstName</code> vào <code>class User</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  firstName = <span class="hljs-string">'John'</span>
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">this</span>.age = <span class="hljs-number">24</span>
+    <span class="hljs-keyword">this</span>.name = <span class="hljs-string">'Alan'</span>
+  }
+  sayHi() {
+    alert(<span class="hljs-string">`Hello, <span class="hljs-subst">${<span class="hljs-keyword">this</span>.firstName}</span>!`</span>)
+  }
+}
+<span class="hljs-keyword">new</span> User().sayHi() <span class="hljs-comment">// Hello, John!</span>
+</div></code></pre>
+<p>Vậy nên chúng ta chỉ cần khai báo &quot;=&quot;, thế là xong.
+Điều quan trọng là các class field chỉ được set trên cá nhân của object, không phải <code>User.prototype</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  name = <span class="hljs-string">'John'</span>
+}
+
+<span class="hljs-keyword">let</span> user = <span class="hljs-keyword">new</span> User()
+alert(user.name) <span class="hljs-comment">// John</span>
+alert(User.prototype.name) <span class="hljs-comment">// undefined</span>
+</div></code></pre>
+<h2 id="c%E1%BA%A3nh-gi%C3%A1c-v%E1%BB%9Bi-this-trong-class">Cảnh giác với this trong class</h2>
+<p>Như chúng ta được biết thì <code>this</code> phụ thuộc vào ngữ cảnh được gọi. Vậy nên đoạn code dưới đây sẽ show <code>undefined</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Button</span> </span>{
+  <span class="hljs-keyword">constructor</span>(value) {
+    <span class="hljs-keyword">this</span>.value = value
+  }
+
+  click() {
+    alert(<span class="hljs-keyword">this</span>.value)
+  }
+}
+
+<span class="hljs-keyword">let</span> button = <span class="hljs-keyword">new</span> Button(<span class="hljs-string">'hello'</span>)
+
+setTimeout(button.click, <span class="hljs-number">1000</span>) <span class="hljs-comment">// undefined</span>
+</div></code></pre>
+<p>Vấn đề là chúng ta bị mất <code>this</code>.
+Có 2 cách tiếp cận để fix điều này (như đã mô tả trong <a href="https://javascript.info/bind">Function binding</a>):</p>
+<ol>
+<li>Truyền vào một wrapper function, như là <code>setTimeout(() =&gt; button.click(), 1000)</code></li>
+<li>Bind một phương thức vào object, ví dụ trong constructor.</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Button</span> </span>{
+  <span class="hljs-keyword">constructor</span>(value) {
+    <span class="hljs-keyword">this</span>.value = value
+    <span class="hljs-keyword">this</span>.click = <span class="hljs-keyword">this</span>.click.bind(<span class="hljs-keyword">this</span>)
+  }
+
+  click() {
+    alert(<span class="hljs-keyword">this</span>.value)
+  }
+}
+
+<span class="hljs-keyword">let</span> button = <span class="hljs-keyword">new</span> Button(<span class="hljs-string">'hello'</span>)
+
+setTimeout(button.click, <span class="hljs-number">1000</span>) <span class="hljs-comment">// undefined</span>
+</div></code></pre>
+<p>Class fields cung cấp chúng ta một cách khác, khá dễ dàng:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Button</span> </span>{
+  <span class="hljs-keyword">constructor</span>(value) {
+    <span class="hljs-keyword">this</span>.value = value
+  }
+  click = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    alert(<span class="hljs-keyword">this</span>.value)
+  }
+}
+
+<span class="hljs-keyword">let</span> button = <span class="hljs-keyword">new</span> Button(<span class="hljs-string">'hello'</span>)
+
+setTimeout(button.click, <span class="hljs-number">1000</span>) <span class="hljs-comment">// hello</span>
+</div></code></pre>
+<p>Class field <code>click = () =&gt; {...}</code> được tạo trên mỗi object, nó là một function riêng biệt trên mỗi <code>Button</code> object với <code>this</code> bên trong tham chiếu đến object đó. Chúng ta có thể truyền <code>button.click</code> bất kỳ đâu mà không cần lo lắng về <code>this</code>, vì nó luôn đúng.</p>
+<p>Đây là một cách rất hữu hiệu trong môi trường trình duyệt, ví dụ lắng nghe các sự kiện.</p>
+<h2 id="t%C3%B3m-l%E1%BA%A1i">Tóm lại</h2>
+<p>Cú pháp class cơ bản như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> </span>{
+  prop = value; <span class="hljs-comment">// property</span>
+
+  <span class="hljs-keyword">constructor</span>(...) { <span class="hljs-comment">// constructor</span>
+    <span class="hljs-comment">// ...</span>
+  }
+
+  method(...) {} <span class="hljs-comment">// method</span>
+
+  <span class="hljs-keyword">get</span> something(...) {} <span class="hljs-comment">// getter method</span>
+  <span class="hljs-keyword">set</span> something(...) {} <span class="hljs-comment">// setter method</span>
+
+  [<span class="hljs-built_in">Symbol</span>.iterator]() {} <span class="hljs-comment">// method with computed name</span>
+  <span class="hljs-comment">// ...</span>
+}
+</div></code></pre>
+<p>Về mặt kỹ thuật, <code>MyClass</code> là một function (hàm mà chúng ta cung cấp dưới dạng constructor function), trong khi các phương thức, getter/setter được viết ở Myclass.prototype</p>
+<p>Trong chương tiếp theo chúng ta sẽ học thêm về class, bao gồm kế thừa và các tính năng khác.</p>
+
+</body>
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Thuộc tính phương thức private và protected.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="thu%E1%BB%99c-t%C3%ADnh-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-private-v%C3%A0-protected">Thuộc tính phương thức private và protected</h1>
+<p>Một trong những nguyên tắc quan trọng trong lập trình hướng đối tượng - phân chia rõ ràng giữa giao diện (khả năng truy cập) bên ngoài và trong.</p>
+<h2 id="interal-and-external-interface">Interal and external interface</h2>
+<p>Trong lập trình hướng đối tượng, thuộc tính và phương thức được chia thành 2 nhóm:</p>
+<ul>
+<li>Internal interface - phương thức và thuộc tính chỉ có thể được truy cập bên trong các phương thức trong class, không phải từ bên ngoài.</li>
+<li>External interface - phương thức và thuộc tính có thể truy cập được từ ngoài và trong class.</li>
+</ul>
+<p>Trong Javascript, có 2 loại thuộc tính và phương thức:</p>
+<ul>
+<li>Public: có thể truy cập từ bất kỳ đâu. Nghĩa là external interface. Cho đến bây giờ thì chúng ta chỉ sử dụng thuộc tính public</li>
+<li>Private: có thể truy cập bên trong class. Nghĩa là internal interface</li>
+</ul>
+<p>Trong nhiều ngôn ngữ khác thì còn tồn tại trường &quot;protected&quot;: chỉ có thể truy cập bên trong class và những class kế thừa.</p>
+<p>Trường Protected không được quy định trong Javascript ở cấp độ ngôn ngữ, những trong thực tế để cho tiện lợi thì chúng ta có thể giả lập để quy ước với nhau.</p>
+<h2 id="protected">Protected</h2>
+<p>Điều này không được đảm bảo về cấp độ ngôn ngữ, nhưng giữa các lập trình viên thống nhất với nhau. Các thuộc tính protected thì thường bắt đầu với tiền tố là <code>_</code></p>
+<p>Ví dụ ở đây ta có thuộc tính protected là <code>_waterAmount</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  _waterAmount = <span class="hljs-number">0</span>
+
+  <span class="hljs-keyword">set</span> waterAmount(value) {
+    <span class="hljs-keyword">if</span> (value &lt; <span class="hljs-number">0</span>) {
+      value = <span class="hljs-number">0</span>
+    }
+    <span class="hljs-keyword">this</span>._waterAmount = value
+  }
+
+  <span class="hljs-keyword">get</span> waterAmount() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._waterAmount
+  }
+
+  <span class="hljs-keyword">constructor</span>(power) {
+    <span class="hljs-keyword">this</span>._power = power
+  }
+}
+
+<span class="hljs-comment">// create the coffee machine</span>
+<span class="hljs-keyword">let</span> coffeeMachine = <span class="hljs-keyword">new</span> CoffeeMachine(<span class="hljs-number">100</span>)
+
+<span class="hljs-comment">// add water</span>
+coffeeMachine.waterAmount = <span class="hljs-number">-10</span> <span class="hljs-comment">// Error: Negative water</span>
+</div></code></pre>
+<p>Chúng ta truy cập thông qua getter/setter. Đồng thời có thể thêm điều kiện khi setter</p>
+<h2 id="readonly">Readonly</h2>
+<p>Chúng ta tạo thuộc tính <code>power</code> là read-only tức là chỉ có thể get chứ không thể set.
+Lưu ý: điều này cũng không được đảm bảo về mặt ngôn ngữ</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  <span class="hljs-comment">// ...</span>
+
+  <span class="hljs-keyword">constructor</span>(power) {
+    <span class="hljs-keyword">this</span>._power = power
+  }
+
+  <span class="hljs-keyword">get</span> power() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._power
+  }
+}
+
+<span class="hljs-comment">// create the coffee machine</span>
+<span class="hljs-keyword">let</span> coffeeMachine = <span class="hljs-keyword">new</span> CoffeeMachine(<span class="hljs-number">100</span>)
+
+alert(<span class="hljs-string">`Power is: <span class="hljs-subst">${coffeeMachine.power}</span>W`</span>) <span class="hljs-comment">// Power is: 100W</span>
+
+coffeeMachine.power = <span class="hljs-number">25</span> <span class="hljs-comment">// Error (no setter)</span>
+</div></code></pre>
+<h3 id="gettersetter-functions">Getter/setter functions</h3>
+<p>Hầu hết mọi lần thì chúng ta thường thích dùng <code>get.../set...</code> hơn, như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  _waterAmount = <span class="hljs-number">0</span>
+
+  setWaterAmount(value) {
+    <span class="hljs-keyword">if</span> (value &lt; <span class="hljs-number">0</span>) value = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>._waterAmount = value
+  }
+
+  getWaterAmount() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._waterAmount
+  }
+}
+
+<span class="hljs-keyword">new</span> CoffeeMachine().setWaterAmount(<span class="hljs-number">100</span>)
+</div></code></pre>
+<p>Nó trông dài hơn những function thì đa năng hơn, bạn có thể truyền nhiều tham số.
+Cú pháp get/set thì ngắn hơn, như nó có quy tắc bị giới hạn bởi tham số truyền vào.</p>
+<h3 id="protected-fields-%C4%91%C6%B0%E1%BB%A3c-k%E1%BA%BF-th%E1%BB%ABa">Protected fields được kế thừa</h3>
+<p>Nếu chúng ta kế thừa <code>class MegaMachine extends CoffeeMachine</code>, thì không có gì có thể ngăn cản chúng ta truy cập <code>this._waterAmount</code> hoặc <code>this._power</code> từ các phương thức của class mới.</p>
+<p>Vì thế các trường protected thì có thể được thừa kế. Không như các trường private dưới đây.</p>
+<h2 id="private">Private</h2>
+<p>Tính năng này được thêm gần đây. Không được hổ trở bởi nhiều JS engine, vì thế cần polyfill</p>
+<p>Cuối cùng thì chúng ta cũng có một thuộc tính &quot;riêng tư&quot; được hổ trợ bởi chính ngôn ngữ JS.</p>
+<p>Private thì bắt đầu bằng <code>#</code>. Nó chỉ có thể truy cập bên trong class.</p>
+<p>Ví dụ thuộc tính private <code>#waterLimit</code> và phương thức private <code>#checkWater</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  #waterLimit = <span class="hljs-number">200</span>
+
+  #fixWaterAmount(value) {
+    <span class="hljs-keyword">if</span> (value &lt; <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">if</span> (value &gt; <span class="hljs-keyword">this</span>.#waterLimit) <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.#waterLimit
+  }
+
+  setWaterAmount(value) {
+    <span class="hljs-keyword">this</span>.#waterLimit = <span class="hljs-keyword">this</span>.#fixWaterAmount(value)
+  }
+}
+
+<span class="hljs-keyword">let</span> coffeeMachine = <span class="hljs-keyword">new</span> CoffeeMachine()
+
+<span class="hljs-comment">// can't access privates from outside of the class</span>
+coffeeMachine.#fixWaterAmount(<span class="hljs-number">123</span>) <span class="hljs-comment">// Error</span>
+coffeeMachine.#waterLimit = <span class="hljs-number">1000</span> <span class="hljs-comment">// Error</span>
+</div></code></pre>
+<p>Các trường private thì không bị xung đột với các trường public. Chúng ta có thể khai báo private <code>#waterAmount</code> và public <code>waterAmount</code> cùng 1 lúc.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  #waterAmount = <span class="hljs-number">0</span>
+
+  <span class="hljs-keyword">get</span> waterAmount() {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.#waterAmount
+  }
+
+  <span class="hljs-keyword">set</span> waterAmount(value) {
+    <span class="hljs-keyword">if</span> (value &lt; <span class="hljs-number">0</span>) value = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.#waterAmount = value
+  }
+}
+
+<span class="hljs-keyword">let</span> machine = <span class="hljs-keyword">new</span> CoffeeMachine()
+
+machine.waterAmount = <span class="hljs-number">100</span>
+alert(machine.#waterAmount) <span class="hljs-comment">// Error</span>
+</div></code></pre>
+<p>Không như các trường protected, private fields được đảm bảo về mặt ngôn ngữ.
+Nếu chúng ta kế thừa từ <code>CoffeeMachine</code>, thì chúng ta sẽ không truy cập được vào <code>#waterAmount</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MegaCoffeeMachine</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">CoffeeMachine</span> </span>{
+  method() {
+    alert(<span class="hljs-keyword">this</span>.#waterAmount) <span class="hljs-comment">// Error: can only access from CoffeeMachine</span>
+  }
+}
+</div></code></pre>
+<p>Lưu ý: bình thường chúng ta có thể truy cập vào các thuộc field dạng <code>this[name]</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  ...
+  sayHi() {
+    <span class="hljs-keyword">let</span> fieldName = <span class="hljs-string">"name"</span>;
+    alert(<span class="hljs-string">`Hello, <span class="hljs-subst">${<span class="hljs-keyword">this</span>[fieldName]}</span>`</span>);
+  }
+}
+</div></code></pre>
+<p>Với các trường private thì không thể: <code>this['#name']</code> sẽ không hoạt động.</p>
+
+</body>
+</html>

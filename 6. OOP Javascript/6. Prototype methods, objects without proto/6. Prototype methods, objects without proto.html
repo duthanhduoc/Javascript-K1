@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>6. Prototype methods, objects without proto.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="prototype-methods-objects-without-proto">Prototype methods, objects without <strong>proto</strong></h1>
+<p>Trong bài đầu của chương này, chúng ta đã đề cập đến các phương thức hiện đại để setyp một prototype.</p>
+<p><code>__proto__</code> được cho là đã bị loại bỏ (chỉ các trình duyệt còn dữ lại)</p>
+<p>Các phương thức hiện đại đó là:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create(proto, [descriptors])</a> - Tạo một object rỗng với việc cung cấp <code>proto</code> như <code>[[Prototype]]</code> và tùy chọn là các bộ mô tả thuộc tính (property descriptors)</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf(obj)</a> - return về <code>[[Prototype]]</code> của <code>obj</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf">Object.setPrototypeOf(obj, proto)</a> - set <code>[[Prototype]]</code> của <code>obj</code> thành <code>proto</code></li>
+</ul>
+<p>Chúng nên được sử dụng thay vì <code>__proto__</code>
+Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-comment">// Tạo một object mới với animal như một prototype</span>
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-built_in">Object</span>.create(animal)
+
+<span class="hljs-built_in">console</span>.log(rabbit.eats) <span class="hljs-comment">// true</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.getPrototypeOf(rabbit) === animal) <span class="hljs-comment">// true</span>
+
+<span class="hljs-built_in">Object</span>.setPrototypeOf(rabbit, {}) <span class="hljs-comment">// thay đổi prototype của rabbit thành {}</span>
+</div></code></pre>
+<p><code>Object.create</code> có một tham số tùy chọn thứ hai là: bộ mô tả thuộc tính. Chúng ta có thể cung cấp thêm các thuộc tính cho object như thế này:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-built_in">Object</span>.create(animal, {
+  <span class="hljs-attr">jumps</span>: {
+    <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span>
+  }
+})
+
+<span class="hljs-built_in">console</span>.log(rabbit.jumps) <span class="hljs-comment">// true</span>
+</div></code></pre>
+<p>Các bộ mô tả thì có cùng cấu trúc như đã mô tả ở bài 1.
+Chúng ta có thể sử dụng <code>Object.create</code> để tạo một object clone thay vì dùng <code>for...in</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> clone = <span class="hljs-built_in">Object</span>.create(
+  <span class="hljs-built_in">Object</span>.getPrototypeOf(obj),
+  <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptors(obj)
+)
+</div></code></pre>
+<p>Điều này có thể copy chính xác một <code>obj</code>, bao gồm tất cả thuộc tính: có thể liệt kê và không liệt kê, thuộc tính dữ liệu và setter/getter - mọi thứ, và với chính xác <code>[[Prototype]]</code></p>
+<h2 id="t%C3%B3m-t%E1%BA%AFt-l%E1%BB%8Bch-s%E1%BB%AD">Tóm tắt lịch sử</h2>
+<p>Như đã thấy thì chúng ta có nhiều cách để quản lý <code>[[Prototype]]</code>. Nhiều cách để làm cùng 1 thứ.
+Tại sao?
+Sau đây là nguyên nhân lịch sử</p>
+<ul>
+<li>Thuộc tính <code>prototype</code> của constructor function đã có từ xa xưa</li>
+<li>Sau đó, vào năm 2012, <code>Object.create</code> xuất hiện trong JS tiêu chuẩn. Nó cung cấp khả năng tạo một object với một prototype được cung cấp, nhưng không cung cấp khả năng get/set nó. Vì thế các trình duyệt thêm một thuộc tính &quot;không thuộc JS tiêu chuẩn&quot; là <code>__proto__</code> để cho phép người dùng có thể get/set một prototype bất cứ lúc nào.</li>
+<li>Sau đó, vào năm 2015, <code>Object.setPrototypeOf</code> và Object.getProtypeOf<code>được thêm vào JS tiêu chuẩn, để thực hiện chức năng tương tự như</code><strong>proto</strong>`.</li>
+</ul>
+<p>Tại sao <code>__proto__</code> bị thay thế bởi các hàm <code>getPrototypeOf/setPrototypeOf</code>? Đây là một câu hỏi thú vị, đòi hỏi chúng ta phải hiểu tại sao <code>__proto__</code> khá tệ. Đọc thêm để biết câu trả lời.</p>
+<p><strong>Đừng thay đổi <code>[[Prototype]]</code> trên các object đang tồn tại nếu quan tâm đến vấn đề tốc độ</strong>
+Về mặt kỹ thuật, chúng ta có thể get/set <code>[[Prototype]]</code> bất kỳ lúc nào. Nhưng thường thì chúng ta chỉ set một lần khi object khởi tạo và không thay đổi nó nữa: <code>rabbit</code> kế thừa từ <code>animal</code>, và nó sẽ không thay đổi.</p>
+<p>Và các Javascript engine được tối ưu hóa cao cho việc này. Thay đổi một prototype &quot;đang hoạt động&quot; với <code>Object.setPrototypeOf</code> hoặc <code>obj.__proto__=</code> là một phép tất rất chậm bởi vì nó phá vỡ sự tối ưu hóa nội bộ cho các hoạt động truy cập đến thuộc tính object. Vì thế tránh sử dụng nó nếu bạn không biết nó làm gì, hoặc tốc độ Javasript không phải là vấn đề bạn quan tâm.</p>
+<h2 id="%22very-plain%22-objects---c%C3%A1c-object-r%E1%BA%A5t-%C4%91%C6%A1n-gi%E1%BA%A3n">&quot;Very plain&quot; objects - Các Object rất đơn giản</h2>
+<p>Như chúng ta đã biết, các object có thể được sử dụng để lưu trữ các cặp key/value
+Nhưng nếu chúng ta cố tình lưu trữ một key do người dùng cung cấp (ví dụ người dùng nhập), chúng ta sẽ thấy một điều thú vị là: tất cả các key đều hoạt động tốt ngoại trừ <code>&quot;__proto__&quot;</code>.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {}
+
+<span class="hljs-keyword">let</span> key = prompt(<span class="hljs-string">"What's the key?"</span>, <span class="hljs-string">'__proto__'</span>)
+obj[key] = <span class="hljs-string">'some value'</span>
+alert(obj[key]) <span class="hljs-comment">// [object Object], không phải là "some value"!</span>
+</div></code></pre>
+<p>Ở đây, nếu người dùng nhập là <code>__proto__</code>, hành động gán ở trên sẽ bị bỏ qua.
+Điều này không làm chúng ta ngạc nhiên lắm. <code>__proto__</code> là một thuộc tính đặc biệt: nó nên là object hoặc <code>null</code>. Một string không thể trở thành một prototype.</p>
+<p>Giả sử chúng ta không có ý định set prototype của object. Chúng ta chỉ muốn lưu cặp key/value và key được đặt tên là <code>&quot;__proto__&quot;</code>. Vậy nên đây là bug!</p>
+<p>Trong ví dụ bên trên, hậu quả gây ra không nghiêm trọng lắm. Nhưng trong một số trường hợp khác, chúng ta có thể gán value cho object, và sau đó prototype có thể bị thay đổi. Kết quả là việc thực thí có thể bị sai theo cách không mong muốn.</p>
+<p>Điều tồi tệ hơn là các dev thường không nghĩ về khả năng này. Điều đó làm cho những lỗi như vậy khó nhận ra và thậm chí biến chúng thành các lỗ hổng bảo mật, đặt biệt là khi Javascript được sử dụng ở phía máy chủ.</p>
+<p>Làm thế nào để tránh vấn đề này?</p>
+<p>Đầu tiên, chúng ta chỉ cần chuyển qua sử dụng <code>Map</code> để lưu trữ thay vì một plain object, mọi thứ sẽ hoạt động tốt.</p>
+<p>Nhưng <code>Object</code> cũng có thể giúp được, vì các nhà sáng lập ngôn ngữ đã nghĩ đến trường hợp này từ lâu rồi.</p>
+<p><code>__proto__</code> không phải là một thuộc tính dữ liệu của object, nó là thuộc tính bộ truy cập của <code>Object.prototype</code>:</p>
+<p><img src="proto.PNG" alt="proto"></p>
+<p>Vì thế, nếu <code>obj.__proto__</code> được get hay set, tương ứng với việc getter/setter được gọi từ <code>[[Prototype]]</code></p>
+<p>Như đã nói ở đầu chương: <code>__proto__</code> là cách để truy cập vào <code>[[Prototype]]</code>, nó không phải là <code>[[Prototype]]</code></p>
+<p>Bây giờ, nếu chúng ta có ý định sử dụng một object mà không gặp vấn đề như trên, chúng ta có thể làm điều đó với một mẹo nhỏ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+
+<span class="hljs-keyword">let</span> key = prompt(<span class="hljs-string">"What's the key?"</span>, <span class="hljs-string">'__proto__'</span>)
+obj[key] = <span class="hljs-string">'some value'</span>
+
+alert(obj[key]) <span class="hljs-comment">// "some value"</span>
+</div></code></pre>
+<p><code>Object.create(null)</code> tạo một object trống mà không có prototype (<code>[[Prototype]]</code> là <code>null</code>)</p>
+<p>Vì thế, không có getter/setter <code>__proto__</code>. Bây giờ thì quá trình hoạt động bình thường/</p>
+<p>Chúng ta có thể gọi những object như này là &quot;very plain&quot; hoặc &quot;pure dictionnary&quot; object, bởi vì chúng còn đơn giản hơn một plain object <code>{...}</code></p>
+<p>Nhược điểm của các object như vậy là thiếu các phương thức có sẵn, ví dụ <code>toString</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+
+alert(obj) <span class="hljs-comment">// Error (no toString)</span>
+</div></code></pre>
+<p>Để ý rằng hầu hết các phương thức object liên quan kiểu <code>Object.something(...)</code> như <code>Object.keys(obj)</code> - Chúng thuộc về <code>Object</code> to bự, nên vẫn hoạt động bình thường.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> chineseDictionary = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+chineseDictionary.hello = <span class="hljs-string">'你好'</span>
+chineseDictionary.bye = <span class="hljs-string">'再见'</span>
+
+alert(<span class="hljs-built_in">Object</span>.keys(chineseDictionary)) <span class="hljs-comment">// hello,bye</span>
+</div></code></pre>
+<h2 id="t%C3%B3m-l%E1%BA%A1i">Tóm lại</h2>
+<p>Các phương thức hiện đại để setup và truy cập trực tiếp vào prototype là:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create(proto, [descriptors])</a> - Tạo một object rỗng với việc cung cấp <code>proto</code> như <code>[[Prototype]]</code> và tùy chọn là các bộ mô tả thuộc tính (property descriptors)</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf">Object.getPrototypeOf(obj)</a> - return về <code>[[Prototype]]</code> của <code>obj</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf">Object.setPrototypeOf(obj, proto)</a> - set <code>[[Prototype]]</code> của <code>obj</code> thành <code>proto</code></li>
+</ul>
+<p>getter/setter bằng <code>__proto__</code> thì không an toàn nếu chúng ta muốn người dùng tự tạo key cho object. Bởi vì nếu người dùng nhập <code>&quot;__proto__&quot;</code> như là key, và nó sẽ gây ra lỗi, và đôi khi sẽ gây ra các kết quả không mong muốn.</p>
+<p>Vì thế chúng ta có thể sử dụng <code>Object.create(null)</code> để tạo một &quot;very plain&quot; object mà không có <code>__proto__</code>, hoặc chuyển qua <code>Map</code> object.</p>
+<p>Cũng như <code>Object.create</code> cung cấp một cách dễ dàng để shallow-copy một object với tất cả descriptor (bộ mô tả)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> clone = <span class="hljs-built_in">Object</span>.create(
+  <span class="hljs-built_in">Object</span>.getPrototypeOf(obj),
+  <span class="hljs-built_in">Object</span>.getOwnPropertyDescriptors(obj)
+)
+</div></code></pre>
+<p>Chúng ta cũng cần rõ ràng là <code>__proto__</code> là getter/setter cho <code>[[Prototype]]</code> và nằm trong <code>Object.prototype</code>, như là các phương thức khác.</p>
+<p>Chúng ta có thể tạo một object mà không có prototype bằng cách <code>Object.create(null)</code>. Những object như vậy được sử dụng như là &quot;pure dictionaries&quot;, chúng không có vấn đề gì với key <code>&quot;__proto__&quot;</code>.</p>
+<p>Các phương thức khác:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">Object.keys(obj)</a> / <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values">Object.values(obj)</a> / <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">Object.entries(obj)</a> – Trả về một mảng về keys/values/cặp key-values (chỉ các thuộc tính có thể đếm)</li>
+</ul>
+<p>Tất cả các phương thức mà return về thuộc tính object (như <code>Object.keys</code> và một số khác) - chỉ return về thuộc tính của nó. Nếu chúng ta muốn các thuộc tính mà nó kế thừa, chúng ta có thể sử dụng <code>for...in</code></p>
+
+</body>
+</html>

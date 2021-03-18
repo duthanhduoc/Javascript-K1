@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Native prototypes.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="native-prototypes">Native Prototypes</h1>
+<p>Thuộc tính <code>&quot;prototype&quot;</code> được sử dụng rỗng rãi trong Javascript. Mọi constructor function có sẵn của JS đều sử dụng nó.</p>
+<h2 id="objectprototype">Object.prototype</h2>
+<p>Cùng nói về một object rỗng</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {}
+<span class="hljs-built_in">console</span>.log(obj.toString()) <span class="hljs-comment">// "[object Object]"</span>
+</div></code></pre>
+<p>Khoan đã! Chúng ta không hề thấy phương thức <code>toString</code> được khai báo trong <code>obj</code>. <code>obj</code> là object rỗng cơ mà.
+Đầu tiên là <code>obj={}</code> thì tương tự như <code>obj = new Object()</code>, mà <code>Object</code> là một constructor function được xây dựng sẵn trong JS. <code>Object</code> có thuộc tính <code>prototype</code> tham chiếu đến một object khổng lồ với nhiều phương thức và <code>toString</code> cũng nằm trong đó.</p>
+<p>Khi <code>new Object()</code> được gọi (hoặc literal object <code>{...}</code> được tạo), <code>[[Prototype]]</code> của nó sẽ được set là <code>Object.prototype</code></p>
+<p>Vì thế khi <code>obj.toString()</code> được gọi thì thực chất là lấy <code>toString()</code> từ <code>Object.prototype</code></p>
+<p>Chúng ta có thể kiểm tra</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {}
+
+alert(obj.__proto__ === <span class="hljs-built_in">Object</span>.prototype) <span class="hljs-comment">// true</span>
+
+alert(obj.toString === obj.__proto__.toString) <span class="hljs-comment">//true</span>
+alert(obj.toString === <span class="hljs-built_in">Object</span>.prototype.toString) <span class="hljs-comment">//true</span>
+</div></code></pre>
+<p>Có một lưu ý là không còn một <code>[[Prototype]]</code> nào trong chuỗi <code>Object.prototype</code> nữa</p>
+<pre class="hljs"><code><div>alert(<span class="hljs-built_in">Object</span>.prototype.__proto__) <span class="hljs-comment">// null</span>
+</div></code></pre>
+<h1 id="c%C3%A1c-prototype-%C4%91%C6%B0%E1%BB%A3c-d%E1%BB%B1ng-s%E1%BA%B5n-kh%C3%A1c">Các prototype được dựng sẵn khác</h1>
+<p>Các prototype được dựng sẵn khác như là <code>Array</code>, <code>Date</code>, <code>Function</code> và số khác cũng giữ trong mình các phương thức trong prototype.</p>
+<p>Khi chúng ta tạo một array <code>[1, 2, 3]</code>, mặc định <code>new Array()</code> sẽ được sử dụng. Vì thế <code>Array.prototype</code> sẽ trở thành prototype của nó và cung cấp các phương thức cho nó. Điều này vô cùng tiện lợi.</p>
+<p>Như mô tả thì tất cả các prototype được xây dựng sẵn đều có <code>Object.prototype</code> trên đỉnh. Đó là lý do tại sao một số người nói rắng <code>mọi thứ đều kế thừa từ object</code>.</p>
+<p>Đây là một bức tranh tổng thể (Ví dụ cho 3 prototype)</p>
+<p><img src="./object-prototype.PNG" alt="Object prototype"></p>
+<p>Cùng kiểm tra bằng tay</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+
+<span class="hljs-comment">// it inherits from Array.prototype?</span>
+alert(arr.__proto__ === <span class="hljs-built_in">Array</span>.prototype) <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// then from Object.prototype?</span>
+alert(arr.__proto__.__proto__ === <span class="hljs-built_in">Object</span>.prototype) <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// and null on the top.</span>
+alert(arr.__proto__.__proto__.__proto__) <span class="hljs-comment">// null</span>
+</div></code></pre>
+<p>Một số phương thức trong prototype có thể bị trùng nhau, ví dụ <code>Array.prototype</code> có <code>toString()</code>, nhưng <code>Object.prototype</code> cũng có <code>toString</code>. Trong trường hợp này thì nó sẽ chọn cái gần hơn.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]
+<span class="hljs-built_in">console</span>.log(arr.toString()) <span class="hljs-comment">// Kết quả của Array.prototype.toString</span>
+</div></code></pre>
+<h2 id="primitives---ki%E1%BB%83u-nguy%C3%AAn-th%E1%BB%A7y">Primitives - Kiểu nguyên thủy</h2>
+<p>Phần phức tạp nhất lại xảy ra với String, number, boolean.
+Như chúng ta biết thì chúng không phải là các object. Nhưng nếu chúng ta có thể truy cập đến các thuộc tính của chúng theo những cách dưới đây</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>
+a.toString()
+;(<span class="hljs-number">2</span>).toString()
+<span class="hljs-built_in">Number</span>(<span class="hljs-number">2</span>).toString() <span class="hljs-comment">// tạo bằng object wrapper</span>
+</div></code></pre>
+<p>Những object này được tạo ẩn và JS engine tối ưu chúng, vì thế ta vẫn có <code>String.prototype</code>, <code>Number.prototype</code> và <code>Boolean.prototype</code>.</p>
+<p>Có thể nói string, number, boolean là kiểu nguyên thủy, không phải object và không bị tham chiếu. Còn về bản chất thì chúng cũng là object.</p>
+<p>Lưu ý: <code>null</code> và <code>undefined</code> không có các object wrapper, chúng là những giá trị đặc biệt vì thế không có thuộc tính hay prototype.</p>
+<h2 id="thay-%C4%91%E1%BB%95i-prototype-s%C6%A1-khai">Thay đổi prototype sơ khai</h2>
+<p>Chúng ta có thể thay đổi prototype, nếu thêm phương thức <code>show</code> vào <code>String.prototype</code> thì tất cả các string đều có thể được dùng phương thức này.</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">String</span>.prototype.show = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  alert(<span class="hljs-keyword">this</span>)
+}
+
+<span class="hljs-string">'BOOM!'</span>.show() <span class="hljs-comment">// BOOM!</span>
+</div></code></pre>
+<p>Nhưng đây thường là một ý tưởng tồi tệ. Bởi vì các prototype như thế này là toàn cục (global), vậy nên nó dễ bị đè lên nhau. Nếu có 2 thư viện thêm phương thức <code>String.prototype.show</code>, thì sẽ có một phương thức bị đè lên và dẫn đến sai lệch.</p>
+<p>Trong lập trình hiện đại, chỉ có một trường hợp duy nhất mà chúng ta sửa đổi các prototype sơ khai là <strong>polyfilling</strong></p>
+<p>Polyfilling thực ra chỉ là một cách thêm các phương thức mà JS engine hiện tại không hỗ trợ.</p>
+<h2 id="m%C6%B0%E1%BB%A3n-t%E1%BB%AB-prototype">Mượn từ prototype</h2>
+<p>Ví dụ object <code>obj</code> không có phương thức <code>join</code>, ta có thể mượn nó từ <code>Array.prototype.join</code>. Sở dĩ <code>join</code> cũng hoạt động được trong object vì thuật toán bên trong phương thức <code>join</code> chỉ quan tâm đến các index đúng và thuộc tính <code>length</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {
+  <span class="hljs-number">0</span>: <span class="hljs-string">'Hello'</span>,
+  <span class="hljs-number">1</span>: <span class="hljs-string">'world!'</span>,
+  <span class="hljs-attr">length</span>: <span class="hljs-number">2</span>
+}
+
+obj.join = <span class="hljs-built_in">Array</span>.prototype.join
+
+alert(obj.join(<span class="hljs-string">','</span>)) <span class="hljs-comment">// Hello,world!</span>
+</div></code></pre>
+<p>Một cách tiếp cận khác là kế thừa bằng cách set <code>obj.__proto__</code> là <code>Array.prototype</code>, vì thế tất cả phương thức của <code>Array</code> tự động có sẵn ở <code>obj</code>.</p>
+<p>Có một điều lưu ý là chúng ta chỉ có thể kế thừa một object tại một thời điểm, trong trường hợp chúng ta kế thừa <code>Array.prototype</code> thì có thể bạn nghĩ chúng ta sẽ mất <code>Object.prototype</code> nhưng may thay thì <code>Array.prototype</code> kế thừa <code>Object.prototype</code> nên chúng ta không bị mất <code>Object.prototype</code>.</p>
+<p>Mượn thuộc tính thì khá linh hoạt, nó cho phép chúng ta thêm bớt các tính năng từ các object khác nhau nếu cần thiết.</p>
+
+</body>
+</html>

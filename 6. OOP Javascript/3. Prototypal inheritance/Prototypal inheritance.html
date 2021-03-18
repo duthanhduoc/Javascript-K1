@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prototypal inheritance.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="prototypal-inheritance">Prototypal inheritance</h1>
+<p>Trong lập trình, chúng ta thường muốn lấy cái gì đó và kế thừa nó.
+Ví dụ chúng ta có object <code>user</code> có vài thuộc tính và phương thức, chúng ta muốn tạo một object <code>admin</code> cũng có vài thuộc tính và phương thức như <code>user</code> mà không cần tạo mới lại chúng, vậy nên chúng ta kế thừa chúng.</p>
+<p>Prototypal inheritance (kế thừa nguyên mẫu) là tính năng giúp chúng ta làm được điều này.</p>
+<h2 id="prototype">[[Prototype]]</h2>
+<p>Trong Javascript, Object có một thuộc tính ẩn là gọi là <code>[[Prototype]]</code>(nó được giới thiệu như vậy). Dù bị ẩn nhưng chúng ta vẫn có nhiều cách để sử dụng nó.
+Một trong những cách đó là thông qua một getter/setter là <code>__proto__</code>.
+Ví dụ tạo object <code>rabbit</code> kế thừa thuộc object <code>animal</code></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>
+}
+<span class="hljs-keyword">let</span> rabbit = {
+  <span class="hljs-attr">jumps</span>: <span class="hljs-literal">true</span>
+}
+
+rabbit.__proto__ = animal <span class="hljs-comment">// // sets rabbit.[[Prototype]] = animal</span>
+
+alert(rabbit.eats) <span class="hljs-comment">// true</span>
+alert(rabbit.jumps) <span class="hljs-comment">// true</span>
+</div></code></pre>
+<p>Javascript Engine tìm thuộc tính <code>eat</code> trong <code>rabbit</code> nhưng không có, vì thế nó vào tìm trong <code>[[Prototype]]</code> của <code>rabbit</code>, bay giờ <code>[[Prototype]]</code> của <code>rabbit</code> là <code>animal</code>, vì thế nó lấy từ <code>animal</code></p>
+<p>Ví dụ về prototype chain</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>,
+  walk() {
+    alert(<span class="hljs-string">'Animal walk'</span>)
+  }
+}
+
+<span class="hljs-keyword">let</span> rabbit = {
+  <span class="hljs-attr">jumps</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">__proto__</span>: animal
+}
+
+<span class="hljs-keyword">let</span> longEar = {
+  <span class="hljs-attr">earLength</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">__proto__</span>: rabbit
+}
+
+<span class="hljs-comment">// walk được lấy từ prototype chain</span>
+longEar.walk() <span class="hljs-comment">// Animal walk</span>
+alert(longEar.jumps) <span class="hljs-comment">// true (từ rabbit)</span>
+</div></code></pre>
+<p><strong>Lưu ý với <code>__proto__</code></strong></p>
+<ul>
+<li>Trước ECMAScript 2015 không có cách chính thống nào truy cập trực tiếp đến prototype của một object. Vậy nên hầu hết các trình duyệt thêm vào một thuộc tính bộ truy cập (accessor property) được gọi là <code>__proto__</code></li>
+<li><code>__proto__</code> không phải là thuộc tính <code>[[Prototype]]</code>, nó chỉ là getter/setter của <code>[[Prototype]]</code></li>
+<li><code>__proto__</code> gần đây đã bị loại bỏ và không được khuyên dùng nữa, nhưng vì một số lý do một số trình duyệt và môi trường vẫn giữ chúng lại. Chúng ta nên sử dụng <code>Object.getPrototypeOf/Object.setPrototypeOf</code> (ECMAScript 2015)</li>
+</ul>
+<h2 id="gi%C3%A1-tr%E1%BB%8B-c%E1%BB%A7a-this">Giá trị của 'this'</h2>
+<p>Ví dụ đoạn code phía dưới</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> user = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">surname</span>: <span class="hljs-string">'Smith'</span>,
+
+  <span class="hljs-keyword">set</span> fullName(value) {
+    ;[<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.surname] = value.split(<span class="hljs-string">' '</span>)
+  },
+
+  <span class="hljs-keyword">get</span> fullName() {
+    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> <span class="hljs-subst">${<span class="hljs-keyword">this</span>.surname}</span>`</span>
+  }
+}
+
+<span class="hljs-keyword">let</span> admin = {
+  <span class="hljs-attr">__proto__</span>: user,
+  <span class="hljs-attr">isAdmin</span>: <span class="hljs-literal">true</span>
+}
+
+alert(admin.fullName) <span class="hljs-comment">// John Smith (*)</span>
+
+<span class="hljs-comment">// setter triggers!</span>
+admin.fullName = <span class="hljs-string">'Alice Cooper'</span> <span class="hljs-comment">// (**)</span>
+
+alert(admin.fullName) <span class="hljs-comment">// Alice Cooper, trậng thái của admin đã bị thay đổi</span>
+alert(user.fullName) <span class="hljs-comment">// John Smith, trạng thái của user vẫn giữ nguyên</span>
+</div></code></pre>
+<p>Lý giải cho điều này là <code>this</code> trong <code>this.name</code> và <code>this.surname</code> không đại diện cho prototype</p>
+<p><strong>Không quan trọng phương thức ở đâu: trong object hay prototype của nó. Trong phương thức được gọi, <code>this</code> luôn đại diện cho object trước dấu chấm</strong></p>
+<p>Vì thế <code>admin.fullName=</code> sử dụng <code>admin</code> như <code>this</code>, không phải <code>user</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// animal has methods</span>
+<span class="hljs-keyword">let</span> animal = {
+  walk() {
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.isSleeping) {
+      alert(<span class="hljs-string">`I walk`</span>)
+    }
+  },
+  sleep() {
+    <span class="hljs-keyword">this</span>.isSleeping = <span class="hljs-literal">true</span>
+  }
+}
+
+<span class="hljs-keyword">let</span> rabbit = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'White Rabbit'</span>,
+  <span class="hljs-attr">__proto__</span>: animal
+}
+
+<span class="hljs-comment">// modifies rabbit.isSleeping</span>
+rabbit.sleep()
+
+alert(rabbit.isSleeping) <span class="hljs-comment">// true</span>
+alert(animal.isSleeping) <span class="hljs-comment">// undefined (no such property in the prototype)</span>
+</div></code></pre>
+<h2 id="forin-loop">for…in loop</h2>
+<p>Vòng lặp <code>for...in</code> cũng lặp các thuộc tính kế thừa</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-keyword">let</span> rabbit = {
+  <span class="hljs-attr">jumps</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">__proto__</span>: animal
+}
+
+<span class="hljs-comment">// Object.keys chỉ return các key</span>
+alert(<span class="hljs-built_in">Object</span>.keys(rabbit)) <span class="hljs-comment">// jumps</span>
+
+<span class="hljs-comment">// for..in lặp luôn cả key và key kế thừa</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> prop <span class="hljs-keyword">in</span> rabbit) alert(prop) <span class="hljs-comment">// jumps, sau đó eats</span>
+</div></code></pre>
+<p>Nếu chúng ta muốn loại bỏ các thuộc tính kế thừa thì có thể dùng phương thức có sẵn là <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty">obj.hasOwnProperty(key)</a>: nó return <code>true</code> nếu key đó thuộc object (không phải từ kế thừa)</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> animal = {
+  <span class="hljs-attr">eats</span>: <span class="hljs-literal">true</span>
+}
+
+<span class="hljs-keyword">let</span> rabbit = {
+  <span class="hljs-attr">jumps</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">__proto__</span>: animal
+}
+
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> prop <span class="hljs-keyword">in</span> rabbit) {
+  <span class="hljs-keyword">let</span> isOwn = rabbit.hasOwnProperty(prop)
+
+  <span class="hljs-keyword">if</span> (isOwn) {
+    alert(<span class="hljs-string">`Our: <span class="hljs-subst">${prop}</span>`</span>) <span class="hljs-comment">// Our: jumps</span>
+  } <span class="hljs-keyword">else</span> {
+    alert(<span class="hljs-string">`Inherited: <span class="hljs-subst">${prop}</span>`</span>) <span class="hljs-comment">// Inherited: eats</span>
+  }
+}
+</div></code></pre>
+<p>Ở đây ta có prototype chain như sau: <code>rabbit</code> kế thừa từ <code>animal</code>, <code>animal</code> kế thừa từ <code>Object.prototype</code> (bởi vì <code>animal</code> là một literal object <code>{...}</code>, vì thế nó là mặc định), cuối cùng <code>Object.prototype</code> kế thừa từ <code>null</code></p>
+<p>Có một điều khá thú vị là phương thức <code>rabbit.hasOwnProperty</code> đến từ đâu? Chúng ta không định nghĩa nó mà. À, hóa ra nó đến từ <code>Object.prototype.hasOwnProperty</code>. Chúng ta đã kế thừa nó.</p>
+<p>..Nhưng tại sao <code>hasOwnProperty</code> không xuất hiện trong <code>for...in</code> như <code>eats</code> và <code>jumps</code>
+Câu trả lời rất đơn giản: nó không được liệt kê. Tất cả thuộc tính từ <code>Object.prototype</code> thì được set cờ là <code>enumerable:false</code>.</p>
+<p>Lưu ý:
+<strong>Hầu hết các phương thức get key/value sẽ bỏ qua thuộc tính kế thừa, ví dụ như Object.keys, Object.values</strong></p>
+<p>Tham khảo: <a href="https://javascript.info/prototype-inheritance">https://javascript.info/prototype-inheritance</a></p>
+
+</body>
+</html>

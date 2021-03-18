@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Class kế thừa.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="class-inheritance---k%E1%BA%BF-th%E1%BB%ABa-l%E1%BB%9Bp">Class inheritance - kế thừa lớp</h1>
+<p>Kế thừa lớp là cách mà một lớp mở rộng một lớp khác.</p>
+<h2 id="t%E1%BB%AB-kh%C3%B3a-%22extends%22">Từ khóa &quot;extends&quot;</h2>
+<p>Chúng ta có class <code>Animal</code></p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.name = name
+  }
+  run(speed) {
+    <span class="hljs-keyword">this</span>.speed = speed
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> runs with speed <span class="hljs-subst">${<span class="hljs-keyword">this</span>.speed}</span>.`</span>)
+  }
+  stop() {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> stands still.`</span>)
+  }
+}
+
+<span class="hljs-keyword">let</span> animal = <span class="hljs-keyword">new</span> Animal(<span class="hljs-string">'My animal'</span>)
+</div></code></pre>
+<p>Cùng tạo <code>class Rabbit</code> kế thừa từ <code>Animal</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  hide() {
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> hides!`</span>)
+  }
+}
+
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-keyword">new</span> Rabbit(<span class="hljs-string">'White Rabbit'</span>)
+
+rabbit.run(<span class="hljs-number">5</span>) <span class="hljs-comment">// White Rabbit runs with speed 5.</span>
+rabbit.hide() <span class="hljs-comment">// White Rabbit hides!</span>
+</div></code></pre>
+<p>Object của class <code>Rabbit</code> có thể truy cập được các phương thức bên trong <code>Rabbit</code> cũng như <code>Animal</code>.</p>
+<p>Thực ra bên trong, <code>extends</code> sử dụng cơ chế prototype.</p>
+<p><img src="./animal_prototype.PNG" alt="animal and rabbit prototype"></p>
+<p>Ví dụ, để tìm phương thức <code>rabbit.run</code>, engine kiểm tra:</p>
+<ol>
+<li>object <code>rabbit</code> (không có <code>run</code>)</li>
+<li>prototype của nó, đó là <code>Rabbit.prototype</code> (cũng không có <code>run</code>)</li>
+<li>prototype của nó, đó là <code>Animal.prototype</code>, cuối cùng chạy phương thức <code>run</code>.</li>
+</ol>
+<p><strong>Cú pháp như này được chấp nhận</strong></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span>(<span class="hljs-params">phrase</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-class"><span class="hljs-keyword">class</span> </span>{
+    sayHi() {
+      alert(phrase)
+    }
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">f</span>('<span class="hljs-title">Hello</span>') </span>{}
+
+<span class="hljs-keyword">new</span> User().sayHi() <span class="hljs-comment">// Hello</span>
+</div></code></pre>
+<p>Điều này sẽ hữu dụng khi chúng ta muốn kế thừa dựa vào điều kiện nào đó.</p>
+<h2 id="ghi-%C4%91%C3%A8-m%E1%BB%99t-ph%C6%B0%C6%A1ng-th%E1%BB%A9c">Ghi đè một phương thức</h2>
+<p>Điều gì sẽ xảy ra nếu class Rabbit và Animal đều trùng tên phương thức
+Ví dụ như phương thức <code>stop()</code> phía dưới</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  stop() {
+    <span class="hljs-comment">// ...Bây giờ nó sẽ sử dụng rabbit.stop()</span>
+    <span class="hljs-comment">// thay vì stop() từ Animal</span>
+  }
+}
+</div></code></pre>
+<p>Thường thì chúng ta không muốn thay thế hoàn toàn phương thức cha, chúng ta muốn kế thừa trên phương thức cha, ví dụ như gọi phương thức cha rồi thêm một số hiệu ứng khác nữa.</p>
+<p>Class cung cấp từ khóa <code>&quot;super&quot;</code> giúp chúng ta thực hiện điều này/</p>
+<ul>
+<li><code>super.method(...)</code> để gọi một phương thức cha</li>
+<li><code>super(...)</code> để gọi một constructor cha (bên trong constructor của chúng ta)</li>
+</ul>
+<p>Ví dụ</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.name = name
+  }
+
+  run(speed) {
+    <span class="hljs-keyword">this</span>.speed = speed
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> runs with speed <span class="hljs-subst">${<span class="hljs-keyword">this</span>.speed}</span>.`</span>)
+  }
+
+  stop() {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> stands still.`</span>)
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  hide() {
+    alert(<span class="hljs-string">`<span class="hljs-subst">${<span class="hljs-keyword">this</span>.name}</span> hides!`</span>)
+  }
+
+  stop() {
+    <span class="hljs-keyword">super</span>.stop() <span class="hljs-comment">// call parent stop</span>
+    <span class="hljs-keyword">this</span>.hide() <span class="hljs-comment">// and then hide</span>
+  }
+}
+
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-keyword">new</span> Rabbit(<span class="hljs-string">'White Rabbit'</span>)
+
+rabbit.run(<span class="hljs-number">5</span>) <span class="hljs-comment">// White Rabbit runs with speed 5.</span>
+rabbit.stop() <span class="hljs-comment">// White Rabbit stands still. White Rabbit hides!</span>
+</div></code></pre>
+<p><strong>Arrow function không có <code>super</code></strong></p>
+<p>Nếu được truy cập, nó sẽ lấy bên ngoài function: ví dụ</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  stop() {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">super</span>.stop(), <span class="hljs-number">1000</span>) <span class="hljs-comment">// Gọi stop từ Aniaml sau 1 giây</span>
+  }
+}
+</div></code></pre>
+<p><code>super</code> trong arrow function thì giống như bên trong <code>stop()</code>. Nếu chúng ta sử dụng một function thông thường ở đây, sẽ gây lỗi</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Unexpected super</span>
+setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">super</span>.stop()
+}, <span class="hljs-number">1000</span>)
+</div></code></pre>
+<h2 id="ghi-%C4%91%C3%A8-constructor">Ghi đè constructor</h2>
+<p>Với constructor thì hơi phức tạp một chút.</p>
+<p>Cho đến bây giờ thì <code>Rabbit</code> không có <code>constructor</code> của chính nó.</p>
+<p>Nếu một class không có constructor mà kế thừa một class khác, thì một constructor trống sẽ được tạo ra như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-comment">// Tạo ra từ những class mà không có constructor của nó</span>
+  <span class="hljs-keyword">constructor</span>(...args) {
+    <span class="hljs-keyword">super</span>(...args)
+  }
+}
+</div></code></pre>
+<p>Như chúng ta đã thấy, nó gọi một <code>constructor</code> và truyền các tham số vào.</p>
+<p>Tiếp theo cùng xem ví dụ dưới</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.name = name
+  }
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name, earLength) {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.name = name
+    <span class="hljs-keyword">this</span>.earLength = earLength
+  }
+
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-comment">// Doesn't work!</span>
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-keyword">new</span> Rabbit(<span class="hljs-string">'White Rabbit'</span>, <span class="hljs-number">10</span>) <span class="hljs-comment">// Error: this is not defined.</span>
+</div></code></pre>
+<p>Chúng ta nhận được một lỗi. Bây giờ chúng ta không thể tạo rabbit. Sai ở đâu?</p>
+<p>Câu trả lời là
+<strong>constructor trong class kế thừa phải gọi <code>super(...)</code>, và làm điều này trước khi sử dụng <code>this</code></strong></p>
+<p>Vậy để fix điều này, chúng ta cần làm như sau</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name) {
+    <span class="hljs-keyword">this</span>.speed = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">this</span>.name = name
+  }
+
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name, earLength) {
+    <span class="hljs-keyword">super</span>(name)
+    <span class="hljs-keyword">this</span>.earLength = earLength
+  }
+
+  <span class="hljs-comment">// ...</span>
+}
+
+<span class="hljs-comment">// now fine</span>
+<span class="hljs-keyword">let</span> rabbit = <span class="hljs-keyword">new</span> Rabbit(<span class="hljs-string">'White Rabbit'</span>, <span class="hljs-number">10</span>)
+alert(rabbit.name) <span class="hljs-comment">// White Rabbit</span>
+alert(rabbit.earLength) <span class="hljs-comment">// 10</span>
+</div></code></pre>
+<h2 id="ghi-%C4%91%C3%A8-c%C3%A1c-class-field">Ghi đè các class field</h2>
+<p>Chúng ta không chỉ có thể ghi đè các phương thức mà còn có thể ghi đè các class field</p>
+<p>Mặc dầu sẽ có một số phức tạp, ví dụ</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  name = <span class="hljs-string">'animal'</span>
+
+  <span class="hljs-keyword">constructor</span>() {
+    alert(<span class="hljs-keyword">this</span>.name) <span class="hljs-comment">// (*)</span>
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  name = <span class="hljs-string">'rabbit'</span>
+}
+
+<span class="hljs-keyword">new</span> Animal() <span class="hljs-comment">// animal</span>
+<span class="hljs-keyword">new</span> Rabbit() <span class="hljs-comment">// animal</span>
+</div></code></pre>
+<p>Ở đây, class <code>Rabbit</code> kế thừa từ <code>Animal</code> và ghi đè trường <code>name</code>.</p>
+<p><code>Rabbit</code> không có constructor của nó, vì thế <code>Animal</code> constructor được gọi.</p>
+<p>Điều thú vị trong cả 2 trường hợp: <code>new Animal()</code> và <code>new Rabbit()</code>, <code>alert</code> ở dòng <code>*</code> hiển thị <code>animal</code>.</p>
+<p><strong>Nói cách khác, constructor cha luôn sử dụng giá trị trường (field) của nó, không phải từ kế thừa</strong></p>
+<p>Điều này chỉ xảy ra với class fields, không có ở các phương thức.</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>{
+  showName() {
+    <span class="hljs-comment">// instead of this.name = 'animal'</span>
+    alert(<span class="hljs-string">'animal'</span>)
+  }
+
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">this</span>.showName() <span class="hljs-comment">// instead of alert(this.name);</span>
+  }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Rabbit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Animal</span> </span>{
+  showName() {
+    alert(<span class="hljs-string">'rabbit'</span>)
+  }
+}
+
+<span class="hljs-keyword">new</span> Animal() <span class="hljs-comment">// animal</span>
+<span class="hljs-keyword">new</span> Rabbit() <span class="hljs-comment">// rabbit</span>
+</div></code></pre>
+<p>Lưu ý rằng output bây giờ khác nhau.</p>
+<p>Và đó là những gì chúng ta mong muốn một cách tự nhiên. Khi constructor cha được gọi trong class kế thừa, nó sử dụng phương thức đã bị ghi đè.</p>
+<p>Nhưng với class field thì không. Đó là bởi vì thứ tự khởi tạo field. Class field được khởi tạo:</p>
+<ul>
+<li>Trước constructor cho class cơ bản (mà không kế thừa bất cứ thứ gì)</li>
+<li>Ngay lập tức sau khi <code>super()</code> được gọi ở class kế thừa.</li>
+</ul>
+<p>Trong trường hợp chúng ta, <code>Rabbit</code> là class kế thừa. Không có <code>constructor()</code> bên trong nó. Như đã nói từ trước, điều này giống như thể tạo một constructor rỗng với chỉ <code>super(...args)</code> bên trong.</p>
+<p>Vì thế, <code>new Rabbit()</code> gọi <code>super()</code>, constructor cha được gọi, và ngay sau đó thì class field được khởi tạo. Tại thời điểm constructor cha thực thi, chưa có class field <code>Rabbit</code>, đó là lý do tại sao <code>Animal</code> field được sử dụng.</p>
+<p>Đây là sự khác biết giữa field và method trong javascript.</p>
+<p>Nếu đó là vấn đề, chúng ta có thể fix nó bằng cách sử dụng các phương thức (method) hoặc getter/setter thay vì trường (field)</p>
+
+</body>
+</html>
