@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Money Lover</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .edit-buttons {
+        display: flex;
+        justify-content: space-around;
+      }
+    </style>
+  </head>
+  <body class="container-fluid">
+    <header class="p-4 text-center">
+      <h1>Money lover</h1>
+    </header>
+    <div class="form-add shadow p-3 mb-5">
+      <form>
+        <div class="form-group">
+          <label for="name">Tên chi phí</label>
+          <input
+            type="name"
+            class="form-control"
+            id="name"
+            placeholder="Nhập tên chi phí"
+          />
+        </div>
+        <div class="form-group">
+          <label for="number">Số tiền</label>
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            placeholder="Nhập số tiền"
+          />
+        </div>
+        <button type="button" class="btn btn-primary btn__add">Thêm</button>
+        <div class="edit-buttons d-none">
+          <button type="button" class="btn btn-info mr-4 btn__back">
+            Trở lại
+          </button>
+          <button type="button" class="btn btn-success btn__save">Lưu</button>
+          <button type="button" class="btn btn-danger ml-auto btn__remove">
+            Xóa
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="d-flex justify-content-between mb-5">
+      <span class="h3 total__amount">Tổng chi phí: <strong></strong></span>
+      <button class="btn btn-danger btn__remove-all">Xóa tất cả</button>
+    </div>
+    <div class="list"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
