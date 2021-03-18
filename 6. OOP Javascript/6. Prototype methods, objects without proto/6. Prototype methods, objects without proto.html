@@ -366,7 +366,7 @@ code {
     });
   </script>
 <h1 id="prototype-methods-objects-without-proto">Prototype methods, objects without <strong>proto</strong></h1>
-<p>Trong bài đầu của chương này, chúng ta đã đề cập đến các phương thức hiện đại để setyp một prototype.</p>
+<p>Trong bài đầu của chương này, chúng ta đã đề cập đến các phương thức hiện đại để setup một prototype.</p>
 <p><code>__proto__</code> được cho là đã bị loại bỏ (chỉ các trình duyệt còn dữ lại)</p>
 <p>Các phương thức hiện đại đó là:</p>
 <ul>
@@ -417,7 +417,7 @@ Sau đây là nguyên nhân lịch sử</p>
 <ul>
 <li>Thuộc tính <code>prototype</code> của constructor function đã có từ xa xưa</li>
 <li>Sau đó, vào năm 2012, <code>Object.create</code> xuất hiện trong JS tiêu chuẩn. Nó cung cấp khả năng tạo một object với một prototype được cung cấp, nhưng không cung cấp khả năng get/set nó. Vì thế các trình duyệt thêm một thuộc tính &quot;không thuộc JS tiêu chuẩn&quot; là <code>__proto__</code> để cho phép người dùng có thể get/set một prototype bất cứ lúc nào.</li>
-<li>Sau đó, vào năm 2015, <code>Object.setPrototypeOf</code> và Object.getProtypeOf<code>được thêm vào JS tiêu chuẩn, để thực hiện chức năng tương tự như</code><strong>proto</strong>`.</li>
+<li>Sau đó, vào năm 2015, <code>Object.setPrototypeOf</code> và <code>Object.getProtypeOf</code> được thêm vào JS tiêu chuẩn, để thực hiện chức năng tương tự như<code>**proto**</code>.</li>
 </ul>
 <p>Tại sao <code>__proto__</code> bị thay thế bởi các hàm <code>getPrototypeOf/setPrototypeOf</code>? Đây là một câu hỏi thú vị, đòi hỏi chúng ta phải hiểu tại sao <code>__proto__</code> khá tệ. Đọc thêm để biết câu trả lời.</p>
 <p><strong>Đừng thay đổi <code>[[Prototype]]</code> trên các object đang tồn tại nếu quan tâm đến vấn đề tốc độ</strong>

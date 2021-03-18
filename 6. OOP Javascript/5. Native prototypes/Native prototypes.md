@@ -2,6 +2,12 @@
 
 Thuộc tính `"prototype"` được sử dụng rỗng rãi trong Javascript. Mọi constructor function có sẵn của JS đều sử dụng nó.
 
+Đến đây có thể mọi người đã bị loạn não nên mình sẽ nhắc lại.
+
+- `[[Prototype]]` là một thuộc tính ẩn trong object(function) đại diện trong prototype **thực tế**.
+- `__proto__` là getter/setter truy cập đến `[[Prototype]]`
+- Thuộc tính `"prototype"` tồn tại trong constructor function nó là một thuộc tính bình thường, không phải là `[[Prototype]]`. Nó giúp chúng ta kế thừa khi tạo object từ constructor function.
+
 ## Object.prototype
 
 Cùng nói về một object rỗng

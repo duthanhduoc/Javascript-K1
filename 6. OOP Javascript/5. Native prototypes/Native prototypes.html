@@ -367,6 +367,12 @@ code {
   </script>
 <h1 id="native-prototypes">Native Prototypes</h1>
 <p>Thuộc tính <code>&quot;prototype&quot;</code> được sử dụng rỗng rãi trong Javascript. Mọi constructor function có sẵn của JS đều sử dụng nó.</p>
+<p>Đến đây có thể mọi người đã bị loạn não nên mình sẽ nhắc lại.</p>
+<ul>
+<li><code>[[Prototype]]</code> là một thuộc tính ẩn trong object(function) đại diện trong prototype <strong>thực tế</strong>.</li>
+<li><code>__proto__</code> là getter/setter truy cập đến <code>[[Prototype]]</code></li>
+<li>Thuộc tính <code>&quot;prototype&quot;</code> tồn tại trong constructor function nó là một thuộc tính bình thường, không phải là <code>[[Prototype]]</code>. Nó giúp chúng ta kế thừa khi tạo object từ constructor function.</li>
+</ul>
 <h2 id="objectprototype">Object.prototype</h2>
 <p>Cùng nói về một object rỗng</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {}
