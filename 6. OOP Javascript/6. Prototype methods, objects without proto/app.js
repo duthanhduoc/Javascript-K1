@@ -1,12 +1,12 @@
-// create a new object with animal as a prototype
-const animal = {
-  name: 'thỏ'
+let animal = {
+  eats: true
 }
-const  rabbit = {
-  age: 13,
-  __proto__: animal
-}
-for(const key in rabbit) {
-  console.log(key)
-}
-console.log(rabbit)
+
+// Tạo một object mới với animal như một prototype
+let rabbit = Object.create(animal)
+console.log(rabbit.eats) // true
+
+console.log(Object.getPrototypeOf(rabbit)) // true
+
+Object.setPrototypeOf(rabbit, {}) // thay đổi prototype của rabbit thành {}
+console.log('rabbit', rabbit)
