@@ -512,6 +512,56 @@ numbers.forEach(<span class="hljs-function">(<span class="hljs-params">value, in
 <span class="hljs-keyword">const</span> check = numbers.includes(<span class="hljs-number">5</span>) <span class="hljs-comment">// true</span>
 Thường thì các method với tring, array không thay đổi giá trị gốc. Ngoại trừ: pop, push, shift, unshift, <span class="hljs-keyword">delete</span>
 </div></code></pre>
+<p><strong>reverse()</strong>: Đảo ngược thứ tự các item trong array</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> fruits = [<span class="hljs-string">'Banana'</span>, <span class="hljs-string">'Orange'</span>, <span class="hljs-string">'Apple'</span>, <span class="hljs-string">'Mango'</span>]
+fruits.reverse()
+<span class="hljs-built_in">console</span>.log(fruits) <span class="hljs-comment">// ["Mango", "Apple", "Orange", "Banana"]</span>
+</div></code></pre>
+<p><strong>sort()</strong>: Mặc định sẽ sắp xếp các giá trị như là <strong>string</strong>
+Điều này hoạt động ổn cho string (&quot;Apple&quot; thì đứng trước &quot;Banana&quot;).
+Tuy nhiên, nếu số cũng bị cho là string, <code>25</code> thì bị cho là lớn hơn <code>100</code>, bởi vì <code>2</code> thì lớn hơn <code>1</code>.
+Bởi vì điều này, phương thức <code>sort()</code> sẽ thực thi không chính xác khi sắp xếp number.
+Bạn có thể fix điều này bằng cách cung cấp một <strong>compare function</strong>.
+<strong>compare function</strong> sẽ có dạng như thế này.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">a, b</span>)</span>{<span class="hljs-keyword">return</span> a - b}
+</div></code></pre>
+<p>Nếu kết quả là âm, <code>a</code> sẽ được xếp trước <code>b</code>.
+Nếu kết quả là dương, <code>a</code> sẽ được xếp sau <code>b</code>.
+Nếu kết quả là 0, sẽ không có sự thay đổi nào giữa 2 giá trị.</p>
+<p>Ví dụ sắp xếp tăng dầng:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> points = [<span class="hljs-number">40</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">25</span>, <span class="hljs-number">10</span>]
+points.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a, b</span>) </span>{
+  <span class="hljs-keyword">return</span> a - b
+})
+<span class="hljs-built_in">console</span>.log(points) <span class="hljs-comment">// [1, 5, 10, 25, 40, 100]</span>
+</div></code></pre>
+<p>Ví dụ sắp xếp giảm dần:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> points = [<span class="hljs-number">40</span>, <span class="hljs-number">100</span>, <span class="hljs-number">1</span>, <span class="hljs-number">5</span>, <span class="hljs-number">25</span>, <span class="hljs-number">10</span>]
+points.sort(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">a, b</span>) </span>{
+  <span class="hljs-keyword">return</span> b - a
+})
+<span class="hljs-built_in">console</span>.log(points) <span class="hljs-comment">// [100, 40, 25, 10, 5, 1]</span>
+</div></code></pre>
+<p><strong>reduce()</strong>: Dùng để &quot;xào nấu&quot; một array, ví dụ tính tổng 1 array hay từ 1 array chuyển thành 1 array, object khác.</p>
+<pre class="hljs"><code><div>arr.reduce(<span class="hljs-function">(<span class="hljs-params">total, current, currentIndex</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> something
+}, initialValue)
+</div></code></pre>
+<p><code>initialValue</code> là option, có hoặc không vẫn được. Nếu có thì ở vòng lặp đầu tiên, <code>total = initalValue</code> và <code>current = arr[0]</code>. Tức là currentIndex sẽ chạy từ 0 cho đến hết.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> points = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]
+<span class="hljs-comment">// flat array</span>
+<span class="hljs-keyword">const</span> result = points.reduce(<span class="hljs-function">(<span class="hljs-params">total, current</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> total.concat(current)
+}, [])
+<span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// [1, 2, 3, 4, 5, 6]</span>
+</div></code></pre>
+<p>Còn nếu không dùng <code>inititalValue</code> thì đầu tiên <code>total = arr[0]</code> và <code>current = arr[1]</code>. Tức là currentIndex sẽ chạy từ 1 cho đến hết.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> points = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]
+<span class="hljs-keyword">const</span> result = points.reduce(<span class="hljs-function">(<span class="hljs-params">total, current</span>) =&gt;</span> {
+  <span class="hljs-keyword">return</span> total + current
+})
+<span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// 21</span>
+</div></code></pre>
 
 </body>
 </html>
