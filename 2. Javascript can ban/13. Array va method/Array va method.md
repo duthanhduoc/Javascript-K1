@@ -213,3 +213,75 @@ const numbers = [1, 2, 3, 4, 5]
 const check = numbers.includes(5) // true
 Thường thì các method với tring, array không thay đổi giá trị gốc. Ngoại trừ: pop, push, shift, unshift, delete
 ```
+
+**reverse()**: Đảo ngược thứ tự các item trong array
+
+```js
+var fruits = ['Banana', 'Orange', 'Apple', 'Mango']
+fruits.reverse()
+console.log(fruits) // ["Mango", "Apple", "Orange", "Banana"]
+```
+
+**sort()**: Mặc định sẽ sắp xếp các giá trị như là **string**
+Điều này hoạt động ổn cho string ("Apple" thì đứng trước "Banana").
+Tuy nhiên, nếu số cũng bị cho là string, `25` thì bị cho là lớn hơn `100`, bởi vì `2` thì lớn hơn `1`.
+Bởi vì điều này, phương thức `sort()` sẽ thực thi không chính xác khi sắp xếp number.
+Bạn có thể fix điều này bằng cách cung cấp một **compare function**.
+**compare function** sẽ có dạng như thế này.
+
+```js
+function(a, b){return a - b}
+```
+
+Nếu kết quả là âm, `a` sẽ được xếp trước `b`.
+Nếu kết quả là dương, `a` sẽ được xếp sau `b`.
+Nếu kết quả là 0, sẽ không có sự thay đổi nào giữa 2 giá trị.
+
+Ví dụ sắp xếp tăng dầng:
+
+```js
+var points = [40, 100, 1, 5, 25, 10]
+points.sort(function (a, b) {
+  return a - b
+})
+console.log(points) // [1, 5, 10, 25, 40, 100]
+```
+
+Ví dụ sắp xếp giảm dần:
+
+```js
+var points = [40, 100, 1, 5, 25, 10]
+points.sort(function (a, b) {
+  return b - a
+})
+console.log(points) // [100, 40, 25, 10, 5, 1]
+```
+
+**reduce()**: Dùng để "xào nấu" một array, ví dụ tính tổng 1 array hay từ 1 array chuyển thành 1 array, object khác.
+
+```js
+arr.reduce((total, current, currentIndex) => {
+  return something
+}, initialValue)
+```
+
+`initialValue` là option, có hoặc không vẫn được. Nếu có thì ở vòng lặp đầu tiên, `total = initalValue` và `current = arr[0]`. Tức là currentIndex sẽ chạy từ 0 cho đến hết.
+
+```js
+var points = [1, 2, [3, 4], 5, 6]
+// flat array
+const result = points.reduce((total, current) => {
+  return total.concat(current)
+}, [])
+console.log(result) // [1, 2, 3, 4, 5, 6]
+```
+
+Còn nếu không dùng `inititalValue` thì đầu tiên `total = arr[0]` và `current = arr[1]`. Tức là currentIndex sẽ chạy từ 1 cho đến hết.
+
+```js
+var points = [1, 2, 3, 4, 5, 6]
+const result = points.reduce((total, current) => {
+  return total + current
+})
+console.log(result) // 21
+```
