@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bat dong bo.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="b%E1%BA%A5t-%C4%91%E1%BB%93ng-b%E1%BB%99-callback-promise-async-await-trong-javascript">Bất đồng bộ callback, promise, async await trong Javascript</h1>
+<p>Bài gốc từ xdevclass: <a href="https://xdevclass.com/phan-4-bat-dong-bo-callback-promise-async-await-trong-javascript/">Phần 4: Bất đồng bộ callback, promise, async await trong Javascript</a></p>
+<h2 id="l%E1%BA%ADp-tr%C3%ACnh-b%E1%BA%A5t-%C4%91%E1%BB%93ng-b%E1%BB%99">Lập trình bất đồng bộ</h2>
+<ul>
+<li>
+<p>Cả môi trường trình duyệt và Node.js, Javascript đều chạy <strong>đơn luồng</strong></p>
+</li>
+<li>
+<p>Trong những chương trình đồng bộ, nếu bạn có 2 dòng code theo thứ tự <strong>L1</strong>, <strong>L2</strong> thì <strong>L2</strong> không thể bắt đầu chạy nếu <strong>L1</strong> chưa chạy xong.</p>
+</li>
+<li>
+<p>Trong những chương trình bất đồng bộ, nếu bạn cũng có 2 dòng code theo thứ tự <strong>L1</strong>, <strong>L2</strong>. Trong khi <strong>L1</strong> sẽ được thực hiện một số tác vụ và hoàn thành trong tương lai thì <strong>L2</strong> có thể chạy trước khi <strong>L1</strong> hoàn thành.</p>
+</li>
+</ul>
+<h3 id="call-stack">Call Stack</h3>
+<p><strong>Call Stack</strong> là một cấu trúc dữ liệu dạng ngăn xếp (stack) dùng để chứa thông tin về hoạt động của chương trình máy tính trong lúc thực thi. <strong>Call stack</strong> hoạt động theo kiểu <strong>LIFO</strong> (Last In First Out) tức là thằng vào sau cùng nhưng sẽ được thực hiện và thoát ra khỏi ngăn xếp đầu tiên.</p>
+<p>Ví dụ đoạn code dưới đây</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span>(<span class="hljs-params">x</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(x)
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span>(<span class="hljs-params">y</span>) </span>{
+  a(y + <span class="hljs-number">2</span>)
+}
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span>(<span class="hljs-params">z</span>) </span>{
+  b(z + <span class="hljs-number">1</span>)
+}
+c(<span class="hljs-number">5</span>)
+</div></code></pre>
+<p>Khi chạy đoạn code trên, ta sẽ có call stack trong Javascript được mô tả như thế này:
+Call Stack:</p>
+<ol>
+<li>a()</li>
+<li>b()</li>
+<li>c()</li>
+</ol>
+<p>Tức là khi <strong>a()</strong> thực hiện xong, nó sẽ bị xóa khỏi call stack. <strong>b()</strong> được thực hiện và xóa khỏi call stack. <strong>c()</strong> được thực hiện và xóa khỏi call stack. Lúc này call stack trống thì chương trình đã thực hiện xong.</p>
+<h3 id="event-loop-v%C3%A0-callback-queue">Event Loop và Callback queue</h3>
+<p>Trong một <strong>Javascript Runtime</strong> (môi trường chạy JS) còn có một số thứ khác quan trọng không kém <strong>Call Stack</strong> như <strong>Web APIs, Event Loop, Callback Queue</strong>.</p>
+<p><img src="./js-runtime-big-picture.png" alt="'Sơ đồ event loop'"></p>
+<p>Một ví dụ trực quan về cách hoạt động của Event Loop và Callback Queue</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Hi!'</span>)
+  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">timeout</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'There!'</span>)
+  }, <span class="hljs-number">3000</span>)
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Welcome to loupe!'</span>)
+}
+main()
+</div></code></pre>
+<p>Đoạn code trên sẽ thực hiện như sau</p>
+<ul>
+<li><code>console</code> sẽ in <code>&quot;Hi!&quot;</code> ra đầu tiên</li>
+<li><code>setTimeout</code> được gọi = &gt; đẩy async callback là <code>timeout</code> vào <strong>Web Apis</strong>. Cho <code>timeout</code> đợi 3s</li>
+<li><code>console</code> sẽ in ra <code>&quot;Welcome to loupe!&quot;</code></li>
+<li>Sau khi đợi 3s xong thì <code>&quot;There!&quot;</code> mới xuất hiện</li>
+</ul>
+<p><img src="screen-capture.gif" alt="Sơ đồ"></p>
+<p>Mọi người ai coi không kịp thì có thể vào <a href="http://latentflip.com/loupe">trang này để test</a>.</p>
+<p>Nếu để ý thì các bạn có thể thấy sau khi hàm <code>main</code> chạy xong và biến khỏi call stack thì <code>timeout</code> với <code>console.log(&quot;There!&quot;)</code> lại được đẩy vô.</p>
+<p>Như mình đã đề cập bên trên, Javascript thì có <strong>call stack</strong> nhưng môi trường để chạy Javascript (Browser, NodeJs) thì còn có thêm các <strong>WebAPIs, event loop</strong> và <strong>callback queue</strong>. Và những thứ này hoạt động trên một luồng riêng biệt và được đảm bảo về tính thống nhất.</p>
+<p>Vậy nên mình có thể tóm gọn lại như sau</p>
+<ul>
+<li>Sự thật thì tất cả code Javascript thực hiện đồng bộ, <strong>event loop</strong> cho phép chúng vào hàng đợi và thực hiện các đoạn code tiếp theo.</li>
+<li>Javascript sử dụng <strong>đơn luồng</strong>, nhưng môi trường để chạy Javascript thì hoạt động <strong>đa luồng</strong>.</li>
+</ul>
+<p>Event loop là chủ đề nâng cao trong JS, mình nghĩ ae mới học hiểu như vậy là đủ rồi. Nếu muốn tìm hiểu sâu hơn thì có thể <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">xem video này</a></p>
+<h2 id="async-callback">async callback</h2>
+<p>Bất đồng bộ callback xuất hiện rất nhiều ở Javascript</p>
+<ul>
+<li>Ưu điểm: Dễ hiểu (vì chỉ là một callback function đơn giản)</li>
+<li>Nhược điểm: Khó khăn trong việc xử lý lỗi. Code bị lồng vào nhau quá nhiều (callback hell)</li>
+</ul>
+<p>Lắng nghe sự kiện click. Khi được click thì mới chạy callback function</p>
+<pre class="hljs"><code><div><span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'myBtn'</span>).addEventListener(<span class="hljs-string">'click'</span>, displayDate)
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">displayDate</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'demo'</span>).innerHTML = <span class="hljs-built_in">Date</span>()
+}
+</div></code></pre>
+<p>Đọc file trong Node.js. Khi đọc file hoàn tất thì mới chạy callback function bên trong.</p>
+<pre class="hljs"><code><div>fs.readFile(<span class="hljs-string">'demo.txt'</span>, (err, data) =&gt; {
+  <span class="hljs-built_in">console</span>.log(data)
+})
+</div></code></pre>
+<p>Nhưng sẽ dễ bị xảy ra hiện tượng Callback Hell (tức là có quá nhiều callback lồng nhau) nếu chúng ta cần sử lý theo tuần tự.</p>
+<p><img src="./callback-hell.jpeg" alt="callback hell"></p>
+<h3 id="s%E1%BB%AD-d%E1%BB%A5ng-async-callback-g%C3%A2y-kh%C3%B3-kh%C4%83n-trong-vi%E1%BB%87c-x%E1%BB%AD-l%C3%BD-l%E1%BB%97i">Sử dụng async callback gây khó khăn trong việc xử lý lỗi</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">try</span> {
+  setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Lỗi rồi'</span>)
+  }, <span class="hljs-number">1000</span>)
+} <span class="hljs-keyword">catch</span> (error) {
+  <span class="hljs-comment">// Dòng này sẽ không bao giờ được chạy</span>
+  <span class="hljs-built_in">console</span>.log(error)
+}
+</div></code></pre>
+<h2 id="promise-es6">Promise ES6</h2>
+<p><strong>Promise</strong> đơn giản nghĩa là lời hứa, trong tương lai có thể làm hoặc không làm một hành động gì đó (thất hứa)</p>
+<p>Một Promise có 3 trạng thái sau:</p>
+<ul>
+<li><strong>pending</strong>: đang chờ kết quả</li>
+<li><strong>fulfilled</strong>: đã có kết quả</li>
+<li><strong>rejected</strong>: lỗi xảy ra</li>
+</ul>
+<h3 id="t%E1%BA%A1o-m%E1%BB%99t-promise">Tạo một Promise</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(
+  <span class="hljs-comment">/* executor */</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">resolve, reject</span>) </span>{
+    <span class="hljs-comment">// statements</span>
+  }
+)
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  ...
+  if(...) {
+    resolve(value) <span class="hljs-comment">// thành công</span>
+  } <span class="hljs-keyword">else</span> {
+    reject(reason) <span class="hljs-comment">// thất bại</span>
+  }
+})
+</div></code></pre>
+<h3 id="x%E1%BB%AD-l%C3%BD-tr%E1%BA%A1ng-th%C3%A1i-promise">Xử lý trạng thái promise</h3>
+<pre class="hljs"><code><div>promise
+  .then(
+    <span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+      <span class="hljs-comment">/* fulfillment */</span>
+    },
+    (error) =&gt; {
+      <span class="hljs-comment">/* rejection */</span>
+    }
+  )
+  .catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+    <span class="hljs-comment">/* rejection */</span>
+  })
+</div></code></pre>
+<h3 id="chuy%E1%BB%83n-m%E1%BB%99t-async-callback-th%C3%A0nh-m%E1%BB%99t-promise">Chuyển một async callback thành một promise.</h3>
+<p>Ví dụ về in ra <code>'hello'</code> sau 1s</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// async callback thông thường</span>
+setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'hello'</span>)
+}, <span class="hljs-number">1000</span>)
+<span class="hljs-comment">// chuyển thành promise</span>
+<span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+    resolve(<span class="hljs-string">'hello'</span>)
+  }, <span class="hljs-number">1000</span>)
+})
+p.then(<span class="hljs-function">(<span class="hljs-params">value</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(value)
+})
+</div></code></pre>
+<h3 id="m%E1%BB%99t-s%E1%BB%91-l%C6%B0u-%C3%BD-khi-d%C3%B9ng-promise">Một số lưu ý khi dùng promise</h3>
+<p><em>Promises are eager and not lazy</em>. Tức promise thực thi khi bạn khai báo chứ không phải là khi bạn sài <code>then()</code>. Khi sài <code>then()</code> chỉ là lúc bạn lấy kết quả</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>
+<span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  a++
+})
+<span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// 2</span>
+</div></code></pre>
+<p>Để tránh điều này thì bạn có thể wrap nó vào trong một function</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">runPromise</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    a++
+  })
+  <span class="hljs-keyword">return</span> p
+}
+<span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// 1</span>
+</div></code></pre>
+<p>Một promise thì chỉ có thể rơi vào 1 trong 3 trạng thái như mình đã nêu trên. Không thể đã fulfilled rồi lại bị rejected được. Và sau khi thực hiện <code>resolve()</code> hay <code>reject()</code>, nếu có code phía dưới thì code đó vẫn được chạy. Ví dụ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  resolve(<span class="hljs-string">'done'</span>)
+  <span class="hljs-comment">// Code sẽ chạy nhưng sẽ không được đưa vào rejected</span>
+  reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'error'</span>))
+})
+</div></code></pre>
+<ul>
+<li>
+<p><code>then</code> / <code>catch</code> luôn return về một promise</p>
+</li>
+<li>
+<p>return giá trị trong <code>onFulfilled</code> / <code>onRejected</code> sẽ đưa giá trị đó về trạng thái <code>onFulfilled</code> ở promise tiếp theo (tương tự thực hiện <code>resolve</code>)</p>
+</li>
+<li>
+<p><code>throw</code> giá trị trong executor / onFulfilled / onReject sẽ đưa giá trị đó về trạng thái onRejected ở promise tiếp theo</p>
+</li>
+</ul>
+<p><img src="promise.png" alt="promise"></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> p1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  resolve(<span class="hljs-number">1</span>)
+})
+p1.then(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> result * <span class="hljs-number">2</span>).then(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// 2</span>
+})
+<span class="hljs-keyword">const</span> p2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  reject(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Lỗi 404'</span>))
+})
+p2.catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> error).then(<span class="hljs-function">(<span class="hljs-params">result</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(result.message) <span class="hljs-comment">// Lỗi 404</span>
+})
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> p = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Something wrong!'</span>)
+})
+p.catch(<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(error.message) <span class="hljs-comment">// Something wrong!</span>
+})
+</div></code></pre>
+<h3 id="m%E1%BB%99t-s%E1%BB%91-c%C3%A1ch-kh%C3%A1c-%C4%91%E1%BB%83-t%E1%BA%A1o-nhanh-promise">Một số cách khác để tạo nhanh Promise</h3>
+<ul>
+<li><code>Promise.resolve()</code></li>
+<li><code>Promise.reject()</code></li>
+</ul>
+<h3 id="m%E1%BB%99t-s%E1%BB%91-pattern-c%E1%BA%A7n-tr%C3%A1nh-v%E1%BB%9Bi-promise">Một số pattern cần tránh với promise</h3>
+<h4 id="th%E1%BB%B1c-hi%E1%BB%87n-cho-code-ch%E1%BA%A1y-tu%E1%BA%A7n-t%E1%BB%B1-g%C3%A2y-n%C3%AAn-callback-hell">thực hiện cho code chạy tuần tự gây nên callback hell</h4>
+<pre class="hljs"><code><div>asyncFunc1().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value1</span>) </span>{
+  asyncFunc2().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value2</span>) </span>{
+    <span class="hljs-comment">// thực hiện gì đó</span>
+  })
+})
+</div></code></pre>
+<p>Cách fix callback hell</p>
+<pre class="hljs"><code><div>asyncFunc1()
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value1</span>) </span>{
+    <span class="hljs-keyword">return</span> asyncFunc2()
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value2</span>) </span>{
+    <span class="hljs-comment">// thực hiện gì đó</span>
+  })
+</div></code></pre>
+<h4 id="d%C6%B0-th%E1%BB%ABa-khai-b%C3%A1o-promise">dư thừa khai báo promise</h4>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">asyncFunc1</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">resolve, reject</span>) </span>{
+    asyncFunc2()
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-comment">// extra work with data</span>
+        resolve(data)
+      })
+      .catch(reject)
+  })
+}
+</div></code></pre>
+<p>cách fix dư thừa khai báo promise</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">asyncFunc1</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> asyncFunc2().then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>{
+    <span class="hljs-comment">// extra work with data</span>
+    <span class="hljs-keyword">return</span> data
+  })
+}
+</div></code></pre>
+<h2 id="asyncawait-es7">Async/Await ES7</h2>
+<p>Nếu ở phiên bản ES6 thì promise có thể giải quyết được phần nào callback hell, nhưng vẫn chưa được triệt để. Đến ES7 chúng ta có thể xử lý bất đồng bộ một cách dễ nhìn và dễ đọc hơn với async/await.</p>
+<p><strong>Chú ý</strong>: Async/Await không thay thế promise mà nó kết hợp với promise để cho ra cú pháp dễ nhìn hơn. Vì thế để học async/await yêu cầu bạn phải hiểu được promise</p>
+<p><img src="async-await.jpeg" alt="async await"></p>
+<p><strong>Async function</strong>: Luôn luôn return một promise</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+}
+<span class="hljs-comment">// tương tự</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.resolve(<span class="hljs-number">1</span>)
+}
+</div></code></pre>
+<p><strong>Await</strong>: Chỉ hoạt động bên trong async function</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> resolve(<span class="hljs-string">'done!'</span>), <span class="hljs-number">1000</span>)
+  })
+  <span class="hljs-comment">// đợi cho đến khi promise resolves (*)</span>
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> promise
+  <span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// "done!"</span>
+}
+handle()
+</div></code></pre>
+<h3 id="kh%C3%B4ng-th%E1%BB%83-d%C3%B9ng-await-b%C3%AAn-trong-m%E1%BB%99t-function-th%C6%B0%E1%BB%9Dng">Không thể dùng await bên trong một function thường</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> {
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> resolve(<span class="hljs-string">'done!'</span>), <span class="hljs-number">2000</span>)
+  })
+  <span class="hljs-comment">// SyntaxError</span>
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> promise
+}
+handle()
+</div></code></pre>
+<h3 id="kh%C3%B4ng-ph%E1%BA%A3i-c%C3%A1i-g%C3%AC-c%C5%A9ng-d%C3%B9ng-await-await-ch%E1%BB%89-n%C3%AAn-d%C3%B9ng-cho-promise">Không phải cái gì cũng dùng await, await chỉ nên dùng cho promise</h3>
+<p>Đoạn code dưới đây là sự thừa thải, bạn không cần chuyển một function đồng bộ thành bất đồng bộ</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">sum</span>(<span class="hljs-params">a, b</span>) </span>{
+  <span class="hljs-keyword">return</span> a + b
+}
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> sum(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+  <span class="hljs-keyword">return</span> result
+}
+handle().then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(res)
+})
+</div></code></pre>
+<h3 id="x%E1%BB%AD-l%C3%BD-l%E1%BB%97i-v%E1%BB%9Bi-asyncawait">Xử lý lỗi với async/await</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUser</span>(<span class="hljs-params">username</span>) </span>{
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(
+      <span class="hljs-string">`https://api.github.com/search/users?q=<span class="hljs-subst">${username}</span>`</span>
+    )
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> response.json()
+  } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">throw</span> e
+  }
+}
+getUser(<span class="hljs-string">'Duoc'</span>)
+  .then(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(res))
+  .catch(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-built_in">console</span>.warn(err))
+</div></code></pre>
+<h3 id="%C4%91%E1%BB%ABng-bao-gi%E1%BB%9D-k%E1%BA%BFt-h%E1%BB%A3p-c%C3%A1c-to%C3%A1n-t%E1%BB%AD-%C4%91%E1%BB%93ng-b%E1%BB%99-v%E1%BB%9Bi-asyncawait">Đừng bao giờ kết hợp các toán tử đồng bộ với async/await</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> x = <span class="hljs-number">0</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">r5</span>(<span class="hljs-params"></span>) </span>{
+  x += <span class="hljs-number">1</span>
+  <span class="hljs-built_in">console</span>.log(x)
+  <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>
+}
+;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+  x += <span class="hljs-keyword">await</span> r5()
+  <span class="hljs-built_in">console</span>.log(x)
+})()
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 5</span>
+</div></code></pre>
+<p>Nên sửa lại thành như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> x = <span class="hljs-number">0</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">r5</span>(<span class="hljs-params"></span>) </span>{
+  x += <span class="hljs-number">1</span>
+  <span class="hljs-built_in">console</span>.log(x)
+  <span class="hljs-keyword">return</span> <span class="hljs-number">5</span>
+}
+;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-keyword">async</span> (</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> y = <span class="hljs-keyword">await</span> r5()
+  x += y
+  <span class="hljs-built_in">console</span>.log(x)
+})()
+</div></code></pre>
+<h3 id="g%E1%BB%8Di-tu%E1%BA%A7n-t%E1%BB%B1-v%E1%BB%9Bi-asyncawait">Gọi tuần tự với async/await</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBooksAndAuthor</span>(<span class="hljs-params">authorId</span>) </span>{
+  <span class="hljs-keyword">const</span> books = <span class="hljs-keyword">await</span> fetchAllBook()
+  <span class="hljs-keyword">const</span> author = <span class="hljs-keyword">await</span> fetchAuthorById(authorId)
+  <span class="hljs-keyword">return</span> {
+    author,
+    <span class="hljs-attr">books</span>: books.filter(<span class="hljs-function">(<span class="hljs-params">book</span>) =&gt;</span> book.authorId === authorId)
+  }
+}
+</div></code></pre>
+<p>Tối ưu performance với <code>Promise.all()</code>.</p>
+<p>Nhìn vào đoạn code bên trên, thay vì đợi lấy <code>fetchAllBook()</code> xong rồi đến <code>fetchAuthorById()</code> thì ta có thể cho 2 function này chạy ‘cùng lúc’</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getBooksAndAuthor</span>(<span class="hljs-params">authorId</span>) </span>{
+  <span class="hljs-keyword">const</span> [books, author] = <span class="hljs-keyword">await</span> <span class="hljs-built_in">Promise</span>.all([
+    fetchAllBook(),
+    fetchAuthorById(authorId)
+  ])
+  <span class="hljs-keyword">return</span> {
+    author,
+    <span class="hljs-attr">books</span>: books.filter(<span class="hljs-function">(<span class="hljs-params">book</span>) =&gt;</span> book.authorId === authorId)
+  }
+}
+</div></code></pre>
+
+</body>
+</html>
