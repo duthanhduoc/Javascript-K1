@@ -1,3 +1,19 @@
+// function handle() {
+//   return new Promise((resolve, reject) => {
+//     const p = Promise.resolve('duoc')
+//     console.log(typeof p)
+//     resolve(p)
+//   })
+// }
+
+// async function handle() {
+//   return Promise.resolve('Duoc')
+// }
+
+// handle().then((res) => {
+//   console.log(res)
+// })
+
 class FastHttp {
   static async send(method, url, data) {
     const res = await fetch(url, {
@@ -12,8 +28,9 @@ class FastHttp {
     }
     return res.json()
   }
-  static get(url) {
-    return this.send('GET', url)
+  static async get(url) {
+    const res = await this.send('GET', url)
+    return res
   }
   static post(url, data) {
     return this.send('POST', url, data)
@@ -26,41 +43,47 @@ class FastHttp {
   }
 }
 
+// window.addEventListener('DOMContentLoaded', async () => {
+//   try {
+//     const res = await FastHttp.get(
+//       'https://6061cc41ac47190017a71c4b.mockapi.io/users'
+//     )
+//     console.log(res)
+//   } catch (error) {
+//     console.error(error)
+//   }
+// })
+
+// IIFE
 ;(async function () {
   try {
-    const res = await FastHttp.get(
-      'https://606191f6ac47190017a711f1.mockapi.io/users'
+    const res = await FastHttp.post(
+      'https://6061cc41ac47190017a71c4b.mockapi.io/users',
+      {
+        name: 'Vo Van Cuong'
+      }
     )
     console.log(res)
   } catch (error) {
-    console.error(err)
+    console.error(error)
   }
 })()
 
-// // FastHttp.post('https://606191f6ac47190017a711f1.mockapi.io/users', {
-// //   name: 'Nguyen van cu'
-// // })
-// //   .then((res) => {
-// //     console.log(res)
-// //   })
-// //   .catch((err) => {
-// //     console.error(err)
-// //   })
-
-// // FastHttp.put('https://606191f6ac47190017a711f1.mockapi.io/users/1', {
-// //   name: 'Dang Cong Minh'
-// // })
-// //   .then((res) => {
-// //     console.log(res)
-// //   })
-// //   .catch((err) => {
-// //     console.error(err)
-// //   })
-
-// // FastHttp.delete('https://606191f6ac47190017a711f1.mockapi.io/users/1')
-// //   .then((res) => {
-// //     console.log(res)
-// //   })
-// //   .catch((err) => {
-// //     console.error(err)
-// //   })
+// FastHttp
+//   .put('https://6061cc41ac47190017a71c4b.mockapi.io/users/10', {
+//     name: 'Tran Van Canh',
+//     address: 'Vietnam'
+//   })
+//   .then((res) => {
+//     console.log(res)
+//   })
+//   .catch((err) => {
+//     console.error(err)
+//   })
+// FastHttp.delete('https://6061cc41ac47190017a71c4b.mockapi.io/users/11')
+//   .then((res) => {
+//     console.log(res)
+//   })
+//   .catch((err) => {
+//     console.error(err)
+//   })

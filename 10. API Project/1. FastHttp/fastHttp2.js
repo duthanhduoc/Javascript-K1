@@ -27,35 +27,37 @@ class FastHttp {
   }
 }
 
-// FastHttp.get('https://606191f6ac47190017a711f1.mockapi.io/users1')
+// const http = new FastHttp()
+// http
+//   .get('https://6061cc41ac47190017a71c4b.mockapi.io/users')
 //   .then((res) => {
 //     console.log(res)
 //   })
 //   .catch((err) => {
 //     console.error(err)
 //   })
-
-// FastHttp.post('https://606191f6ac47190017a711f1.mockapi.io/users', {
-//   name: 'Nguyen van cu'
-// })
+// http
+//   .post('https://6061cc41ac47190017a71c4b.mockapi.io/users', {
+//     name: 'Vo Van Cuong'
+//   })
 //   .then((res) => {
 //     console.log(res)
 //   })
 //   .catch((err) => {
 //     console.error(err)
 //   })
-
-// FastHttp.put('https://606191f6ac47190017a711f1.mockapi.io/users/1', {
-//   name: 'Dang Cong Minh'
-// })
+// http
+//   .put('https://6061cc41ac47190017a71c4b.mockapi.io/users/10', {
+//     name: 'Tran Van Canh',
+//     address: 'Vietnam'
+//   })
 //   .then((res) => {
 //     console.log(res)
 //   })
 //   .catch((err) => {
 //     console.error(err)
 //   })
-
-FastHttp.delete('https://606191f6ac47190017a711f1.mockapi.io/users/1')
+FastHttp.delete('https://6061cc41ac47190017a71c4b.mockapi.io/users/11')
   .then((res) => {
     console.log(res)
   })
