@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ajax, Fetch, API.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ajax-fetch-api">Ajax, Fetch API</h1>
+<p><a href="https://xdevclass.com/phan-6-json-va-ajax-trong-javascript/">Bản gốc: Phần 6 (Phần cuối): JSON và Ajax trong Javascript</a></p>
+<h2 id="json">JSON</h2>
+<p>JSON (<strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation) là một chuỗi text được viết dưới dạng Javascript Object dùng để lưu trữ và trao đổi dữ liệu.</p>
+<p>JSON thường được dùng để lưu trữ string, number, boolean, array, object, null.</p>
+<p>Định dạng JSON có thể dễ dàng sử dụng ở các ngôn ngữ lập trình khác nhau. Ở Javascript bạn có thể thao tác với JSON thông qua <code>JSON.parse()</code> và <code>JSON.stringify()</code></p>
+<h3 id="chuy%E1%BB%83n-object-th%C3%A0nh-json">Chuyển Object thành JSON</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> myObj = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">30</span>,
+  <span class="hljs-attr">cars</span>: [<span class="hljs-string">'Ford'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Fiat'</span>]
+}
+<span class="hljs-keyword">const</span> myJSON = <span class="hljs-built_in">JSON</span>.stringify(myObj)
+<span class="hljs-built_in">console</span>.log(myJSON) <span class="hljs-comment">// '{"name":"John","age":30,"cars":["Ford","BMW","Fiat"]}'</span>
+</div></code></pre>
+<h3 id="chuy%E1%BB%83n-json-th%C3%A0nh-object">Chuyển JSON thành Object</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Chú ý là dùng dấu ' hoặc ` ngoài cùng thì JS mới cho phép</span>
+<span class="hljs-keyword">const</span> myJSON = <span class="hljs-string">`{"name":"John","age":30,"cars":["Ford","BMW","Fiat"]}`</span>
+<span class="hljs-keyword">const</span> myObj = <span class="hljs-built_in">JSON</span>.parse(myJSON)
+</div></code></pre>
+<h3 id="c%C3%BA-ph%C3%A1p-json">Cú pháp JSON</h3>
+<ul>
+<li>Data là cặp name/value</li>
+<li>Data được ngăn cách bởi dấu phẩy</li>
+<li>Ngoặc nhọn mô tả object</li>
+<li>Ngoặc vuông mô tả array</li>
+<li>JSON dấu nháy kép</li>
+<li>Trường name phải bọc trong nháy kép</li>
+</ul>
+<h2 id="value-trong-json-ph%E1%BA%A3i-l%C3%A0-m%E1%BB%99t-trong-nh%E1%BB%AFng-ki%E1%BB%83u-d%E1%BB%AF-li%E1%BB%87u-d%C6%B0%E1%BB%9Bi-%C4%91%C3%A2y">Value trong JSON phải là một trong những kiểu dữ liệu dưới đây</h2>
+<ul>
+<li>string</li>
+<li>number</li>
+<li>object</li>
+<li>array</li>
+<li>boolean</li>
+<li>null</li>
+</ul>
+<h2 id="array-v%C3%A0-json">Array và JSON</h2>
+<pre class="hljs"><code><div><span class="hljs-comment">// Array</span>
+<span class="hljs-keyword">const</span> arr = [<span class="hljs-string">'Ford'</span>, <span class="hljs-string">'BMW'</span>, <span class="hljs-string">'Fiat'</span>]
+<span class="hljs-comment">// JSON</span>
+<span class="hljs-keyword">const</span> json = <span class="hljs-string">'[ "Ford", "BMW", "Fiat" ]'</span>
+</div></code></pre>
+<p>Ngoài các giá trị được nêu bên trên thì các giá trị như <strong>Function, undefined, NaN, Infinity</strong>,… sẽ không được chuyển sang JSON nhé</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> obj = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-number">30</span>
+  },
+  <span class="hljs-attr">city</span>: <span class="hljs-string">'New York'</span>
+}
+<span class="hljs-keyword">var</span> myJSON = <span class="hljs-built_in">JSON</span>.stringify(obj)
+<span class="hljs-built_in">console</span>.log(myJSON) <span class="hljs-comment">// '{"name":"John","city":"New York"}'</span>
+</div></code></pre>
+<h2 id="ajax">AJAX</h2>
+<p>AJAX = <strong>A</strong>synchronous <strong>J</strong>avaScript <strong>A</strong>nd <strong>X</strong>ML.</p>
+<p>AJAX không phải là một ngôn ngữ lập trình</p>
+<p>AJAX chỉ là sự kết hợp của</p>
+<ul>
+<li>XMLHttpRequest object có sẵn trên trình duyệt (dùng để gửi và nhận data từ web server)</li>
+<li>Javascript và HTML DOM (để hiển thị hoặc sử dụng data)</li>
+</ul>
+<p>Cái tên AJAX dễ gây hiểu lầm là ứng dụng dùng AJAX sẽ sử dụng XML (một kiểu data như JSON nhưng phức tạp hơn) để gửi và nhận dữ liệu. Nhưng trên thực tế thì chúng ta chủ yếu dùng text hoặc JSON để trao đổi dữ liệu.</p>
+<p>AJAX giúp chúng ta đọc dữ liệu từ server trả về, gửi dữ liệu lên server ở chế độ ngầm, cập nhật trang web mà không cần reload lại trang. Vì sự tiện lợi của AJAX mà chúng ta đã có React, Angular và Vue 😆</p>
+<h3 id="c%C3%A1ch-ajax-ho%E1%BA%A1t-%C4%91%E1%BB%99ng">Cách AJAX hoạt động</h3>
+<p><img src="pic_ajax.gif" alt="Ajax"></p>
+<ol>
+<li>Một sự kiện xảy ra ở trang web (trang được load, một button được click)</li>
+<li>Một XMLHttpRequest object được tạo bởi Javascript</li>
+<li>XMLHttpRequest object gửi một request đến web server</li>
+<li>Server xử lý request đó</li>
+<li>Server gửi response về cho trang web</li>
+<li>Response được đọc bởi Javascript</li>
+<li>Thực hiện một số hành động trên trang web bằng Javascript (ví dụ như cập nhật lại trang)</li>
+</ol>
+<h3 id="xmlhttprequest">XMLHttpRequest</h3>
+<p>XMLHttpRequest (XHR) là một constructor function (mình đã giới thiệu về constructor function trong <img src="https://xdevclass.com/phan-3-thao-tac-voi-number-string-array-object-va-class-trong-javascript/" alt="bài này">) dùng để giao tiếp với server. XHR cũng là một Web APIs nên nó chỉ có trên môi trường trình duyệt, không xuất hiện ở Node.js nha :mrgreen:</p>
+<h3 id="t%E1%BA%A1o-m%E1%BB%99t-xmlhttprequest-object">Tạo một XMLHttpRequest object</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> xhttp = <span class="hljs-keyword">new</span> XMLHttpRequest()
+</div></code></pre>
+<h3 id="m%E1%BB%99t-s%E1%BB%91-ph%C6%B0%C6%A1ng-th%E1%BB%A9c-c%E1%BB%A7a-xmlhttprequest-object">Một số phương thức của XMLHttpRequest object</h3>
+<table>
+<thead>
+<tr>
+<th>Phương thức</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new XMLHttpRequest()</td>
+<td>Tạo mới XMLHttpRequest object</td>
+</tr>
+<tr>
+<td>abort()</td>
+<td>Hủy request hiện tại</td>
+</tr>
+<tr>
+<td>getAllResponseHeaders()</td>
+<td>Returns tất cả thông tin header</td>
+</tr>
+<tr>
+<td>getResponseHeader()</td>
+<td>Returns thông tin header chỉ định</td>
+</tr>
+<tr>
+<td>open(method, url, async, user, psw)</td>
+<td>Quy định request; method: Loại request (GET, POST, PUT, DELETE); url: đường dẫn đến server; async: true (bất đồng bộ) hoặc false (đồng bộ); user: tùy chọn username; psw: tùy chọn password</td>
+</tr>
+<tr>
+<td>send(body)</td>
+<td>Gửi body data đến server. body có thể là; Document, cần serialized trước khi gửi; Blob, BufferSource, FormData, URLSearchParams, or USVString object.null; Nếu không có giá trị nào cho body thì mặc định null được sử dụng.</td>
+</tr>
+<tr>
+<td>setRequestHeader()</td>
+<td>Thêm các giá trị vào trong header request</td>
+</tr>
+</tbody>
+</table>
+<h3 id="m%E1%BB%99t-s%E1%BB%91-thu%E1%BB%99c-t%C3%ADnh-c%E1%BB%A7a-xmlhttprequest-object">Một số thuộc tính của XMLHttpRequest object</h3>
+<table>
+<thead>
+<tr>
+<th>Thuộc tính</th>
+<th>Mô tả</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>onreadystatechange</td>
+<td>Xác định một function được gọi khi thuộc tính readyState thay đổi</td>
+</tr>
+<tr>
+<td>readyState</td>
+<td>Mô tả trạng thái của XMLHttpRequest.0: request chưa được khởi tạo. 1: kết nối với server được thiết lập. 2: request được server tiếp nhận. 3: đang xử lý request. 4: request kết thúc và response đã sẵn sàng để dùng</td>
+</tr>
+<tr>
+<td>responseText</td>
+<td>Return về response như một string</td>
+</tr>
+<tr>
+<td>responseXML</td>
+<td>Return về response như một XML</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Return về status của request. 200: “OK”. 403: “Forbidden”. 404: “Not Found”. Xem danh sách đầy đủ tại <a href="https://www.w3schools.com/tags/ref_httpmessages.asp">Http Messages Reference</a></td>
+</tr>
+<tr>
+<td>statusText</td>
+<td>Return về status dạng text (Ví dụ “OK” hoặc “Not Found”)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="v%C3%AD-d%E1%BB%A5-v%E1%BB%81-c%C3%A1ch-d%C3%B9ng-xhr-%C4%91%E1%BB%83-get">Ví dụ về cách dùng XHR để GET</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">loadDoc</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> xhttp = <span class="hljs-keyword">new</span> XMLHttpRequest()
+  <span class="hljs-comment">// function này sẽ chạy mỗi khi readyState thay đổi</span>
+  xhttp.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Khi request thành công</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.readyState == <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-keyword">this</span>.status == <span class="hljs-number">200</span>) {
+      <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'demo'</span>).innerHTML = <span class="hljs-keyword">this</span>.responseText
+    }
+  }
+  xhttp.open(<span class="hljs-string">'GET'</span>, <span class="hljs-string">'https://httpbin.org/get'</span>, <span class="hljs-literal">true</span>)
+  xhttp.send()
+}
+loadDoc()
+</div></code></pre>
+<h3 id="v%C3%AD-d%E1%BB%A5-v%E1%BB%81-c%C3%A1ch-d%C3%B9ng-xhr-%C4%91%E1%BB%83-post">Ví dụ về cách dùng XHR để POST</h3>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">send</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> xhttp = <span class="hljs-keyword">new</span> XMLHttpRequest()
+  <span class="hljs-comment">// function này sẽ chạy mỗi khi readyState thay đổi</span>
+  xhttp.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-comment">// Khi request thành công</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.readyState == <span class="hljs-number">4</span> &amp;&amp; <span class="hljs-keyword">this</span>.status == <span class="hljs-number">200</span>) {
+      <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'demo'</span>).innerHTML = <span class="hljs-keyword">this</span>.responseText
+    }
+  }
+  xhttp.open(<span class="hljs-string">'POST'</span>, <span class="hljs-string">'https://httpbin.org/post'</span>, <span class="hljs-literal">true</span>)
+  <span class="hljs-keyword">const</span> body = { <span class="hljs-attr">name</span>: <span class="hljs-string">'Du Thanh Duoc'</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">24</span>, <span class="hljs-attr">point</span>: <span class="hljs-number">100</span> }
+  xhttp.send(<span class="hljs-built_in">JSON</span>.stringify(body))
+}
+send()
+</div></code></pre>
+<p>Dùng <code>XMLHttpRequest</code> để xử lý AJAX được coi là cách “cổ xưa” nhất và rườm rà nhất. Ngày nay chúng ta có rất nhiều tùy chọn mạnh mẽ để xử lý AJAX. Mình có thể liệt kê ra</p>
+<ul>
+<li>Nếu dùng <a href="https://jquery.com/">Jquery</a> thì Jquery cung cấp cho chúng ta nhiều hàm gọi AJAX rất tiện lợi như <code>load</code>, <code>ajax</code>, <code>get</code>, <code>getJSON</code></li>
+<li>Những trình duyệt ngày này cung cấp một API khác <code>XMLHttpRequest</code> đó là <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a>, với nhiều tính năng nâng cao và cú pháp dễ sử dụng hơn <code>XMLHttpRequest</code></li>
+<li>Phổ biến nhất phải kể đến <a href="https://github.com/axios/axios">Axios</a>, một thư viện chuyên dụng cho việc xử lý AJAX cũng như gọi API. Cung cấp hàng tá tính năng hay, dùng được cho cả môi trường trình duyệt và Node (nếu trình duyệt nó sẽ dựa trên XHR, nếu là Node thì là <a href="https://nodejs.org/api/http.html">HTTP interface</a>)</li>
+</ul>
+<h2 id="fetch-api">Fetch API</h2>
+<p>Fetch là một API đơn giản cung cấp cho chúng ta khả năng gửi và nhận request thông qua trình duyệt. Nếu như <code>XMLHttpRequest</code> dùng callback thì Fetch API dùng Promise, vì thế sẽ tiện lợi hơi khi thao tác và xử lý.</p>
+<p>Một setup request đơn giản với fetch</p>
+<pre class="hljs"><code><div>fetch(<span class="hljs-string">'http://example.com/movies.json'</span>)
+  .then(<span class="hljs-function">(<span class="hljs-params">response</span>) =&gt;</span> response.json())
+  .then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(data))
+</div></code></pre>
+<p>Lưu ý là Promise return từ <code>fetch()</code> <strong>sẽ không reject dựa trên HTTP error status</strong> ngay cả khi HTTP 404 hoặc 500. Thay vì đó, nó sẽ resolve bình thường (với <code>ok</code> status là false), và nó chỉ sẽ reject khi mà mạng lỗi hoặc bất cứ điều gì ngăn cả request hoàn thành.</p>
+<pre class="hljs"><code><div>fetch(<span class="hljs-string">'examples/example.json'</span>)
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-keyword">if</span> (!response.ok) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(response.statusText)
+    }
+    <span class="hljs-comment">// Do stuff with the response</span>
+  })
+  .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Looks like there was a problem: \n'</span>, error)
+  })
+</div></code></pre>
+<h3 id="%C4%91%E1%BB%8Dc-m%E1%BB%99t-response">Đọc một response</h3>
+<pre class="hljs"><code><div>fetch(<span class="hljs-string">'examples/example.json'</span>)
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-keyword">if</span> (!response.ok) {
+      <span class="hljs-keyword">throw</span> <span class="hljs-built_in">Error</span>(response.statusText)
+    }
+    <span class="hljs-comment">// Read the response as json.</span>
+    <span class="hljs-keyword">return</span> response.json()
+  })
+  .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">responseAsJson</span>) </span>{
+    <span class="hljs-comment">// Do stuff with the JSON</span>
+    <span class="hljs-built_in">console</span>.log(responseAsJson)
+  })
+  .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">error</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Looks like there was a problem: \n'</span>, error)
+  })
+</div></code></pre>
+<p>Mặc định nếu không truyền tham số thứ 2 thì fetch sẽ dùng phương thức GET, còn muốn chỉ rõ phương thức như POST, PUT… thì phải truyền tham số thứ 2 vào.</p>
+<p>Ví dụ POST</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Example POST method implementation:</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">postData</span>(<span class="hljs-params">url = <span class="hljs-string">''</span>, data = {}</span>) </span>{
+  <span class="hljs-comment">// Default options are marked with *</span>
+  <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> fetch(url, {
+    <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>, <span class="hljs-comment">// *GET, POST, PUT, DELETE, etc.</span>
+    <span class="hljs-attr">mode</span>: <span class="hljs-string">'cors'</span>, <span class="hljs-comment">// no-cors, *cors, same-origin</span>
+    <span class="hljs-attr">cache</span>: <span class="hljs-string">'no-cache'</span>, <span class="hljs-comment">// *default, no-cache, reload, force-cache, only-if-cached</span>
+    <span class="hljs-attr">credentials</span>: <span class="hljs-string">'same-origin'</span>, <span class="hljs-comment">// include, *same-origin, omit</span>
+    <span class="hljs-attr">headers</span>: {
+      <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>
+      <span class="hljs-comment">// 'Content-Type': 'application/x-www-form-urlencoded',</span>
+    },
+    <span class="hljs-attr">redirect</span>: <span class="hljs-string">'follow'</span>, <span class="hljs-comment">// manual, *follow, error</span>
+    <span class="hljs-attr">referrerPolicy</span>: <span class="hljs-string">'no-referrer'</span>, <span class="hljs-comment">// no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url</span>
+    <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify(data) <span class="hljs-comment">// body data type must match "Content-Type" header</span>
+  })
+  <span class="hljs-keyword">return</span> response.json() <span class="hljs-comment">// parses JSON response into native JavaScript objects</span>
+}
+postData(<span class="hljs-string">'https://example.com/answer'</span>, { <span class="hljs-attr">answer</span>: <span class="hljs-number">42</span> }).then(<span class="hljs-function">(<span class="hljs-params">data</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// JSON data parsed by `data.json()` call</span>
+})
+</div></code></pre>
+
+</body>
+</html>
