@@ -37,7 +37,7 @@ const userPlus = { ...user, ability: ['sing'] }
 ```
 
 ```js
-// merge array
+// concat array
 const list1 = [1, 2, 3, 4]
 const list2 = [5, 6, 7, 8]
 const list3 = [...list1, ...list2]

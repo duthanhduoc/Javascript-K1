@@ -494,10 +494,10 @@ generator.next() <span class="hljs-comment">// {value: 4, done: true}</span>
 <p><code>next()</code>: tiếp tục cho hàm chạy cho đến khi gặp <code>yield</code> hoặc <code>return</code>. return object <code>{value: any, done: true/false}</code></p>
 </li>
 <li>
-<p><code>return()</code>: tiếp tục thực thi, đồng thời kết thúc generator và return object <code>{value: any, done: true}</code></p>
+<p><code>return(value)</code>: kết thúc generator và return object <code>{value: any, done: true}</code></p>
 </li>
 <li>
-<p><code>throw()</code>: tiếp tục thực thi và quăng 1 lỗi vào trong generator function (đồng thời kết thúc generator, trừ khi được bắt lại trong generator đó). return object <code>{value: any, done: true/false}</code></p>
+<p><code>throw()</code>: quăng 1 lỗi vào trong generator function (đồng thời kết thúc generator, trừ khi được bắt lại trong generator đó). return object <code>{value: any, done: true/false}</code></p>
 </li>
 </ul>
 <p>Ví dụ về method <code>return()</code></p>
@@ -531,13 +531,15 @@ g.throw(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
 <h2 id="c%C3%A1c-tr%C6%B0%E1%BB%9Dng-h%E1%BB%A3p-d%C3%B9ng-generator">Các trường hợp dùng generator</h2>
 <h3 id="generator-%C3%A1p-d%E1%BB%A5ng-trong-redux-saga">Generator áp dụng trong Redux-Saga</h3>
 <p>Nếu bạn dùng Redux-Saga với React thì chắc hẳn không lạ gì với generator và yield</p>
-<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { put, takeEvery } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga/effects'</span>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { put, takeEvery, call } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga/effects'</span>
 <span class="hljs-keyword">const</span> url = <span class="hljs-string">'/api/data/get'</span>
 <span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">requestFetch</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA'</span> })
   <span class="hljs-keyword">try</span> {
-    <span class="hljs-keyword">const</span> dataJSON = <span class="hljs-keyword">yield</span> fetch(url, { <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'application/json'</span> })
-    <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> dataJSON.json()
+    <span class="hljs-keyword">const</span> dataJSON = <span class="hljs-keyword">yield</span> call(
+      fetch(url, { <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'application/json'</span> })
+    )
+    <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> call(dataJSON.json())
     <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA_SUCCESS'</span>, data })
   } <span class="hljs-keyword">catch</span> (error) {
     <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA_FAIL'</span>, error })
@@ -555,7 +557,7 @@ g.throw(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
   <span class="hljs-keyword">return</span> fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)
 }
 <span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">1</span>)) <span class="hljs-comment">// 1</span>
-<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 1</span>
 <span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">3</span>)) <span class="hljs-comment">// 2</span>
 <span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">4</span>)) <span class="hljs-comment">// 3</span>
 </div></code></pre>
@@ -573,7 +575,7 @@ g.throw(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error<
 }
 <span class="hljs-keyword">const</span> fib = fibonacci()
 <span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 1</span>
-<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 1</span>
 <span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 2</span>
 <span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 3</span>
 </div></code></pre>

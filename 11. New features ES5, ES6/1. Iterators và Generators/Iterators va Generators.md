@@ -155,9 +155,9 @@ generator.next() // {value: 4, done: true}
 
 - `next()`: tiếp tục cho hàm chạy cho đến khi gặp `yield` hoặc `return`. return object `{value: any, done: true/false}`
 
-- `return()`: tiếp tục thực thi, đồng thời kết thúc generator và return object `{value: any, done: true}`
+- `return(value)`: kết thúc generator và return object `{value: any, done: true}`
 
-- `throw()`: tiếp tục thực thi và quăng 1 lỗi vào trong generator function (đồng thời kết thúc generator, trừ khi được bắt lại trong generator đó). return object `{value: any, done: true/false}`
+- `throw()`: quăng 1 lỗi vào trong generator function (đồng thời kết thúc generator, trừ khi được bắt lại trong generator đó). return object `{value: any, done: true/false}`
 
 Ví dụ về method `return()`
 
@@ -200,13 +200,15 @@ g.throw(new Error('Something went wrong'))
 Nếu bạn dùng Redux-Saga với React thì chắc hẳn không lạ gì với generator và yield
 
 ```js
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 const url = '/api/data/get'
 export function* requestFetch() {
   yield put({ type: 'FETCH_DATA' })
   try {
-    const dataJSON = yield fetch(url, { 'content-type': 'application/json' })
-    const data = yield dataJSON.json()
+    const dataJSON = yield call(
+      fetch(url, { 'content-type': 'application/json' })
+    )
+    const data = yield call(dataJSON.json())
     yield put({ type: 'FETCH_DATA_SUCCESS', data })
   } catch (error) {
     yield put({ type: 'FETCH_DATA_FAIL', error })
@@ -230,7 +232,7 @@ const fibonacci = (n) => {
   return fibonacci(n - 1) + fibonacci(n - 2)
 }
 console.log(fibonacci(1)) // 1
-console.log(fibonacci(2)) // 2
+console.log(fibonacci(2)) // 1
 console.log(fibonacci(3)) // 2
 console.log(fibonacci(4)) // 3
 ```
@@ -252,7 +254,7 @@ function* fibonacci() {
 }
 const fib = fibonacci()
 console.log(fib.next().value) // 1
-console.log(fib.next().value) // 2
+console.log(fib.next().value) // 1
 console.log(fib.next().value) // 2
 console.log(fib.next().value) // 3
 ```
