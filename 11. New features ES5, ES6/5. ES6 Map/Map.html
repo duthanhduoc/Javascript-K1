@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Map.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="map">Map</h1>
+<p><a href="https://xdevclass.com/tat-ca-nhung-gi-ban-can-biet-ve-map-va-set-trong-javascript/">Bài gốc: Tất cả những gì bạn cần biết về Map và Set trong Javascript</a></p>
+<p>Cho đến bây giờ thì chúng ta đã được biết về các cấu trúc dữ liệu phức tạp dưới đây:</p>
+<ul>
+<li>
+<p>Object được sử dụng để lưu trữ các value (giá trị) mà định danh bằng key (khóa)</p>
+</li>
+<li>
+<p>Array được sử dụng để lưu trữ các giá trị mà được sắp xếp theo thứ tự.</p>
+</li>
+</ul>
+<p>Nhưng liệu rằng chừng đó có đủ cho chúng ta sử dụng khi code trong thực tế. Đó là lý do tại sao Map và Set ra đời để giúp các lập trình viên có thêm nhiều sự lựa chọn hơn khi code.</p>
+<h2 id="map-l%C3%A0-g%C3%AC">Map là gì</h2>
+<p><code>Map</code> là tập hợp các giá trị được định danh bằng key như <code>Object</code>. Nhưng điểm khác biệt chính là <code>Map</code> cho phép key thuộc bất cứ kiểu dữ liệu nào.</p>
+<p>Các phương thức và thuộc tính của <code>Map</code> là</p>
+<ul>
+<li><code>new Map()</code> – tạo mới một map</li>
+<li><code>map.set(key, value)</code> – lưu trữ value bằng key</li>
+<li><code>map.get(key)</code> – return một value bởi một key, <code>undefined</code> nếu <code>key</code> không tồn tại trong map</li>
+<li><code>map.has(key)</code> – return <code>true</code> nếu <code>key</code> tồn tại, <code>false</code> nếu ngược lại</li>
+<li><code>map.delete(key)</code> – xóa value bằng key</li>
+<li><code>map.clear()</code> – xóa mọi thứ từ map</li>
+<li><code>map.size</code> – return số lượng phần tử hiện tại</li>
+</ul>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()
+map.set(<span class="hljs-string">'1'</span>, <span class="hljs-string">'str1'</span>) <span class="hljs-comment">// string key</span>
+map.set(<span class="hljs-number">1</span>, <span class="hljs-string">'num1'</span>) <span class="hljs-comment">// numeric key</span>
+map.set(<span class="hljs-literal">true</span>, <span class="hljs-string">'bool1'</span>) <span class="hljs-comment">// boolean key</span>
+<span class="hljs-comment">// Anh em nhớ object thường không? nó sẽ tự động chuyển đổi key sang string</span>
+<span class="hljs-comment">// Map thì giữ nguyên kiểu dữ liệu của key, đó là điểm khác nhau chính của 2 tụi nó:</span>
+alert(map.get(<span class="hljs-number">1</span>)) <span class="hljs-comment">// 'num1'</span>
+alert(map.get(<span class="hljs-string">'1'</span>)) <span class="hljs-comment">// 'str1'</span>
+alert(map.size) <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<p>Như chúng ta có thể thấy, không như object, key không được chuyển sang string. Key có thể thuộc bất cứ kiểu dữ liệu nào.</p>
+<p><code>map[key]</code> không phải là cách hay để sử dụng Map</p>
+<p>Mặc dù <code>map[key]</code> cũng hoạt động. Chúng ta có thể set <code>map[key] = 2</code>, điều này giống như “đối xử” với <code>map</code> như là một Javascript object thông thường,vì thế bạn sẽ bị một số giới hạn (ví dụ chỉ string/symbol key…)</p>
+<p>Vậy nên chúng ta sử dụng các phương thức mà <code>map</code> cung cấp như <code>set</code>, <code>get</code>,…</p>
+<p><strong>Map cũng có thể sử dụng object như là một key.</strong></p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> john = { <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span> }
+<span class="hljs-comment">// Đếm số lượng truy cập của mỗi user</span>
+<span class="hljs-keyword">let</span> visitsCountMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()
+<span class="hljs-comment">// john đóng vai trò là key của map</span>
+visitsCountMap.set(john, <span class="hljs-number">123</span>)
+alert(visitsCountMap.get(john)) <span class="hljs-comment">// 123</span>
+</div></code></pre>
+<p>Sử dụng object như là key là một trong những tính năng đáng chú ý và quan trọng nhất của <code>Map</code>. Điều tương tự không thể xảy ra với <code>Object</code>. String là key của <code>Object</code> thì ok, nhưng chúng ta không thể xử dụng <code>Object</code> như là một key trong <code>Object</code>.</p>
+<p>Cùng thử xem nào:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> john = { <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span> }
+<span class="hljs-keyword">let</span> ben = { <span class="hljs-attr">name</span>: <span class="hljs-string">'Ben'</span> }
+<span class="hljs-keyword">let</span> visitsCountObj = {} <span class="hljs-comment">// thử sử dụng một object</span>
+visitsCountObj[ben] = <span class="hljs-number">234</span> <span class="hljs-comment">// thử sử dụng object như một key</span>
+visitsCountObj[john] = <span class="hljs-number">123</span> <span class="hljs-comment">// sử dụng john object như một key, ben object sẽ bị thay thế</span>
+<span class="hljs-comment">// Đây là những gì được ghi!</span>
+alert(visitsCountObj[<span class="hljs-string">'[object Object]'</span>]) <span class="hljs-comment">// 123</span>
+</div></code></pre>
+<p>Vì <code>visitsCountObj</code> là một object, nó sẽ chuyển đổi tất cả các Object key, như <code>john</code> và ben ở trên thành một string giống nhau là <code>&quot;[object Object]&quot;</code> . Đây không phải là những gì chúng ta mong đợi.</p>
+<p><strong>Cách <code>Map</code> so sánh các key để biết key đó đã tồn tại hay chưa</strong></p>
+<p>Để kiểm tra các key có bằng nhau hay không, <code>Map</code> sử dụng thuật toán <a href="https://tc39.github.io/ecma262/#sec-samevaluezero">SameValueZero</a> . Nó giống như việc so sánh bằng nghiêm ngặt <code>===</code>, nhưng điểm khác biệt là <code>NaN</code> được coi là bằng với <code>NaN</code>.</p>
+<p>Thuật toán này không thể bị thay đổi hoặc tinh chỉnh.</p>
+<p><strong>Chaining – chuỗi</strong></p>
+<p>Mọi khi gọi <code>map.set</code>, nó return lại chính map đó, vì thế chúng ta có thể nối chuỗi để gọi như thế này:</p>
+<pre class="hljs"><code><div>map.set(<span class="hljs-string">'1'</span>, <span class="hljs-string">'str1'</span>).set(<span class="hljs-number">1</span>, <span class="hljs-string">'num1'</span>).set(<span class="hljs-literal">true</span>, <span class="hljs-string">'bool1'</span>)
+</div></code></pre>
+<h2 id="l%E1%BA%B7p-qua-map">Lặp qua Map</h2>
+<p>Để lặp qua một map, có 3 phương thức:</p>
+<ul>
+<li><code>map.keys()</code> – return một iterable cho các key,</li>
+<li><code>map.values()</code> – return một iterable cho các value,</li>
+<li><code>map.entries()</code> – return một iterable cho các entry <code>[key, value]</code>, nó được sử dụng mặc định trong <code>for...of</code></li>
+</ul>
+<p>Lưu ý đây là một <strong>iterable</strong> chứ không phải <strong>array</strong> nha, ai chưa biết về iter**able thì có thể đọc lại bài viết của mình <a href="https://xdevclass.com/ban-da-biet-ve-iterator-iterable-va-generators-trong-javascript-chua/">Bạn đã biết về Iterator, Iterable và Generator trong Javascript chưa?</a></p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> recipeMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([
+  [<span class="hljs-string">'cucumber'</span>, <span class="hljs-number">500</span>],
+  [<span class="hljs-string">'tomatoes'</span>, <span class="hljs-number">350</span>],
+  [<span class="hljs-string">'onion'</span>, <span class="hljs-number">50</span>]
+])
+<span class="hljs-comment">// Lặp qua các key (vegetables)</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> vegetable <span class="hljs-keyword">of</span> recipeMap.keys()) {
+  alert(vegetable) <span class="hljs-comment">// cucumber, tomatoes, onion</span>
+}
+<span class="hljs-comment">// Lặp qua các value (amounts)</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> amount <span class="hljs-keyword">of</span> recipeMap.values()) {
+  alert(amount) <span class="hljs-comment">// 500, 350, 50</span>
+}
+<span class="hljs-comment">// Lặp qua các [key, value] entries</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> entry <span class="hljs-keyword">of</span> recipeMap) {
+  <span class="hljs-comment">// Tương tự như recipeMap.entries()</span>
+  alert(entry) <span class="hljs-comment">// cucumber,500 (and so on)</span>
+}
+</div></code></pre>
+<p>Thứ tự các key khi chèn vào được bảo toàn.</p>
+<p><code>Map</code> bảo đảm cho các key khi chèn đúng thứ tự ban đầu, không như Object không phải lúc nào cũng theo thứ tự:</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> recipeMap = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([
+  [<span class="hljs-string">'onion'</span>, <span class="hljs-number">50</span>],
+  [<span class="hljs-string">'cucumber'</span>, <span class="hljs-number">500</span>],
+  [<span class="hljs-string">'tomatoes'</span>, <span class="hljs-number">350</span>]
+])
+<span class="hljs-keyword">const</span> obj = { <span class="hljs-attr">foo</span>: <span class="hljs-string">'foo'</span>, <span class="hljs-number">1</span>: <span class="hljs-string">'1'</span>, <span class="hljs-attr">bar</span>: <span class="hljs-string">'bar'</span> }
+<span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">Object</span>.keys(obj)) <span class="hljs-comment">// ["1", "foo", "bar"]</span>
+<span class="hljs-built_in">console</span>.log(recipeMap.keys()) <span class="hljs-comment">// MapIterator {"onion", "cucumber", "tomatoes"}</span>
+</div></code></pre>
+<p>Bên cạnh đó, <code>Map</code> cũng có phương thức <code>forEach</code> được xây dựng sẵn, tương tự như bới Array:</p>
+<pre class="hljs"><code><div>recipeMap.forEach(<span class="hljs-function">(<span class="hljs-params">value, key, map</span>) =&gt;</span> {
+  alert(<span class="hljs-string">`<span class="hljs-subst">${key}</span>: <span class="hljs-subst">${value}</span>`</span>) <span class="hljs-comment">// cucumber: 500 etc</span>
+})
+</div></code></pre>
+<h2 id="objectentries-t%E1%BA%A1o-map-t%E1%BB%AB-object"><code>Object.entries</code>: Tạo Map từ Object</h2>
+<p>Khi một <code>Map</code> được tạo, chúng ta có thể truyền một array (hoặc một itarable) với cặp key/value cho việc khởi tạo, như thế này:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// mảng các cặp [key, value]</span>
+<span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>([
+  [<span class="hljs-string">'1'</span>, <span class="hljs-string">'str1'</span>],
+  [<span class="hljs-number">1</span>, <span class="hljs-string">'num1'</span>],
+  [<span class="hljs-literal">true</span>, <span class="hljs-string">'bool1'</span>]
+])
+alert(map.get(<span class="hljs-string">'1'</span>)) <span class="hljs-comment">// str1</span>
+</div></code></pre>
+<p>Nếu chúng ta có một object thông thường, chúng ta có thể tạo một Map từ nó, sau đó chúng ta có thể sử dụng phương thức có sẵn là <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries">Object.entries(obj)</a> để return về một mảng các cặp key/value đúng định dạng.</p>
+<p>Vậy nên chúng ta có thể tạo một map từ một object như thế này:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">30</span>
+}
+<span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>(<span class="hljs-built_in">Object</span>.entries(obj))
+alert(map.get(<span class="hljs-string">'name'</span>)) <span class="hljs-comment">// John</span>
+</div></code></pre>
+<p>Ở đây, <code>Object.entries</code> return về mảng các cặp key/value: <code>[ [&quot;name&quot;,&quot;John&quot;], [&quot;age&quot;, 30] ]</code> . Đó là những gì chúng ta cần cho <code>Map</code>.</p>
+<h2 id="objectfromentries-t%E1%BA%A1o-object-t%E1%BB%AB-map"><code>Object.fromEntries</code>: Tạo Object từ Map</h2>
+<p>Chúng ta vừa thấy cách tạo <code>Map</code> từ một object thông thường với <code>Object.entries(obj)</code></p>
+<p>Phương thức <code>Object.fromEntries</code> làm điều ngược lại: đưa vào một mảng của các cặp <code>[key, value]</code>, nó tạo một object từ chúng</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> prices = <span class="hljs-built_in">Object</span>.fromEntries([
+  [<span class="hljs-string">'banana'</span>, <span class="hljs-number">1</span>],
+  [<span class="hljs-string">'orange'</span>, <span class="hljs-number">2</span>],
+  [<span class="hljs-string">'meat'</span>, <span class="hljs-number">4</span>]
+])
+<span class="hljs-comment">// bây giờ prices = { banana: 1, orange: 2, meat: 4 }</span>
+alert(prices.orange) <span class="hljs-comment">// 2</span>
+</div></code></pre>
+<p>Chúng ta có thể sử dụng <code>Object.fromEntries</code> để get một object từ <code>Map</code>.</p>
+<p>Ví dụ trong trường hợp chúng ta lưu trữ data trong <code>Map</code>, nhưng chúng ta muốn truyền data đó vào một thư viện hay một hàm nào đó yêu cầu là một object thông thường.</p>
+<p>Đây là cách chúng ta làm:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> map = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>()
+map.set(<span class="hljs-string">'banana'</span>, <span class="hljs-number">1</span>)
+map.set(<span class="hljs-string">'orange'</span>, <span class="hljs-number">2</span>)
+map.set(<span class="hljs-string">'meat'</span>, <span class="hljs-number">4</span>)
+<span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.fromEntries(map.entries()) <span class="hljs-comment">// Tạo một object thường (*)</span>
+<span class="hljs-comment">// xong!</span>
+<span class="hljs-comment">// obj = { banana: 1, orange: 2, meat: 4 }</span>
+alert(obj.orange) <span class="hljs-comment">// 2</span>
+</div></code></pre>
+<p><code>map.entries()</code> return một iterable của các cặp key/value, chính xác đúng định dạng cho <code>Object.fromEntries</code>.</p>
+<p>Chúng ta cũng có thể làm cho dòng <code>(*)</code> ngắn hơn</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> obj = <span class="hljs-built_in">Object</span>.fromEntries(map) <span class="hljs-comment">// không cần .entries()</span>
+</div></code></pre>
+<p>Cho kết quả giống nhau, bởi vì <code>Object.fromEntries</code> mong đợi tham số là iterable object. Không cần thiết là một mảng. Và việc lặp qua <code>map</code> sẽ return cặp key/value giống như <code>map.entries()</code></p>
+
+</body>
+</html>

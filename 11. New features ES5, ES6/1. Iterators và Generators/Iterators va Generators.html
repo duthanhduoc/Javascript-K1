@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Iterators va Generators.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="iterators-v%C3%A0-generators">Iterators và Generators</h1>
+<p><a href="https://xdevclass.com/ban-da-biet-ve-iterator-iterable-va-generators-trong-javascript-chua/">Bài gốc: Bạn đã biết về Iterator, Iterable và Generator trong Javascript chưa?</a></p>
+<p>Code Javascript lâu năm chắc chắn bạn chưa biết điều này (mình đùa theo trend tiktok 1 tí, bạn nào biết rồi thì xem tiếp chứ đừng bỏ qua):mrgreen: .</p>
+<p>Đó là Iterator, Iterable và Generator. Nó không hề mới, nó đã có từ khá lâu rồi nhưng đôi khi chúng ta ít dùng hay chưa gặp nên chưa để ý nó.</p>
+<p>Không sao ^^! Hôm nay mình sẽ cùng các bạn đi tìm hiểu rõ chúng là gì và các trường hợp nào dùng chúng.</p>
+<h2 id="iterator-l%C3%A0-g%C3%AC">Iterator là gì?</h2>
+<p>Trong Javascript, một <strong>iterator</strong> là một object mà nó định nghĩa một trình tự và giá trị có thể trả về tiếp theo trước khi kết thúc. Nghe hơi khó hiểu nhở 😯 .</p>
+<p>Xem ví dụ là hiểu ngay.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">makeRangeIterator</span>(<span class="hljs-params">start = <span class="hljs-number">0</span>, end = Infinity, step = <span class="hljs-number">1</span></span>) </span>{
+  <span class="hljs-keyword">let</span> nextIndex = start
+  <span class="hljs-keyword">let</span> iterationCount = <span class="hljs-number">0</span>
+  <span class="hljs-keyword">const</span> rangeIterator = {
+    <span class="hljs-attr">next</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">let</span> result
+      <span class="hljs-keyword">if</span> (nextIndex &lt;= end) {
+        result = { <span class="hljs-attr">value</span>: nextIndex, <span class="hljs-attr">done</span>: <span class="hljs-literal">false</span> }
+        nextIndex += step
+        iterationCount++
+        <span class="hljs-keyword">return</span> result
+      }
+      <span class="hljs-keyword">return</span> { <span class="hljs-attr">value</span>: iterationCount, <span class="hljs-attr">done</span>: <span class="hljs-literal">true</span> }
+    }
+  }
+  <span class="hljs-keyword">return</span> rangeIterator
+}
+<span class="hljs-keyword">let</span> it = makeRangeIterator(<span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>)
+<span class="hljs-built_in">console</span>.log(it.next()) <span class="hljs-comment">// {value: 1, done: false}</span>
+<span class="hljs-built_in">console</span>.log(it.next()) <span class="hljs-comment">// {value: 3, done: false}</span>
+<span class="hljs-built_in">console</span>.log(it.next()) <span class="hljs-comment">// {value: 5, done: false}</span>
+<span class="hljs-built_in">console</span>.log(it.next()) <span class="hljs-comment">// {value: 3, done: true}</span>
+</div></code></pre>
+<p>function tạo iterator <code>makeRangeIterator</code> nhận vào 3 tham số đó là: dãy số nguyên bắt đầu từ <code>start</code> đến <code>end</code> với bước nhảy là <code>step</code>.</p>
+<p>Giá trị trả về cuối cùng là kích thước của dãy giá trị mà nó đã tạo, được ghi nhận trong biến <code>iterationCount</code>.</p>
+<p>Nhìn vào ví dụ trên bạn thấy phương thức <code>next()</code> không?</p>
+<p>Phương thức theo format như vậy gọi là <strong>giao thức iterator</strong>, nghĩa là trả về một object với thuộc tính.</p>
+<ul>
+<li><code>value</code>: giá trị kế tiếp của chuỗi giá trị</li>
+<li><code>done</code>: boolean, nếu là true thì giá trị cuối cùng của chuỗi giá trị đã được sử dụng</li>
+</ul>
+<p>Việc duyệt qua iterator chỉ thực hiện 1 lần duy nhất.</p>
+<p>Đơn giản vậy thôi, tìm hiểu tiếp <strong>iterable</strong> nhé.</p>
+<h2 id="iterable-l%C3%A0-g%C3%AC">Iterable là gì?</h2>
+<p><strong>Iterable</strong> nghĩa là khả duyệt, tức là có thể lặp qua các phần tử bằng <code>for...of</code>. Một đối tượng muốn được lặp bằng <code>for...of</code> thì phải có phương thức <strong>@@iterator</strong> (tên phương thức nó là như vậy, mục đích chủ yếu là để quy định ràng buộc các kiểu return trong phương thức).</p>
+<p>Phương thức <strong>@@iterator</strong> được cài đặt thông qua thuộc tính tên là <code>Symbol.iterator</code> (kiểu symbol).</p>
+<p>Ví dụ ta có object <code>range</code> đại diện cho 1 khoản giá trị</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> range = {
+  <span class="hljs-attr">from</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">to</span>: <span class="hljs-number">5</span>
+}
+<span class="hljs-comment">// Chúng ta muốn for...of hoạt động:</span>
+<span class="hljs-comment">// for(let num of range) ... num=1,2,3,4,5</span>
+</div></code></pre>
+<p>Để làm object <code>range</code> trở thành một iterable object (và để cho <code>for...of</code> hoạt động) chúng ta cần thêm một phương thức được đặt tên là <code>Symbol.iterator</code>.</p>
+<ol>
+<li>
+<p>Khi <code>for...of</code> bắt đầu, nó gọi phương thức 1 lần (hoặc lỗi nếu không tìm thấy phương thức). Phương thức này phải return về một iterator – một object với phương thức <code>next</code>.</p>
+</li>
+<li>
+<p>Sau đó, <code>for...of</code> chỉ làm việc với object được trả về của <code>next()</code>.</p>
+</li>
+<li>
+<p>Khi <code>for...of</code> muốn giá trị tiếp theo, nó gọi <code>next()</code> trên object đó.</p>
+</li>
+<li>
+<p>Kết quả của <code>next()</code> khi return phải là định dạng <code>{done: Boolean, value: any}</code>, khi <code>done==true</code> (giá trị của <code>done</code> không nhất thiết phải true/false, bạn cũng có thể lưu là 0/1, nhưng mình khuyên nên dùng true/false cho tường mình) nghĩa là quá trình lặp kết thúc, nếu không thì <code>value</code> là giá trị kế tiếp.</p>
+</li>
+</ol>
+<p>Đây là đoạn code được sửa lại:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> range = {
+  <span class="hljs-attr">from</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">to</span>: <span class="hljs-number">5</span>
+}
+<span class="hljs-comment">// 1. for...of yêu cầu phương thức này</span>
+range[<span class="hljs-built_in">Symbol</span>.iterator] = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// ...nó trả về một iterator object:</span>
+  <span class="hljs-comment">// 2. Tiếp sau đó, for..of chỉ làm việc với iterator này,</span>
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">current</span>: <span class="hljs-keyword">this</span>.from,
+    <span class="hljs-attr">last</span>: <span class="hljs-keyword">this</span>.to,
+    <span class="hljs-comment">// 3. next() được gọi trên mỗi vòng lặp for..of</span>
+    next() {
+      <span class="hljs-comment">// 4. Phải return về định dạng {done:.., value :...}</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.current &lt;= <span class="hljs-keyword">this</span>.last) {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">done</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">value</span>: <span class="hljs-keyword">this</span>.current++ }
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> { <span class="hljs-attr">done</span>: <span class="hljs-literal">true</span> }
+      }
+    }
+  }
+}
+<span class="hljs-comment">// Bây giờ đã hoạt động!</span>
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> num <span class="hljs-keyword">of</span> range) {
+  <span class="hljs-built_in">console</span>.log(num) <span class="hljs-comment">// 1, then 2, 3, 4, 5</span>
+}
+</div></code></pre>
+<p>Có thể bây giờ bạn sẽ thắc mắc. <strong>String</strong>, <strong>Array</strong> cũng có thể dùng <code>for...of</code> cơ mà, có thấy nó cài phương thức gì đâu?</p>
+<p>Thật ra thì <strong>String</strong>, <strong>Array</strong>, <strong>Map</strong> nó có sẵn phương thức <strong>@@iterator</strong> mặc định trong <strong>prototype</strong> của nó. Trong khi một số kiểu khác thì không có, ví dụ như <strong>Object</strong>.</p>
+<p><img src="./array-1.png" alt="array có phương thức @@iterator trong prototype của nó"></p>
+<p>Đến đây bạn sẽ tự hỏi, vậy iterator object có phải là iterable object hay không?</p>
+<p>Câu trả lời là <strong>không</strong>! Đơn giản vì bạn không thể <code>for...of</code> iterator được.</p>
+<h2 id="generator-l%C3%A0-g%C3%AC">Generator là gì?</h2>
+<p><strong>Generator</strong> là một object return bởi một generator function, và nó cũng là một <strong>iterable</strong>, cũng như là một <strong>iterator</strong>.</p>
+<p><strong>Generator</strong> chỉ được tạo từ generator function.</p>
+<p><strong>Cú pháp</strong>:</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">makeGenerator</span>(<span class="hljs-params">i</span>) </span>{
+  <span class="hljs-keyword">yield</span> i + <span class="hljs-number">1</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Dòng này sẽ được in khi next() lần 2'</span>)
+  <span class="hljs-keyword">yield</span> i + <span class="hljs-number">2</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Dòng này sẽ được in khi next() lần 3'</span>)
+  <span class="hljs-keyword">yield</span> i + <span class="hljs-number">3</span>
+  <span class="hljs-keyword">return</span> i + <span class="hljs-number">4</span>
+}
+<span class="hljs-keyword">const</span> generator = makeGenerator(<span class="hljs-number">0</span>)
+generator.next() <span class="hljs-comment">// {value: 1, done: false}</span>
+generator.next() <span class="hljs-comment">// {value: 2, done: false}</span>
+generator.next() <span class="hljs-comment">// {value: 3, done: false}</span>
+generator.next() <span class="hljs-comment">// {value: 4, done: true}</span>
+</div></code></pre>
+<p><strong>Đặc điểm</strong></p>
+<ul>
+<li>Hàm có thể dừng lại khi <code>yield</code> hoặc <code>return</code>, và tiếp tục chạy khi bạn <code>next()</code></li>
+<li>Không <code>return</code> tức là return undefined</li>
+</ul>
+<p><strong>Phương thức của generator</strong></p>
+<ul>
+<li>
+<p><code>next()</code>: tiếp tục cho hàm chạy cho đến khi gặp <code>yield</code> hoặc <code>return</code>. return object <code>{value: any, done: true/false}</code></p>
+</li>
+<li>
+<p><code>return()</code>: tiếp tục thực thi, đồng thời kết thúc generator và return object <code>{value: any, done: true}</code></p>
+</li>
+<li>
+<p><code>throw()</code>: tiếp tục thực thi và quăng 1 lỗi vào trong generator function (đồng thời kết thúc generator, trừ khi được bắt lại trong generator đó). return object <code>{value: any, done: true/false}</code></p>
+</li>
+</ul>
+<p>Ví dụ về method <code>return()</code></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">gen</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">1</span>
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">2</span>
+  <span class="hljs-keyword">yield</span> <span class="hljs-number">3</span>
+}
+<span class="hljs-keyword">const</span> g = gen()
+g.next() <span class="hljs-comment">// { value: 1, done: false }</span>
+g.return(<span class="hljs-string">'foo'</span>) <span class="hljs-comment">// { value: "foo", done: true }</span>
+g.next() <span class="hljs-comment">// { value: undefined, done: true }</span>
+</div></code></pre>
+<p>Ví dụ về method <code>throw()</code></p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">gen</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">yield</span> <span class="hljs-number">42</span>
+    } <span class="hljs-keyword">catch</span> (e) {
+      <span class="hljs-built_in">console</span>.log(e.message)
+    }
+  }
+}
+<span class="hljs-keyword">const</span> g = gen()
+g.next()
+<span class="hljs-comment">// { value: 42, done: false }</span>
+g.throw(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Something went wrong'</span>))
+<span class="hljs-comment">// "Something went wrong"</span>
+<span class="hljs-comment">// { value: 42, done: false }</span>
+</div></code></pre>
+<h2 id="c%C3%A1c-tr%C6%B0%E1%BB%9Dng-h%E1%BB%A3p-d%C3%B9ng-generator">Các trường hợp dùng generator</h2>
+<h3 id="generator-%C3%A1p-d%E1%BB%A5ng-trong-redux-saga">Generator áp dụng trong Redux-Saga</h3>
+<p>Nếu bạn dùng Redux-Saga với React thì chắc hẳn không lạ gì với generator và yield</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> { put, takeEvery } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-saga/effects'</span>
+<span class="hljs-keyword">const</span> url = <span class="hljs-string">'/api/data/get'</span>
+<span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">requestFetch</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA'</span> })
+  <span class="hljs-keyword">try</span> {
+    <span class="hljs-keyword">const</span> dataJSON = <span class="hljs-keyword">yield</span> fetch(url, { <span class="hljs-string">'content-type'</span>: <span class="hljs-string">'application/json'</span> })
+    <span class="hljs-keyword">const</span> data = <span class="hljs-keyword">yield</span> dataJSON.json()
+    <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA_SUCCESS'</span>, data })
+  } <span class="hljs-keyword">catch</span> (error) {
+    <span class="hljs-keyword">yield</span> put({ <span class="hljs-attr">type</span>: <span class="hljs-string">'FETCH_DATA_FAIL'</span>, error })
+  }
+}
+</div></code></pre>
+<h3 id="c%C3%A1c-tr%C6%B0%E1%BB%9Dng-h%E1%BB%A3p-c%E1%BA%A7n-ghi-nh%E1%BB%9B">Các trường hợp cần ghi nhớ</h3>
+<p>Ví dụ chúng ta xem video, khi pause giữa chừng 1 video và nhấn play lại. Chúng ta muốn là máy tính sẽ tính toán và load tiếp tục từ đoạn pause trở đi chứ không phải là bắt đầu lại từ đầu.</p>
+<p>Điển hình là bài toán viết một hàm để in ra số fibonacci thứ 1, 2, 3, 4.</p>
+<p>Nếu code thông thường thì ta sẽ code như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> fibonacci = <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (n === <span class="hljs-number">1</span> || n === <span class="hljs-number">2</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+  }
+  <span class="hljs-keyword">return</span> fibonacci(n - <span class="hljs-number">1</span>) + fibonacci(n - <span class="hljs-number">2</span>)
+}
+<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">1</span>)) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">2</span>)) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">3</span>)) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fibonacci(<span class="hljs-number">4</span>)) <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<p>Nếu viết theo cách này thì khi tính số fibinacci thứ 3 thì ta phải tính lại số fibonacci thứ 2 (mặc dầu trước đó ta đã tính rồi), như vậy khá tốn hiệu năng máy tính.</p>
+<p>Sẽ có nhiều hướng giải quyết cho bài toán này, dùng generator function là một ví dụ.</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">fibonacci</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">let</span> prev = <span class="hljs-number">0</span>
+  <span class="hljs-keyword">let</span> curr = <span class="hljs-number">1</span>
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) {
+    <span class="hljs-keyword">yield</span> curr
+    <span class="hljs-keyword">const</span> next = prev + curr
+    prev = curr
+    curr = next
+  }
+}
+<span class="hljs-keyword">const</span> fib = fibonacci()
+<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 2</span>
+<span class="hljs-built_in">console</span>.log(fib.next().value) <span class="hljs-comment">// 3</span>
+</div></code></pre>
+<p>Hoặc đơn cử bài toán tạo ra các ID riêng biệt</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span>* <span class="hljs-title">makeId</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>
+  <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) <span class="hljs-keyword">yield</span> i++
+}
+<span class="hljs-keyword">const</span> ids = makeId()
+<span class="hljs-built_in">console</span>.log(ids.next().value) <span class="hljs-comment">// 0</span>
+<span class="hljs-built_in">console</span>.log(ids.next().value) <span class="hljs-comment">// 1</span>
+<span class="hljs-built_in">console</span>.log(ids.next().value) <span class="hljs-comment">// 2</span>
+</div></code></pre>
+<h2 id="t%C3%B3m-l%E1%BA%A1i">Tóm lại</h2>
+<p>Sau bài hôm nay, mình hy vọng đã giải đáp được một phần thắc mắc của mọi người về 3 khái niêm <strong>Iterator</strong>, <strong>Iterable</strong> và <strong>Generator</strong>. Chúng không quá khó để hiểu, vì thế hãy đọc cẩn thận nha :mrgreen:</p>
+<p>Hẹn gặp mọi người ở bài tiếp theo.</p>
+<h2 id="tham-kh%E1%BA%A3o">Tham khảo</h2>
+<p><a href="https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Iterators_and_Generators">https://developer.mozilla.org/vi/docs/Web/JavaScript/Guide/Iterators_and_Generators</a></p>
+<p><a href="https://javascript.info/iterable">https://javascript.info/iterable</a></p>
+
+</body>
+</html>

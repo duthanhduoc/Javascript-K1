@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Symbols.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ki%E1%BB%83u-symbol">Kiểu Symbol</h1>
+<p><a href="https://xdevclass.com/kieu-symbol-trong-javascript-co-the-ban-chua-tung-nghe-thay/">Bài gốc: Kiểu Symbol trong Javascript, có thể bạn chưa từng nghe thấy</a></p>
+<p>Theo như mô tả thì các key của object chỉ có thể là kiểu string hoặc symbol. Không phải number, không phải boolean, chỉ là string và symbol.</p>
+<p>Thường thì chúng ta chỉ sử dụng string. Bây giờ cùng xem lợi ích mà symbol có thể mang lại cho chúng ta.</p>
+<h2 id="symbol-l%C3%A0-g%C3%AC">Symbol là gì</h2>
+<p>Một “symbol” đại diện cho một định danh duy nhất.</p>
+<p>Một giá trị của kiểu này có thể được tạo bằng cách sử dụng <code>Symbol()</code></p>
+<pre class="hljs"><code><div><span class="hljs-comment">// id thuộc kiểu symbol</span>
+<span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>()
+</div></code></pre>
+<p>Chúng ta có thể truyền một đoạn mô tả vào symbol (gọi là tên symbol), việc này rất hữu hiệu cho việc debug</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// id là một symbol với mô tả là "id"</span>
+<span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+</div></code></pre>
+<p>Các symbol thì được cam kết duy nhất. Ngay cả khi chúng ta tạo nhiều symbol với cùng mô tả, chúng cũng khác nhau về giá trị. Mô tả chỉ như là dán nhãn mác thôi, không có tác động gì cả.</p>
+<p>Ví dụ 2 symbol cùng mô tả – chúng cũng không bằng nhau.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id1 = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+<span class="hljs-keyword">let</span> id2 = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+<span class="hljs-built_in">console</span>.log(id1 == id2) <span class="hljs-comment">// false</span>
+</div></code></pre>
+<p><strong>Lưu ý</strong>: <code>Symbol</code> không tự động chuyển sang <code>string</code>.</p>
+<p>Hầu hết giá trị trong JS hỗ trợ convert ngầm hiểu sang string. Ví dụ khi dùng <code>alert</code> cho bất cứ giá trị nào, nó sẽ gọi đến phương thức <code>toString()</code> của giá trị đó. Nhưng symbol thì đặc biệt, chúng không tự động convert.</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+alert(id) <span class="hljs-comment">// TypeError: Cannot convert a Symbol value to a string</span>
+</div></code></pre>
+<p>Nếu chúng ta thực sự muốn hiển thị một symbol, chúng ta cần gọi <code>toString()</code> trên nó, như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+alert(id.toString()) <span class="hljs-comment">// Symbol(id), bây giờ thì hoạt động được rồi</span>
+</div></code></pre>
+<p>Hoặc muốn show mô tả bằng cách</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+alert(id.description) <span class="hljs-comment">// id</span>
+</div></code></pre>
+<h2 id="thu%E1%BB%99c-t%C3%ADnh-%E1%BA%A9n">Thuộc tính “ẩn”</h2>
+<p>Symbol cho phép tạo những thuộc tính ẩn của object, các thành phần khác không thuộc code chúng ta không thể truy cập hoặc ghi đè được.</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> initState = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ({
+  <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>
+})
+<span class="hljs-keyword">const</span> state = initState()
+<span class="hljs-comment">// Vô tình một đoạn code nào đó làm thay đổi id</span>
+<span class="hljs-comment">// Có thể là từ User hoặc thư viện ngoài</span>
+state.id = <span class="hljs-number">2</span>
+<span class="hljs-comment">// và thuộc tính id của chúng ta bị thay đổi</span>
+</div></code></pre>
+<p><code>state</code> thuộc về một đoạn code khác, nếu vì lý do nào đó (có thể từ người dùng hoặc thư viện ngoài) mà nó bị thay đổi thì có thể dẫn đến việc tính toán bị sai lệch. Điển hình là các game chơi trên trình duyệt khá là dễ bị hack hay cheat vì chỉ cần viết một đoạn tool nhỏ can thiệp vào 1 biến chủ đạo trong code và làm thay đổi giá trị nó là được.</p>
+<p>Ví dụ bạn thay đổi biến <code>health = 100</code> thành <code>health = 99999</code> trong game và bạn bất tử cmnr.</p>
+<p>Điều này rõ ràng không an toàn tí nào.</p>
+<p>Cách fix vấn đề trên:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> initState = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">const</span> result = {}
+  <span class="hljs-keyword">const</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+  result[id] = id
+  <span class="hljs-keyword">return</span> result
+}
+<span class="hljs-keyword">const</span> state = initState()
+<span class="hljs-comment">// Bây giờ chúng ta không thể truy cập được vào thuộc tính Symbol('id') nữa</span>
+<span class="hljs-comment">// Bởi vì ở ngoài không biết giá trị id là bao nhiêu</span>
+</div></code></pre>
+<p>Chúng ta cũng có thể tạo key là symbol trong object literal như thế này</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> initState = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> ({
+  [<span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)]: <span class="hljs-number">1</span>
+})
+</div></code></pre>
+<p>Thực ra về mặt kỹ thuật thì symbol không 100% là ẩn. Một phương thức có sẵn là <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols">Object.getOwnPropertySymbols(obj)</a> cho phép chúng ta lấy tất cả các symbol. Cũng có một phương thức là <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys">Reflect.ownKeys(obj)</a> return tất cả các key của object bao gồm cả kiểu symbol. Vì thế chúng không thực sự ẩn. Nhưng hầu hết các thư viện ngoài thì không dùng đến những phương thức này.</p>
+<h2 id="symbol-b%E1%BB%8B-b%E1%BB%8F-qua-%E1%BB%9F-forin">Symbol bị bỏ qua ở for…in</h2>
+<p>Thuộc tính symbol không tham gia vòng lặp <code>for...in</code></p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+<span class="hljs-keyword">let</span> user = {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'John'</span>,
+  <span class="hljs-attr">age</span>: <span class="hljs-number">30</span>,
+  [id]: <span class="hljs-number">123</span>
+}
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> user) alert(key) <span class="hljs-comment">// name, age (không có symbol)</span>
+<span class="hljs-comment">// Truy cập trực tiếp thì ok</span>
+alert(<span class="hljs-string">'Direct: '</span> + user[id])
+</div></code></pre>
+<p><code>Object.keys(user)</code> cũng bỏ qua chúng.</p>
+<p>Đối ngược với điều đó, <code>Object.assign</code> copy cả thuộc tính có key là string và symbol</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'id'</span>)
+<span class="hljs-keyword">let</span> user = {
+  [id]: <span class="hljs-number">123</span>
+}
+<span class="hljs-keyword">let</span> clone = <span class="hljs-built_in">Object</span>.assign({}, user)
+alert(clone[id]) <span class="hljs-comment">// 123</span>
+</div></code></pre>
+<p>Không có nghịch lý nào ở đây cả. Đó là bởi vì thiết kế ngôn ngữ như vậy. Ý tưởng là khi chúng ta clone một object hoặc merge object, chúng ta thường muốn tất cả các thuộc tính được copy (bao gồm cả symbol như id).</p>
+<h2 id="global-symbol">Global symbol</h2>
+<p>Như chúng ta đã thấy, thường thì tất cả các symbol thì khác nhau, ngay cả khi nếu chúng có cùng tên. Nhưng thỉnh thoảng chúng ta muốn những symbol cùng tên thì cùng giá trị. Ví dụ, những phần khác nhau của app muốn truy cập đến symbol <code>&quot;id&quot;</code>, điều này có nghĩa là nó phải cùng giá trị.</p>
+<p>Để làm điều này, chúng ta có một thứ gọi là <strong>global symbol registry</strong>. Chúng ta có thể tạo symbol trước và truy cập sau, và nó đảm bảo rằng việc truy cập lại có thể chính xác.</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// đọc từ global registry</span>
+<span class="hljs-keyword">let</span> id = <span class="hljs-built_in">Symbol</span>.for(<span class="hljs-string">'id'</span>) <span class="hljs-comment">// nếu symbol chưa tồn tại, nó sẽ được tạo</span>
+<span class="hljs-comment">// đọc lại lần nữa, có thể từ một nơi nào đó trong code</span>
+<span class="hljs-keyword">let</span> idAgain = <span class="hljs-built_in">Symbol</span>.for(<span class="hljs-string">'id'</span>)
+<span class="hljs-comment">// cùng một symbol</span>
+alert(id === idAgain) <span class="hljs-comment">// true</span>
+</div></code></pre>
+<p>Symbol bên trong registry được gọi là global symbol. Nếu chúng ta muốn một symbol toàn app, có thể truy cập ở bất kỳ đâu trong code – global symbol là tất cả những gì ta cần.</p>
+<h2 id="symbolkeyfor">Symbol.keyFor</h2>
+<p>Với global symbol, không chỉ <code>Symbol.for(key)</code> return một symbol bằng tên, có một phương thức ngược lại là <code>Symbol.keyFor(sym)</code>: return một tên bởi global symbol</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// get symbol bằng tên</span>
+<span class="hljs-keyword">let</span> sym = <span class="hljs-built_in">Symbol</span>.for(<span class="hljs-string">'name'</span>)
+<span class="hljs-keyword">let</span> sym2 = <span class="hljs-built_in">Symbol</span>.for(<span class="hljs-string">'id'</span>)
+<span class="hljs-comment">// get tên bằng symbol</span>
+alert(<span class="hljs-built_in">Symbol</span>.keyFor(sym)) <span class="hljs-comment">// name</span>
+alert(<span class="hljs-built_in">Symbol</span>.keyFor(sym2)) <span class="hljs-comment">// id</span>
+</div></code></pre>
+<p><code>Symbol.keyFor</code> chỉ hoạt động với global symbol registry, vì thế nó không hoạt động với symbol thông thường. Nếu symbol không phải là global, nó sẽ không tìm thấy và return <code>undefined</code>.</p>
+<p>Ngoài ra thì bất cứ symbol nào cũng có thuộc tính <code>description</code>.</p>
+<p>Ví dụ:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">let</span> globalSymbol = <span class="hljs-built_in">Symbol</span>.for(<span class="hljs-string">'name'</span>)
+<span class="hljs-keyword">let</span> localSymbol = <span class="hljs-built_in">Symbol</span>(<span class="hljs-string">'name'</span>)
+alert(<span class="hljs-built_in">Symbol</span>.keyFor(globalSymbol)) <span class="hljs-comment">// name, global symbol</span>
+alert(<span class="hljs-built_in">Symbol</span>.keyFor(localSymbol)) <span class="hljs-comment">// undefined, not global</span>
+alert(localSymbol.description) <span class="hljs-comment">// name</span>
+</div></code></pre>
+<h2 id="h%E1%BB%87-th%E1%BB%91ng-symbol">Hệ thống symbol</h2>
+<p>Có nhiều phương thức symbol mà Javascript sử dụng bên trong, chúng ta có thể sử dụng chúng để tinh chỉnh các khía cạnh khác nhau của object.</p>
+<p>Chúng thì được liệt kê trong bảng <a href="https://tc39.github.io/ecma262/#sec-well-known-symbols">Well-know symbols</a> :</p>
+<ul>
+<li><code>Symbol.hasInstance</code></li>
+<li><code>Symbol.isConcatSpreadable</code></li>
+<li><code>Symbol.iterator</code></li>
+<li><code>Symbol.toPrimitive</code></li>
+<li>… và vô số khác</li>
+</ul>
+<h2 id="t%C3%B3m-l%E1%BA%A1i">Tóm lại</h2>
+<p><code>Symbol</code> là một kiểu dữ liệu nguyên thủy (primitive type) cho các định danh duy nhất.</p>
+<p>Symbol được tạo với <code>Symbol()</code> có thể tùy chọn tham số mô tả (name)</p>
+<p>Symbol luôn luôn cho ra các giá trị khác nhau, ngay cả khi nó cùng tên. Nếu chúng ta muốn các symbol cùng tên bằng nhau, thì hãy sử dụng global registry.</p>
+<p>Symbol có 2 trường hợp sử dụng chính:</p>
+<ol>
+<li>Thuộc tính ẩn của object. Các thuộc tính có key là kiểu symbol thì không xuất hiện trong <code>for...in</code>, vì thế nó không thể vô tình bị xử lý cùng với các thuộc tính khác. Ngoài ra, nó sẽ không được truy cập trực tiếp, bởi vì các đoạn code khác không có được giá trị symbol. Vì thế thuộc tính sẽ được bảo vệ bởi các yếu tố tình cờ hoặc cố ý ghi đè.</li>
+<li>Có nhiều hệ thống symbol được sử dụng bởi Javascript mà ta có thể truy cập thông qua <code>Symbol.*</code>. Ví dụ sử dụng <code>Symbol.iterator</code> cho iterable object.</li>
+</ol>
+<h2 id="tham-kh%E1%BA%A3o">Tham khảo</h2>
+<p><a href="https://javascript.info/symbol">Symbol</a></p>
+
+</body>
+</html>
