@@ -1,34 +1,78 @@
 // let map = new Map()
-// map.set('1', 'str1') // string key
+// map.set(1, 'str1') // string key
 // map.set(1, 'num1') // numeric key
 // map.set(true, 'bool1') // boolean key
-
-// // console.log(map.keys())
+// // let a = {}
+// // let b = { age: 18 }
+// // map[a] = 18
+// console.log(map)
 
 // const obj = {}
-// obj[2] = 1
-// obj[1] = 1
+// obj['1'] = 'str1'
+// obj[1] = 'num1'
+// obj[true] = 'bool1'
+// console.log(obj)
+
+// let recipeMap = new Map([
+//   ['cucumber', 500],
+//   ['tomatoes', 350],
+//   ['onion', 50]
+// ])
+// for (const key of recipeMap.keys()) {
+//   console.log(key)
+// }
+// for (const key of recipeMap.values()) {
+//   console.log(key)
+// }
+// for (const key of recipeMap.entries()) {
+//   console.log(key)
+// }
+// for (const key of recipeMap) {
+//   console.log(key)
+// }
+// console.log(recipeMap)
+// console.log()
+
+// const obj = {
+//   age: 18,
+//   name: 'Duoc',
+//   location: 'Viet Nam'
+// }
+
+// const map = new Map(Object.entries(obj))
+// console.log(map)
+
+// const map = new Map()
+//   .set('age', 18)
+//   .set('name', 'Duoc')
+//   .set('location', 'Viet Nam')
+// console.log(typeof map)
+// const obj = Object.fromEntries(map)
+
+// console.log(obj)
+
+// const obj = {}
+// obj.name = 'Duoc'
+// obj[1] = 100
+// console.log(obj)
 // console.log(Object.keys(obj))
 
-// map.forEach((value, key, map) => {
-//   console.log(key, value)
-// })
+// const map = new Map().set('name', 'Duoc').set(1, 100)
+// console.log(map)
 
-// // const obj = {}
-// // obj[true] = 1
-// // console.log(Object.keys(obj))
-// // let john = { name: 'John' }
-// // let ben = { name: 'Ben' }
-// // let visitsCountObj = {} // thử sử dụng một object
-// // visitsCountObj[ben] = 234 // thử sử dụng object như một key
-// // visitsCountObj[john] = 123 // sử dụng john object như một key, ben object sẽ bị thay thế
+// let set = new Set()
+// let john = { name: 'John' }
+// let pete = { name: 'Pete' }
+// let mary = { name: 'Mary' }
+// // Một số user đến thăm nhiều lần
+// set.add(john)
+// set.add(pete)
+// set.add(mary)
+// set.add(john)
+// set.add(mary)
 
-// // console.log(visitsCountObj)
-
-// let map = new Map()
-// map.set('banana', 1)
-// map.set('orange', 2)
-// map.set('meat', 4)
-// console.log(Object.fromEntries(map))
-
-console.log(new Set([1, 3, 3, 2, 3]).values())
+// console.log(set)
+const arr = [1, 2, 3, 1, 3]
+const set = new Set(arr)
+console.log(Array.from(set))
+console.log([...set])

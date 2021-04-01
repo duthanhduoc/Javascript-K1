@@ -7,7 +7,7 @@ const handle = ({ a, b = 0, c }) => {
   return a + b + c
 }
 
-console.log(handle({ a: 1, c: 3 })) // 6
+console.log(handle({ a: 1, c: 3 })) // 4
 ```
 
 ## Spread syntax

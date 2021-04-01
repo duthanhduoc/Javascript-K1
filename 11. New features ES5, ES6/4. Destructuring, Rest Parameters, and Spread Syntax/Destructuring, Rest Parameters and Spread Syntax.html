@@ -371,7 +371,7 @@ code {
   <span class="hljs-keyword">return</span> a + b + c
 }
 
-<span class="hljs-built_in">console</span>.log(handle({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span> })) <span class="hljs-comment">// 6</span>
+<span class="hljs-built_in">console</span>.log(handle({ <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">3</span> })) <span class="hljs-comment">// 4</span>
 </div></code></pre>
 <h2 id="spread-syntax">Spread syntax</h2>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> user = {
@@ -393,7 +393,7 @@ code {
 Nếu <code>user</code> đã có <code>ability</code> thì nó sẽ bị ghi đè</p>
 <pre class="hljs"><code><div><span class="hljs-keyword">const</span> userPlus = { ...user, <span class="hljs-attr">ability</span>: [<span class="hljs-string">'sing'</span>] }
 </div></code></pre>
-<pre class="hljs"><code><div><span class="hljs-comment">// merge array</span>
+<pre class="hljs"><code><div><span class="hljs-comment">// concat array</span>
 <span class="hljs-keyword">const</span> list1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]
 <span class="hljs-keyword">const</span> list2 = [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>]
 <span class="hljs-keyword">const</span> list3 = [...list1, ...list2]

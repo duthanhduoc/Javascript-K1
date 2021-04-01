@@ -1,31 +1,31 @@
-// let globalSymbol = Symbol.for('name')
-// let localSymbol = Symbol('name')
+// let id1 = Symbol('id')
+// let id2 = Symbol('id')
+// console.log(id1)
+// console.log(id2)
+// console.log(id1 == id2) // false
 
-// alert(Symbol.keyFor(globalSymbol)) // name, global symbol
-// alert(Symbol.keyFor(localSymbol)) // undefined, not global
-
-// alert(localSymbol.description) // name
-
-// let id = Symbol()
-// id = Symbol('test')
-// console.log(id)
-
-// const initState = () => {
-//   const result = {}
-//   const id = Symbol('id')
-//   result[id] = 1
-//   return result
-// }
+// const obj = { age: 18 }
+// const arr = [1, 2, 3]
+// const sym = Symbol('Hi')
+// alert(sym.description)
+// const initState = () => ({
+//   [Symbol('id')]: 1
+// })
 // const state = initState()
-// const key = Object.getOwnPropertySymbols(state)[0]
-
-// console.log(state[key])
-
-let id = Symbol('id')
-let user = {
-  name: 'John',
-  age: 30,
-  [id]: 123
-}
-
-console.log(Object.keys(user))
+// const syms = Object.getOwnPropertySymbols(state)
+// state[syms[0]] = 2
+// console.log(state)
+// let id = Symbol('id')
+// let user = {
+//   name: 'John',
+//   age: 30,
+//   [id]: 123
+// }
+// for (const key in user) {
+//   console.log(key)
+// }
+// console.log(Object.assign({}, user))
+let id = Symbol.for('id') // nếu symbol chưa tồn tại, nó sẽ được tạo
+// đọc lại lần nữa, có thể từ một nơi nào đó trong code
+let idAgain = Symbol.for('id')
+console.log(Symbol.keyFor(idAgain))
