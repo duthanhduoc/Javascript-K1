@@ -1,26 +1,19 @@
-class Subject {
-  constructor() {
-    this.observers = []
-  }
-  // Dùng để đăng ký
-  subscribe(func) {
-    this.observers.push(func)
-  }
-  // Dùng để hủy đăng ký
-  unsubscribe(func) {
-    this.observers = this.observers.filter((subscriber) => subscriber !== func)
-  }
-  // Gửi 1 thông báo đến mọi
-  fire(data) {
-    this.observers.forEach((observer) => observer(data))
-  }
-}
+// const map = (function () {
+//   // Biến này chỉ được truy cập bên trong function
+//   // Private variable
+//   const toaDo = [15.9030623, 105.8066925]
+//   // Function này chỉ được truy cập bên trong function
+//   // Private method
+//   function layToaDo() {
+//     return toaDo
+//   }
+//   return {
+//     // Function này có thể truy cập từ bên ngoài
+//     // Public method
+//     inToaDo: function () {
+//       console.log(layToaDo())
+//     }
+//   }
+// })()
 
-const $gun = new Subject()
-const func = (value) => {
-  console.log(value)
-}
-$gun.subscribe(func)
-$gun.fire('boom')
-
-$gun.unsubscribe(func)
+const map = [1,2]

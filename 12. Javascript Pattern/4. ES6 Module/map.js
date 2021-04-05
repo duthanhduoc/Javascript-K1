@@ -1,5 +1,6 @@
-import {data} from './data.js'
+import {user} from './data.js'
 
 export default function handle() {
-  console.log(data)
+  console.log(user)
 }
+export function print() {}

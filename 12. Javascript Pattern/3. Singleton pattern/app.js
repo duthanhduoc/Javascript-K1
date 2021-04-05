@@ -1,25 +1,21 @@
-const User = (function () {
-  let instance
-  function init() {
-    return {
-      name: 'Dư Thanh Được',
-      printName() {
-        console.log(this.name)
-      }
-    }
-  }
-  return {
-    getInstance: function () {
-      if (!instance) {
-        instance = init()
-      }
-      return instance
-    }
-  }
-})()
+// function Item() {
+//   this.name = 'Dư Thanh Được'
+//   this.printName = function() {
+//     console.log(this.name)
+//   }
+// }
 
-// Dù cho gọi getInstance() bao nhiêu lần
-// thì cũng chỉ có 1 instance được tạo ra mà thôi
-const user1 = User.getInstance()
-const user2 = User.getInstance()
-console.log(user1 === user2) // true
+// const item = new Item()
+// console.log(item)
+
+function init() {
+  return {
+    name: 'Dư Thanh Được',
+    printName() {
+      console.log(this.name)
+    }
+  }
+}
+
+const test = init()
+console.log(test)
