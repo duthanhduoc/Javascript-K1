@@ -1,44 +1,47 @@
 class Http {
   constructor() {
-    this.API = 'https://6024a0f336244d001797adb8.mockapi.io/post'
+    this.api = 'https://6061cc41ac47190017a71c4b.mockapi.io/posts/'
     this.headers = {
       'Content-Type': 'application/json'
     }
   }
-  addPost(body) {
-    return fetch(this.API, {
+
+  getPosts() {
+    return fetch(this.api, {
+      method: 'GET',
+      headers: this.headers
+    }).then((res) => res.json())
+  }
+
+  getPost(id) {
+    return fetch(this.api + id, {
+      method: 'GET',
+      headers: this.headers
+    }).then((res) => res.json())
+  }
+
+  createPost(body) {
+    return fetch(this.api, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(body)
     }).then((res) => res.json())
   }
-  getPosts() {
-    return fetch(this.API, {
-      method: 'GET',
-      headers: this.headers
-    }).then((res) => res.json())
-  }
-  getPost(id) {
-    return fetch(this.API + '/' + id, {
-      method: 'GET',
-      headers: this.headers
-    }).then((res) => res.json())
-  }
+
   updatePost(id, body) {
-    return fetch(this.API + '/' + id, {
+    return fetch(this.api + id, {
       method: 'PUT',
       headers: this.headers,
       body: JSON.stringify(body)
     }).then((res) => res.json())
   }
-  removePost(id) {
-    return fetch(this.API + '/' + id, {
+
+  deletePost(id) {
+    return fetch(this.api + id, {
       method: 'DELETE',
       headers: this.headers
     }).then((res) => res.json())
   }
 }
 
-const HttpClient = new Http()
-
-export default HttpClient
+export default new Http()
