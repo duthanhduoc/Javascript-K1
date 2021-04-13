@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+section, footer {
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer {
+  background-color: #51c4d3;
+}
+#banner {
+  background-color: #194350;
+}
+#about {
+  background-color: #ff8882;
+}
+
+#project {
+  background-color: #ffc2b4;
+}
+#customer {
+  background-color: #9dbeb9;
+}
+#contact {
+  background-color: #f8f5f1;
+}
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+nav {
+  background-color: #feffde;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+}
+
+nav ul li {
+  margin-left: 2rem;
+}
+
+nav ul li a {
+  display: inline-block;
+  padding: .75rem 1rem;
+  color: #1b1717;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+nav ul li a:hover, nav ul li a.active {
+  background-color: #d8e3e7;
+}
